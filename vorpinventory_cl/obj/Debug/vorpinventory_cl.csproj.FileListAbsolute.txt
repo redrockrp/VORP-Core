@@ -1,0 +1,5 @@
+E:\RLC_Core\VORP_Core[Server-Cliente]\build\vorp_inventory\vorpinventory_cl.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\build\vorp_inventory\vorpinventory_cl.net.pdb
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpinventory_cl\obj\Debug\vorpinventory_cl.csprojAssemblyReference.cache
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpinventory_cl\obj\Debug\vorpinventory_cl.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpinventory_cl\obj\Debug\vorpinventory_cl.net.pdb

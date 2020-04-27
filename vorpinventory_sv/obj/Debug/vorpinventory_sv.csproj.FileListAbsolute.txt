@@ -1,0 +1,4 @@
+E:\RLC_Core\VORP_Core[Server-Cliente]\build\vorp_inventory\vorpinventory_sv.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\build\vorp_inventory\vorpinventory_sv.net.pdb
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpinventory_sv\obj\Debug\vorpinventory_sv.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpinventory_sv\obj\Debug\vorpinventory_sv.net.pdb

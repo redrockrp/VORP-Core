@@ -1,0 +1,5 @@
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpcore_sv\bin\Debug\vorpcore_sv.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpcore_sv\obj\Debug\vorpcore_sv.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\build\vorpcore_sv.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\build\vorp_core\vorpcore_sv.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpcore_sv\obj\Debug\vorpcore_sv.csprojAssemblyReference.cache

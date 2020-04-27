@@ -1,0 +1,10 @@
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpcore_cl\obj\Debug\vorpcore_cl.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpcore_cl\obj\Debug\vorpcore_cl.net.pdb
+C:\vorpcore_cl.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpcore_cl.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpcore_cl.net.pdb
+E:\RLC_Core\VORP_Core[Server-Cliente]\build\vorpcore_cl.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\build\vorpcore_cl.net.pdb
+E:\RLC_Core\VORP_Core[Server-Cliente]\build\vorp_core\vorpcore_cl.net.dll
+E:\RLC_Core\VORP_Core[Server-Cliente]\build\vorp_core\vorpcore_cl.net.pdb
+E:\RLC_Core\VORP_Core[Server-Cliente]\vorpcore_cl\obj\Debug\vorpcore_cl.csprojAssemblyReference.cache
