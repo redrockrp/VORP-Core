@@ -40,7 +40,6 @@ namespace vorpcore_sv.Scripts
                 Debug.WriteLine("INIT_PLAYER");
                 await Delay(2000);
                 TriggerServerEvent("vorp:playerSpawn"); // --> vorpcore_sv/vorpcore_sv.cs
-                firstSpawn = false;
             }
         }
 
@@ -50,11 +49,11 @@ namespace vorpcore_sv.Scripts
             if (firstSpawn)
             {
                 
-                //Revelamos todo el mapa al jugador 
-                firstSpawn = false;
                 Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
                 //Teleportamos al jugador a la posicion que se quedo
                 PlayerActions.TeleportToCoords(coords.X, coords.Y, coords.Z, heading);
+
+                firstSpawn = false;
             }
             
 
