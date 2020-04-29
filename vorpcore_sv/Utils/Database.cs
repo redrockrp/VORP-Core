@@ -16,6 +16,9 @@ namespace vorpcore_sv.Utils
             EventHandlers["vorp:getCharacter"] += new Action<int, dynamic>(getCharacter);
             EventHandlers["vorp:addMoney"] += new Action<int, int, int>(addMoney);
             EventHandlers["vorp:removeMoney"] += new Action<int, int, int>(removeMoney);
+
+            EventHandlers["vorp:addXp"] += new Action<int, int>(addXp);
+            EventHandlers["vorp:removeXp"] += new Action<int, int>(removeXp);
         }
 
         public Player getSource(int handle)
@@ -44,7 +47,7 @@ namespace vorpcore_sv.Utils
                     break;
             }
             
-            Exports["ghmattimysql"].execute($"UPDATE characters SET {Cash}={Cash} - {quanty} WHERE identifier=?", new[] { sid }); //Increment the wins column in the database
+            Exports["ghmattimysql"].execute($"UPDATE characters SET {Cash}={Cash} - {quanty} WHERE identifier=?", new[] { sid });
             
             Debug.WriteLine($"Removed {quanty} of {Cash} to {player.Name}");
 
@@ -92,7 +95,7 @@ namespace vorpcore_sv.Utils
                     break;
             }
 
-            Exports["ghmattimysql"].execute($"UPDATE characters SET {Cash} = {Cash} + {quanty} WHERE identifier=?", new[] { sid }); //Increment the wins column in the database
+            Exports["ghmattimysql"].execute($"UPDATE characters SET {Cash} = {Cash} + {quanty} WHERE identifier=?", new[] { sid });
 
             Debug.WriteLine($"Added {quanty} of {Cash} to {player.Name}");
 
@@ -123,6 +126,34 @@ namespace vorpcore_sv.Utils
             }));
         }
 
+        private void addXp(int handle, int quanty)
+        {
+            Player player = getSource(handle);
+
+            string sid = ("steam:" + player.Identifiers["steam"]);
+
+            Exports["ghmattimysql"].execute($"UPDATE characters SET xp = xp + {quanty} WHERE identifier=?", new[] { sid });
+
+            Debug.WriteLine($"Added {quanty} of Xp to {player.Name}");
+
+            // Send Nui Update UI
+           
+        }
+
+        private void removeXp(int handle, int quanty)
+        {
+            Player player = getSource(handle);
+
+            string sid = ("steam:" + player.Identifiers["steam"]);
+
+            Exports["ghmattimysql"].execute($"UPDATE characters SET xp = xp - {quanty} WHERE identifier=?", new[] { sid });
+
+            Debug.WriteLine($"Removed {quanty} of Xp to {player.Name}");
+
+            // Send Nui Update UI
+
+        }
+
         private void getCharacter(int handle, dynamic cb)
         {
             Player player = getSource(handle);
@@ -148,7 +179,6 @@ namespace vorpcore_sv.Utils
                     user.Add("gold", result[0].gold);
                     user.Add("rol", result[0].rol);
                     user.Add("xp", result[0].xp);
-                    user.Add("level", result[0].level);
                     user.Add("firstname", result[0].firstname);
                     user.Add("lastname", result[0].lastname);
 
