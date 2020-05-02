@@ -1,5 +1,6 @@
 # VORP-Core
-Main Core for RedM
+This is the VORP CORE for RedM made in C# compatible with LUA
+[Discord VORP](https://discord.gg/23MPbQ6)
 
 ## Requirements
 - [ghmattimysql](https://github.com/GHMatti/ghmattimysql/releases)
