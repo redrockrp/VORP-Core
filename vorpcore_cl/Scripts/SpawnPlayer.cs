@@ -64,7 +64,9 @@ namespace vorpcore_sv.Scripts
         private async Task setPVPTick()
         {
             await Delay(0);
-            API.NetworkSetFriendlyFireOption(true);
+            uint playerHash = (uint)API.GetHashKey("PLAYER");
+            Function.Call((Hash)0xF808475FA571D823, true);
+            Function.Call((Hash)0xBF25EB89375A37AD, 5, playerHash, playerHash);
             API.DisableControlAction(0, 0x580C4473, true); // Disable hud
             API.DisableControlAction(0, 0xCF8A4ECA, true); // Disable hud
         }
