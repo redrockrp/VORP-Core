@@ -34,7 +34,8 @@ namespace vorpcore_cl.Scripts
                         {
                             if (Function.Call<bool>((Hash)0x6E1C31E14C7A5F97, PlayerTags[i]))
                             {
-                                if (GetDistanceFromPlayer(i) < 10.0f)
+                                float distanceConfig = float.Parse(Utils.GetConfig.Config["HeadIdDistance"].ToString());
+                                if (GetDistanceFromPlayer(i) < distanceConfig)
                                 {
                                     // Feature 2.0
                                     //if () //NetworkIsPlayerTalking

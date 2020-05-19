@@ -39,6 +39,11 @@
       <HintPath>bin\MenuAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\VORP-Character\VORP-Character[Client-Server]\build\vorp_character\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -55,6 +60,7 @@
     <Compile Include="Scripts\SpawnPlayer.cs" />
     <Compile Include="Ui\Uicore.cs" />
     <Compile Include="Utils\Controls.cs" />
+    <Compile Include="Utils\GetConfig.cs" />
     <Compile Include="Utils\Miscellanea.cs" />
     <Compile Include="Utils\PlayerActions.cs" />
     <Compile Include="vorpcore_cl.cs" />

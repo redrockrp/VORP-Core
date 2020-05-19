@@ -57,11 +57,15 @@
     <Compile Include="Scripts\SLoadPlayer.cs" />
     <Compile Include="Utils\Database.cs" />
     <Compile Include="Utils\JsonUiCalls.cs" />
+    <Compile Include="Utils\LoadConfig.cs" />
     <Compile Include="Utils\SaveCoordsDB.cs" />
     <Compile Include="Utils\UPlayerCoords.cs" />
     <Compile Include="vorpcore_sv.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,3 +6,4 @@ E:\RLC_Core\VORP_Core[Server-Cliente]\vorpcore_sv\obj\Debug\vorpcore_sv.csprojAs
 E:\VORP-Repos\VORP-Core\build\vorp_core\vorpcore_sv.net.dll
 E:\VORP-Repos\VORP-Core\vorpcore_sv\obj\Debug\vorpcore_sv.csprojAssemblyReference.cache
 E:\VORP-Repos\VORP-Core\vorpcore_sv\obj\Debug\vorpcore_sv.net.dll
+E:\VORP-Repos\VORP-Core\build\vorp_core\Config.json
