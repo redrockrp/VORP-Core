@@ -12,7 +12,7 @@ This is the VORP CORE for RedM made in C# compatible with LUA
 * Add ```set mysql_connection_string "mysql://mysqluser:password@localhost/database"``` to your ```server.cfg``` file
 * Add ```ensure ghmattimysql``` to your ```server.cfg``` file
 
-* [Download lastest version](https://github.com/VORPCORE/VORP-Core/releases)
+* [Download lastest version of VORP CORE](https://github.com/VORPCORE/VORP-Core/releases)
 * To change the language go to ```resources/vorp_character``` and change the default language
 
 * Copy and paste ```vorp_core``` folder to ```resources/vorp_core```
