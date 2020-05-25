@@ -28,7 +28,7 @@ ensure vorp_core
 ````
 In vorp_core folder has a vorp.sql file, u need create database 'vorp' and execute this sql.
 ````
-* Now you are ready!!
+Now you are ready!!
 
 ## Wiki
 [Wiki VORP CORE](https://forum.vorpcore.com/)
