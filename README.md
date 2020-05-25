@@ -20,4 +20,4 @@ This is the VORP CORE for RedM made in C# compatible with LUA
 * Now you are ready!!
 
 ## Wiki
-[Wiki VORP CORE](https://forum.vorpcore.com/d/4-api-vorp-core-server)
+[Wiki VORP CORE](https://forum.vorpcore.com/)
