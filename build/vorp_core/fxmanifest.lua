@@ -13,7 +13,6 @@ server_scripts {
 }
 
 files {
-  'MenuAPI.dll',
   'Newtonsoft.Json.dll',
   'ui/hud.html',
   'ui/css/style.css',

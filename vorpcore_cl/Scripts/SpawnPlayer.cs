@@ -8,8 +8,8 @@ namespace vorpcore_sv.Scripts
 {
     public class SpawnPlayer : BaseScript
     {
-
         public static bool firstSpawn = true;
+        public static bool iSPvpOn = false;
 
         public SpawnPlayer()
         {
@@ -38,7 +38,7 @@ namespace vorpcore_sv.Scripts
         {
             if (firstSpawn) { 
                 Debug.WriteLine("INIT_PLAYER");
-                await Delay(2000);
+                await Delay(4000);
                 TriggerServerEvent("vorp:playerSpawn"); // --> vorpcore_sv/vorpcore_sv.cs
             }
         }

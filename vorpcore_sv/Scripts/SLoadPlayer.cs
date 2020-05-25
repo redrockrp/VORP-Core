@@ -28,20 +28,23 @@ namespace vorpcore_sv.Scripts
                 {
                     Debug.WriteLine("Usuario no registrado");
 
-                    source.TriggerEvent("vorp:createPlayer");
+                    source.TriggerEvent("vorpcharacter:createPlayer");
                 }
                 else
                 {
                     Debug.WriteLine("Usuario registrado");
 
                     string c_json = result[0].coords;
-
-                    Dictionary<string, float> pos =  JsonConvert.DeserializeObject<Dictionary<string, float>>(c_json);
-
-                    Vector3 pcoords = new Vector3(pos["x"], pos["y"], pos["z"]);
-
-                    source.TriggerEvent("vorp:initPlayer", pcoords, pos["heading"]);
-                                   
+                    try
+                    {
+                        Dictionary<string, float> pos = JsonConvert.DeserializeObject<Dictionary<string, float>>(c_json);
+                        Vector3 pcoords = new Vector3(pos["x"], pos["y"], pos["z"]);
+                        source.TriggerEvent("vorp:initPlayer", pcoords, pos["heading"]);
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("Coords Not Found");
+                    }
                     
 
                     // Send Nui Update UI all

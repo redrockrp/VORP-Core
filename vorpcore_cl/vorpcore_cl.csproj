@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\IDHeads.cs" />
+    <Compile Include="Scripts\Instance.cs" />
     <Compile Include="Scripts\SpawnPlayer.cs" />
     <Compile Include="Ui\Uicore.cs" />
     <Compile Include="Utils\Controls.cs" />
