@@ -1,4 +1,4 @@
-# VORP-Core
+# VORP-CORE
 This is the VORP CORE for RedM made in C# compatible with LUA
 [Discord VORP](https://discord.gg/23MPbQ6)
 
