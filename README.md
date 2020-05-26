@@ -26,7 +26,7 @@ ensure ghmattimysql
 ensure vorp_core
 ```
 ````
-In vorp_core folder has a vorp.sql file, u need create database 'vorp' and execute this sql.
+The vorp_core folder has a vorp.sql file, you need to create a database 'vorp' and execute the sql.
 ````
 Now you are ready!
 
