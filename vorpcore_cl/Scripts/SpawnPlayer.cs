@@ -1,8 +1,9 @@
 ﻿using CitizenFX.Core;
-using CitizenFX.Core.Native;
+using static CitizenFX.Core.Native.API;
 using System;
 using System.Threading.Tasks;
 using vorpcore_cl.Utils;
+using CitizenFX.Core.Native;
 
 namespace vorpcore_sv.Scripts
 {
@@ -26,6 +27,17 @@ namespace vorpcore_sv.Scripts
 
             API.RegisterCommand("stopload", new Action(StopLoading), false);
 
+            EventHandlers["onClientResourceStop"] += new Action<string>(OnClientResourceStop);
+        }
+
+        private void OnClientResourceStop(string resourceName)
+        {
+            Debug.WriteLine("Guardando las cordenadas");
+            int playerPedId = API.PlayerPedId();
+            Vector3 playerCoords = API.GetEntityCoords(playerPedId, true, true);
+            float playerHeading = API.GetEntityHeading(playerPedId);
+
+            TriggerServerEvent("vorp:saveLastCoords", playerCoords, playerHeading);
         }
 
         private void StopLoading()
@@ -40,23 +52,15 @@ namespace vorpcore_sv.Scripts
                 Debug.WriteLine("INIT_PLAYER");
                 await Delay(4000);
                 TriggerServerEvent("vorp:playerSpawn"); // --> vorpcore_sv/vorpcore_sv.cs
+                firstSpawn = false;
             }
         }
 
         private void InitPlayer(/*string characterName, string characterSurname, string group, int xp, int level, string job, */ Vector3 coords, float heading)
-        {
-
-            if (firstSpawn)
-            {
-                
-                Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
-                //Teleportamos al jugador a la posicion que se quedo
-                PlayerActions.TeleportToCoords(coords.X, coords.Y, coords.Z, heading);
-
-                firstSpawn = false;
-            }
-            
-
+        { 
+            Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
+            //Teleportamos al jugador a la posicion que se quedo
+            PlayerActions.TeleportToCoords(coords.X, coords.Y, coords.Z, heading);
         }
 
 
@@ -74,16 +78,17 @@ namespace vorpcore_sv.Scripts
         [Tick]
         private async Task saveLastCoordsTick()
         {
-            await Delay(5000);
+            //await Delay(5000);
+            
+            //if (!firstSpawn)
+            //{
+            //    Debug.WriteLine("Guardando las cordenadas");
+            //    int playerPedId = API.PlayerPedId();
+            //    Vector3 playerCoords = API.GetEntityCoords(playerPedId, true, true);
+            //    float playerHeading = API.GetEntityHeading(playerPedId);
 
-            if (!firstSpawn)
-            {
-                int playerPedId = API.PlayerPedId();
-                Vector3 playerCoords = API.GetEntityCoords(playerPedId, true, true);
-                float playerHeading = API.GetEntityHeading(playerPedId);
-
-                TriggerServerEvent("vorp:saveLastCoords", playerCoords, playerHeading);
-            }
+            //    TriggerServerEvent("vorp:saveLastCoords", playerCoords, playerHeading);
+            //}
 
             
 

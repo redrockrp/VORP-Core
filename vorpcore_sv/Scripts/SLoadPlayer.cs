@@ -66,8 +66,6 @@ namespace vorpcore_sv.Scripts
                     string strjson = sr.ReadToEnd();
 
                     source.TriggerEvent("vorp:updateUi", strjson);
-
-
                 }
 
             }));
