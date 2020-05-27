@@ -24,17 +24,6 @@ namespace vorpcore_sv.Scripts
 
             EventHandlers["playerSpawned"] += new Action<object>(InitTpPlayer);
 
-            EventHandlers["onClientResourceStop"] += new Action<string>(OnClientResourceStop);
-        }
-
-        private void OnClientResourceStop(string resourceName)
-        {
-            Debug.WriteLine("Guardando las cordenadas");
-            int playerPedId = API.PlayerPedId();
-            Vector3 playerCoords = API.GetEntityCoords(playerPedId, true, true);
-            float playerHeading = API.GetEntityHeading(playerPedId);
-
-            TriggerServerEvent("vorp:saveLastCoords", playerCoords, playerHeading);
         }
 
         private async void InitTpPlayer(object spawnInfo)

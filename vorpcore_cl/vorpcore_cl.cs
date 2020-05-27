@@ -12,10 +12,11 @@ namespace vorpcore_cl
     {
         public vorpcore_cl()
         {
-            EventHandlers["populationPedCreating"] += new Action<float, float, float, uint, dynamic>(
-                    (x, y, z, model, setters) => {
-                        API.CancelEvent(); 
-                    });
+            //Feature
+            //EventHandlers["populationPedCreating"] += new Action<float, float, float, uint, dynamic>(
+            //        (x, y, z, model, setters) => {
+            //            API.CancelEvent(); 
+            //        });
         }
 
     }

@@ -37,7 +37,7 @@ namespace vorpcore_cl.Scripts
                                 float distanceConfig = float.Parse(Utils.GetConfig.Config["HeadIdDistance"].ToString());
                                 if (GetDistanceFromPlayer(i) < distanceConfig)
                                 {
-                                    // Feature 2.0
+                                    // Feature 2.0 Voice Chat
                                     //if () //NetworkIsPlayerTalking
                                     //{
                                     //    Function.Call((Hash)0x84BD27DDF9575816, PlayerTags[i], 0x333FC632);
