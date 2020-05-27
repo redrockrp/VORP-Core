@@ -1,4 +1,4 @@
-# VORP-Core
+# VORP-CORE
 This is the VORP CORE for RedM made in C# compatible with LUA
 [Discord VORP](https://discord.gg/23MPbQ6)
 
@@ -12,12 +12,23 @@ This is the VORP CORE for RedM made in C# compatible with LUA
 * Add ```set mysql_connection_string "mysql://mysqluser:password@localhost/database"``` to your ```server.cfg``` file
 * Add ```ensure ghmattimysql``` to your ```server.cfg``` file
 
-* [Download lastest version](https://github.com/VORPCORE/VORP-Core/releases)
+* [Download the lastest version of VORP CORE](https://github.com/VORPCORE/VORP-Core/releases)
 * To change the language go to ```resources/vorp_character``` and change the default language
 
 * Copy and paste ```vorp_core``` folder to ```resources/vorp_core```
 * Add ```ensure vorp_core``` to your ```server.cfg``` file
-* Now you are ready!!
+* Example Server.cfg
+```cfg
+#MYSQL
+set mysql_connection_string "mysql://user:password@ip/vorp"
+ensure ghmattimysql
+#Core
+ensure vorp_core
+```
+````
+The vorp_core folder has a vorp.sql file, you need to create a database 'vorp' and execute the sql.
+````
+Now you are ready!
 
 ## Wiki
-[Wiki VORP CORE](http://vorpwiki.ddns.net/home)
+[Wiki VORP CORE](https://forum.vorpcore.com/)
