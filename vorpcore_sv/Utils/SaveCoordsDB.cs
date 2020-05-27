@@ -18,12 +18,13 @@ namespace vorpcore_sv.Utils
             EventHandlers["vorp:saveLastCoords"] += new Action<Player, Vector3, float>(SaveLastCoords);
 
             EventHandlers["playerDropped"] += new Action<Player, string>(OnPlayerDropped);
+
+            Tick += saveLastCoordsTick;
         }
 
         private void OnPlayerDropped([FromSource]Player player, string reason)
         {
             string sid = ("steam:" + player.Identifiers["steam"]);
-
 
             try
             {
@@ -43,6 +44,8 @@ namespace vorpcore_sv.Utils
                 Debug.WriteLine(pos);
 
                 Exports["ghmattimysql"].execute("UPDATE characters SET coords=? WHERE identifier=?", new[] { pos, sid });
+
+                LastCoordsInCache.Remove(player);
             }
             catch
             {
@@ -56,6 +59,36 @@ namespace vorpcore_sv.Utils
             LastCoordsInCache[source] = new Tuple<Vector3, float>(lastCoords, lastHeading);
         }
 
+        [Tick]
+        private async Task saveLastCoordsTick()
+        {
+            await Delay(30000);
+            foreach (var source in LastCoordsInCache) 
+            {
+                string sid = ("steam:" + source.Key.Identifiers["steam"]);
+                try
+                {
+                    Vector3 lastCoords = source.Value.Item1;
+                    float lastHeading = source.Value.Item2;
+
+                    UPlayerCoords UPC = new UPlayerCoords()
+                    {
+                        x = lastCoords.X,
+                        y = lastCoords.Y,
+                        z = lastCoords.Z,
+                        heading = lastHeading
+                    };
+
+                    string pos = JsonConvert.SerializeObject(UPC);
+
+                    Debug.WriteLine(pos);
+
+                    Exports["ghmattimysql"].execute("UPDATE characters SET coords=? WHERE identifier=?", new[] { pos, sid });
+                }
+                catch { continue; }
+            }
+
+        }
 
     }
 }

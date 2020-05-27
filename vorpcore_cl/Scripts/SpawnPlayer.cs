@@ -24,9 +24,6 @@ namespace vorpcore_sv.Scripts
 
             EventHandlers["playerSpawned"] += new Action<object>(InitTpPlayer);
 
-
-            API.RegisterCommand("stopload", new Action(StopLoading), false);
-
             EventHandlers["onClientResourceStop"] += new Action<string>(OnClientResourceStop);
         }
 
@@ -38,12 +35,6 @@ namespace vorpcore_sv.Scripts
             float playerHeading = API.GetEntityHeading(playerPedId);
 
             TriggerServerEvent("vorp:saveLastCoords", playerCoords, playerHeading);
-        }
-
-        private void StopLoading()
-        {
-            firstSpawn = false;
-            API.ShutdownLoadingScreen();
         }
 
         private async void InitTpPlayer(object spawnInfo)
@@ -78,19 +69,19 @@ namespace vorpcore_sv.Scripts
         [Tick]
         private async Task saveLastCoordsTick()
         {
-            //await Delay(5000);
-            
-            //if (!firstSpawn)
-            //{
-            //    Debug.WriteLine("Guardando las cordenadas");
-            //    int playerPedId = API.PlayerPedId();
-            //    Vector3 playerCoords = API.GetEntityCoords(playerPedId, true, true);
-            //    float playerHeading = API.GetEntityHeading(playerPedId);
+            await Delay(3000);
 
-            //    TriggerServerEvent("vorp:saveLastCoords", playerCoords, playerHeading);
-            //}
+            if (!firstSpawn)
+            {
+                Debug.WriteLine("Guardando las cordenadas");
+                int playerPedId = API.PlayerPedId();
+                Vector3 playerCoords = API.GetEntityCoords(playerPedId, true, true);
+                float playerHeading = API.GetEntityHeading(playerPedId);
 
-            
+                TriggerServerEvent("vorp:saveLastCoords", playerCoords, playerHeading);
+            }
+
+
 
         }
     }
