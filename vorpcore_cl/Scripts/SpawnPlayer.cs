@@ -62,7 +62,6 @@ namespace vorpcore_sv.Scripts
 
             if (!firstSpawn)
             {
-                Debug.WriteLine("Guardando las cordenadas");
                 int playerPedId = API.PlayerPedId();
                 Vector3 playerCoords = API.GetEntityCoords(playerPedId, true, true);
                 float playerHeading = API.GetEntityHeading(playerPedId);

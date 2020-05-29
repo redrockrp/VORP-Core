@@ -55,7 +55,6 @@ namespace vorpcore_sv.Utils
 
         private void SaveLastCoords([FromSource] Player source, Vector3 lastCoords, float lastHeading)
         {
-            Debug.WriteLine($"Guardando las cordenadas de {source.Name} C: {lastCoords.ToString()}");
             LastCoordsInCache[source] = new Tuple<Vector3, float>(lastCoords, lastHeading);
         }
 

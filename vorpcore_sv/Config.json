@@ -1,4 +1,13 @@
 {
   "HeadId": true,
-  "HeadIdDistance": 15
+  "HeadIdDistance": 15,
+
+  //Discord Rich Precense
+  "ActiveDRP": true,
+  "DiscordAppId": "715911954551799839",
+  "RichPresenceText": "Testeando",
+  "DiscordRichPresenceAsset": "logo_name",
+  "DiscordRichPresenceAssetText": "This server is running with VorpCore",
+  "DiscordRichPresenceAssetSmall": "logo_name",
+  "DiscordRichPresenceAssetSmallText": "vorpcore.com"
 }

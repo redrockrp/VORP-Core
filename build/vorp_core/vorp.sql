@@ -33,7 +33,7 @@ CREATE TABLE `characters`  (
 DROP TABLE IF EXISTS `horse_complements`;
 CREATE TABLE `horse_complements`  (
   `identifier` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `complements` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '[]',
+  `complements` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   UNIQUE INDEX `identifier`(`identifier`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 

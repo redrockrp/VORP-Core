@@ -31,6 +31,12 @@ namespace vorpcore_cl.Utils
                 Langs[l.Key] = l.Value.ToString();
             }
 
+            InitScripts();
+        }
+
+        public void InitScripts() 
+        {
+            Scripts.DiscRichPresence.drp_active = Config["ActiveDRP"].ToObject<bool>();
         }
     }
 }
