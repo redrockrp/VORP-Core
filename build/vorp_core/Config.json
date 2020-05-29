@@ -2,10 +2,10 @@
   "HeadId": true,
   "HeadIdDistance": 15,
 
-  //Discord Rich Precense
-  "ActiveDRP": true,
-  "DiscordAppId": "715911954551799839",
-  "RichPresenceText": "Testeando",
+  //Discord Rich Precense FEATURE DISABLED Please Wait for Milestone 4
+  "ActiveDRP": false,
+  "DiscordAppId": "null",
+  "RichPresenceText": "Test",
   "DiscordRichPresenceAsset": "logo_name",
   "DiscordRichPresenceAssetText": "This server is running with VorpCore",
   "DiscordRichPresenceAssetSmall": "logo_name",
