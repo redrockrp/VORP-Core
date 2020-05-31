@@ -21,7 +21,7 @@ namespace vorpcore_sv.Utils
             EventHandlers["vorp:removeXp"] += new Action<int, int>(removeXp);
         }
 
-        public Player getSource(int handle)
+        public static Player getSource(int handle)
         {
             PlayerList pl = new PlayerList();
             Player p = pl[handle];
@@ -92,6 +92,9 @@ namespace vorpcore_sv.Utils
                     break;
                 case 1:
                     Cash = "gold";
+                    break;
+                case 2:
+                    Cash = "rol";
                     break;
             }
 
