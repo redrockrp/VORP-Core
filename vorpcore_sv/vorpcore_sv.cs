@@ -46,7 +46,7 @@ namespace vorpcore_sv
                             {
                                 int target = int.Parse(args[0].ToString());
                                 int montype = int.Parse(args[1].ToString());
-                                int quantity = int.Parse(args[2].ToString());
+                                double quantity = double.Parse(args[2].ToString());
 
                                 TriggerEvent("vorp:addMoney", target, montype, quantity);
                                 _source.TriggerEvent("vorp:Tip", $"Added {quantity} to {target}", 4000);
@@ -66,7 +66,7 @@ namespace vorpcore_sv
                 {
                     Debug.WriteLine("This only can be executed from client side.");
                 }
-            }), true);
+            }), false);
 
             TriggerEvent("chat:addSuggestion", "/delmoney", "remove money to user\n Example: /delmoney playerid moneytype quantity");
             API.RegisterCommand("delmoney", new Action<int, List<object>, string>((source, args, rawCommand) =>
@@ -82,7 +82,7 @@ namespace vorpcore_sv
                             {
                                 int target = int.Parse(args[0].ToString());
                                 int montype = int.Parse(args[1].ToString());
-                                int quantity = int.Parse(args[2].ToString());
+                                double quantity = double.Parse(args[2].ToString());
 
                                 TriggerEvent("vorp:removeMoney", target, montype, quantity);
                                 _source.TriggerEvent("vorp:Tip", $"Removed {quantity} from {target}", 4000);
@@ -102,7 +102,7 @@ namespace vorpcore_sv
                 {
                     Debug.WriteLine("This only can be executed from client side.");
                 }
-            }), true);
+            }), false);
 
 
 

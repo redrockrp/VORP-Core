@@ -14,8 +14,8 @@ namespace vorpcore_sv.Utils
         public Database()
         {
             EventHandlers["vorp:getCharacter"] += new Action<int, dynamic>(getCharacter);
-            EventHandlers["vorp:addMoney"] += new Action<int, int, int>(addMoney);
-            EventHandlers["vorp:removeMoney"] += new Action<int, int, int>(removeMoney);
+            EventHandlers["vorp:addMoney"] += new Action<int, int, double>(addMoney);
+            EventHandlers["vorp:removeMoney"] += new Action<int, int, double>(removeMoney);
 
             EventHandlers["vorp:addXp"] += new Action<int, int>(addXp);
             EventHandlers["vorp:removeXp"] += new Action<int, int>(removeXp);
@@ -28,41 +28,46 @@ namespace vorpcore_sv.Utils
             return p;
         }
 
-        private void removeMoney(int handle, int typeCash, int quanty)
+        private void removeMoney(int handle, int typeCash, double quanty)
         {
-            Player player = getSource(handle);
-
-            string sid = ("steam:" + player.Identifiers["steam"]);
-            string Cash = "money"; // default is money (0 is money, 1 is gold)
-            switch (typeCash)
-            {
-                case 0:
-                    Cash = "money";
-                    break;
-                case 1:
-                    Cash = "gold";
-                    break;
-                case 2:
-                    Cash = "rol";
-                    break;
-            }
-            
-            Exports["ghmattimysql"].execute($"UPDATE characters SET {Cash}={Cash} - {quanty} WHERE identifier=?", new[] { sid });
-            
-            Debug.WriteLine($"Removed {quanty} of {Cash} to {player.Name}");
-
-            // Send Nui Update UI
             TriggerEvent("vorp:getCharacter", handle, new Action<dynamic>((user) =>
             {
+                Player player = getSource(handle);
 
-                // Send Nui Update UI all
+                string sid = ("steam:" + player.Identifiers["steam"]);
+                string Cash = "money"; // default is money (0 is money, 1 is gold)
+
+                double lessMoney = user.money;
+                double lessGold = user.gold;
+                int lessRol = user.rol;
+
+                switch (typeCash)
+                {
+                    case 0:
+                        Cash = "money";
+                        lessMoney -= quanty;
+                        break;
+                    case 1:
+                        Cash = "gold";
+                        lessGold -= quanty;
+                        break;
+                    case 2:
+                        Cash = "rol";
+                        lessRol -= (int)quanty;
+                        break;
+                }
+            
+                Exports["ghmattimysql"].execute($"UPDATE characters SET {Cash}={Cash} - {quanty} WHERE identifier=?", new[] { sid });
+            
+                Debug.WriteLine($"Removed {quanty} of {Cash} to {player.Name}");
+
                 JsonUiCalls JUC = new JsonUiCalls()
                 {
                     type = "ui",
                     action = "update",
-                    moneyquanty = user.money,
-                    goldquanty = user.gold,
-                    rolquanty = user.rol
+                    moneyquanty = lessMoney,
+                    goldquanty = lessGold,
+                    rolquanty = lessRol
                 };
 
                 DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(JsonUiCalls));
@@ -79,41 +84,46 @@ namespace vorpcore_sv.Utils
 
         }
 
-        private void addMoney(int handle, int typeCash, int quanty)
+        private void addMoney(int handle, int typeCash, double quanty)
         {
-            Player player = getSource(handle);
-
-            string sid = ("steam:" + player.Identifiers["steam"]);
-            string Cash = "money"; // default is money (0 is money, 1 is gold)
-            switch (typeCash)
-            {
-                case 0:
-                    Cash = "money";
-                    break;
-                case 1:
-                    Cash = "gold";
-                    break;
-                case 2:
-                    Cash = "rol";
-                    break;
-            }
-
-            Exports["ghmattimysql"].execute($"UPDATE characters SET {Cash} = {Cash} + {quanty} WHERE identifier=?", new[] { sid });
-
-            Debug.WriteLine($"Added {quanty} of {Cash} to {player.Name}");
-
-            // Send Nui Update UI
             TriggerEvent("vorp:getCharacter", handle, new Action<dynamic>((user) =>
             {
+                Player player = getSource(handle);
 
-                // Send Nui Update UI all
+                string sid = ("steam:" + player.Identifiers["steam"]);
+                string Cash = "money"; // default is money (0 is money, 1 is gold)
+
+                double lessMoney = user.money;
+                double lessGold = user.gold;
+                int lessRol = user.rol;
+
+                switch (typeCash)
+                {
+                    case 0:
+                        Cash = "money";
+                        lessMoney += quanty;
+                        break;
+                    case 1:
+                        Cash = "gold";
+                        lessGold += quanty;
+                        break;
+                    case 2:
+                        Cash = "rol";
+                        lessRol += (int)quanty;
+                        break;
+                }
+
+                Exports["ghmattimysql"].execute($"UPDATE characters SET {Cash} = {Cash} + {quanty} WHERE identifier=?", new[] { sid });
+
+                Debug.WriteLine($"Added {quanty} of {Cash} to {player.Name}");
+
                 JsonUiCalls JUC = new JsonUiCalls()
                 {
                     type = "ui",
                     action = "update",
-                    moneyquanty = user.money,
-                    goldquanty = user.gold,
-                    rolquanty = user.rol
+                    moneyquanty = lessMoney,
+                    goldquanty = lessGold,
+                    rolquanty = lessRol
                 };
 
                 DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(JsonUiCalls));
