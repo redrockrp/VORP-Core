@@ -3,6 +3,8 @@
 
   "Whitelist": true,
 
+  "RespawnTime": 10000,
+
   "HeadId": true,
   "HeadIdDistance": 15,
 
