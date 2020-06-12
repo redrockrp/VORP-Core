@@ -37,6 +37,7 @@ namespace vorpcore_cl.Utils
         public void InitScripts() 
         {
             Scripts.DiscRichPresence.drp_active = Config["ActiveDRP"].ToObject<bool>();
+            Scripts.IDHeads.UseIDHeads = Config["HeadId"].ToObject<bool>();
         }
     }
 }

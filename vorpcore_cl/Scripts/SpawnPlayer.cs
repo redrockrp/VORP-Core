@@ -41,6 +41,7 @@ namespace vorpcore_sv.Scripts
             Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
             //Teleportamos al jugador a la posicion que se quedo
             PlayerActions.TeleportToCoords(coords.X, coords.Y, coords.Z, heading);
+
         }
 
 

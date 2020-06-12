@@ -11,6 +11,7 @@ namespace vorpcore_cl.Scripts
 {
     public class IDHeads : BaseScript
     {
+        public static bool UseIDHeads = false;
         public static Dictionary<int, int> PlayerTags = new Dictionary<int, int>();
 
         public IDHeads() 
@@ -21,6 +22,7 @@ namespace vorpcore_cl.Scripts
         [Tick]
         private async Task SetPlayerIdOnHead()
         {
+            if (!UseIDHeads) { return; }
 
             for (int i = 0; i < 255; i++)
             {
@@ -34,7 +36,7 @@ namespace vorpcore_cl.Scripts
                         {
                             if (Function.Call<bool>((Hash)0x6E1C31E14C7A5F97, PlayerTags[i]))
                             {
-                                float distanceConfig = float.Parse(Utils.GetConfig.Config["HeadIdDistance"].ToString());
+                                float distanceConfig = Utils.GetConfig.Config["HeadIdDistance"].ToObject<float>();
                                 if (GetDistanceFromPlayer(i) < distanceConfig)
                                 {
                                     // Feature 2.0 Voice Chat
