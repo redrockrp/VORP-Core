@@ -122,7 +122,27 @@ namespace vorpcore_sv.Scripts
                 }
                 else
                 {
-                    Debug.WriteLine("This only can be executed from client side.");
+                    try
+                    {
+                        string steamId = args[0].ToString();
+                        Exports["ghmattimysql"].execute("SELECT * FROM whitelist WHERE identifier = ?", new[] { steamId }, new Action<dynamic>((result) =>
+                        {
+                            if (result.Count == 0)
+                            {
+                                Exports["ghmattimysql"].execute("INSERT INTO whitelist (`identifier`) VALUES (?)", new object[] { steamId });
+                                Whitelist.whitelist.Add(steamId);
+                                Debug.WriteLine($"Added {steamId} to whitelist", 4000);
+                            }
+                            else
+                            {
+                                Debug.WriteLine($"{steamId} Is Whitelisted {steamId}", 4000);
+                            }
+                        }));
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("ERROR: Use Correct Sintaxis", 4000);
+                    }
                 }
             }), false);
         }
