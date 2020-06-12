@@ -2,10 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace vorpcore_sv.Utils
 {
@@ -56,9 +53,9 @@ namespace vorpcore_sv.Utils
                         lessRol -= (int)quanty;
                         break;
                 }
-            
+
                 Exports["ghmattimysql"].execute($"UPDATE characters SET {Cash}={Cash} - {quanty} WHERE identifier=?", new[] { sid });
-            
+
                 Debug.WriteLine($"Removed {quanty} of {Cash} to {player.Name}");
 
                 JsonUiCalls JUC = new JsonUiCalls()
@@ -135,7 +132,7 @@ namespace vorpcore_sv.Utils
                 string strjson = sr.ReadToEnd();
 
                 player.TriggerEvent("vorp:updateUi", strjson);
-                
+
             }));
         }
 
@@ -150,7 +147,7 @@ namespace vorpcore_sv.Utils
             Debug.WriteLine($"Added {quanty} of Xp to {player.Name}");
 
             // Send Nui Update UI
-           
+
         }
 
         private void removeXp(int handle, int quanty)

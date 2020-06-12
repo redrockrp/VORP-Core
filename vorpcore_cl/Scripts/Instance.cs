@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CitizenFX.Core;
+﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using System;
+using System.Threading.Tasks;
 
 namespace vorpcore_cl.Scripts
 {
@@ -37,7 +34,7 @@ namespace vorpcore_cl.Scripts
 
         private void SetInstancePlayer(bool inst)
         {
-            if (inst) 
+            if (inst)
             {
                 intancePlayer = true;
             }

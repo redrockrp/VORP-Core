@@ -4,9 +4,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace vorpcore_cl.Utils
 {
@@ -34,7 +31,7 @@ namespace vorpcore_cl.Utils
             InitScripts();
         }
 
-        public void InitScripts() 
+        public void InitScripts()
         {
             Scripts.DiscRichPresence.drp_active = Config["ActiveDRP"].ToObject<bool>();
             Scripts.IDHeads.UseIDHeads = Config["HeadId"].ToObject<bool>();

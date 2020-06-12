@@ -2,10 +2,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace vorpcore_sv.Utils
@@ -61,7 +57,7 @@ namespace vorpcore_sv.Utils
         private async Task saveLastCoordsTick()
         {
             await Delay(300000);
-            foreach (var source in LastCoordsInCache) 
+            foreach (var source in LastCoordsInCache)
             {
                 string sid = ("steam:" + source.Key.Identifiers["steam"]);
                 try
@@ -86,7 +82,7 @@ namespace vorpcore_sv.Utils
 
         }
 
- 
+
 
     }
 }

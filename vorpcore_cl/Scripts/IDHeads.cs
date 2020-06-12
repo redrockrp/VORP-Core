@@ -1,9 +1,6 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using static CitizenFX.Core.Native.API;
 
@@ -14,7 +11,7 @@ namespace vorpcore_cl.Scripts
         public static bool UseIDHeads = false;
         public static Dictionary<int, int> PlayerTags = new Dictionary<int, int>();
 
-        public IDHeads() 
+        public IDHeads()
         {
             Tick += SetPlayerIdOnHead;
         }
@@ -59,7 +56,7 @@ namespace vorpcore_cl.Scripts
                             }
                             else
                             {
-                               
+
                                 int tagId = Function.Call<int>((Hash)0xD877AF112AD2B41B, i, GetPlayerServerId(i).ToString(), false, false, "", 0);
                                 PlayerTags[i] = tagId;
                             }
@@ -70,11 +67,11 @@ namespace vorpcore_cl.Scripts
                             PlayerTags.Add(i, tagId);
                         }
                     }
-                    
+
                 }
-                    
+
             }
-           
+
         }
 
         public static float GetDistanceFromPlayer(int p)

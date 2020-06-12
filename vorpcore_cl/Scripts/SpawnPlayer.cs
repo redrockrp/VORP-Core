@@ -1,9 +1,8 @@
 ﻿using CitizenFX.Core;
-using static CitizenFX.Core.Native.API;
+using CitizenFX.Core.Native;
 using System;
 using System.Threading.Tasks;
 using vorpcore_cl.Utils;
-using CitizenFX.Core.Native;
 
 namespace vorpcore_sv.Scripts
 {
@@ -28,7 +27,8 @@ namespace vorpcore_sv.Scripts
 
         private async void InitTpPlayer(object spawnInfo)
         {
-            if (firstSpawn) { 
+            if (firstSpawn)
+            {
                 Debug.WriteLine("INIT_PLAYER");
                 await Delay(4000);
                 TriggerServerEvent("vorp:playerSpawn"); // --> vorpcore_sv/vorpcore_sv.cs
@@ -37,7 +37,7 @@ namespace vorpcore_sv.Scripts
         }
 
         private void InitPlayer(/*string characterName, string characterSurname, string group, int xp, int level, string job, */ Vector3 coords, float heading)
-        { 
+        {
             Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
             //Teleportamos al jugador a la posicion que se quedo
             PlayerActions.TeleportToCoords(coords.X, coords.Y, coords.Z, heading);

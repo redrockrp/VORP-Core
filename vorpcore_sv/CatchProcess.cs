@@ -1,16 +1,6 @@
 ﻿using CitizenFX.Core;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
-using static CitizenFX.Core.Native.API;
 using System.Runtime.InteropServices;
 using System.Threading;
-using vorpcore_sv.Utils;
 
 namespace vorpcore_sv
 {
@@ -56,7 +46,7 @@ namespace vorpcore_sv
             return false;
         }
 
- 
+
 
     }
 }

@@ -3,10 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
 using vorpcore_sv.Utils;
 
 namespace vorpcore_sv.Scripts
@@ -17,7 +14,7 @@ namespace vorpcore_sv.Scripts
         {
             EventHandlers["vorp:playerSpawn"] += new Action<Player>(PlayerSpawnFunction);
         }
-       
+
         private void PlayerSpawnFunction([FromSource] Player source)
         {
             string sid = ("steam:" + source.Identifiers["steam"]);
@@ -26,8 +23,6 @@ namespace vorpcore_sv.Scripts
             {
                 if (result.Count == 0)
                 {
-                    Debug.WriteLine("Usuario no registrado");
-
                     source.TriggerEvent("vorp:firstSpawn");
                 }
                 else
@@ -43,9 +38,8 @@ namespace vorpcore_sv.Scripts
                     }
                     catch
                     {
-                        Debug.WriteLine("Coords Not Found");
+
                     }
-                    
 
                     // Send Nui Update UI all
                     JsonUiCalls JUC = new JsonUiCalls()

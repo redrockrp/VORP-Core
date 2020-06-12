@@ -2,16 +2,10 @@
 using CitizenFX.Core.Native;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
 using vorpcore_sv.Resources;
 using vorpcore_sv.Utils;
 
-namespace vorpcore_sv 
+namespace vorpcore_sv
 {
     public class vorpcore_sv : BaseScript
     {
@@ -118,7 +112,7 @@ namespace vorpcore_sv
 
             Debug.WriteLine($"{playerName} esta conectando con (Identificador: [{steamIdentifier}])");
 
-                        
+
             if (steamIdentifier == null)
             {
                 deferrals.done(RStrings.console["errorNoSteam"]);
