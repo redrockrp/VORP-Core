@@ -22,6 +22,7 @@ namespace vorpcore_sv.Utils
             Tick += saveLastCoordsTick;
         }
 
+
         private void OnPlayerDropped([FromSource]Player player, string reason)
         {
             string sid = ("steam:" + player.Identifiers["steam"]);
@@ -41,15 +42,13 @@ namespace vorpcore_sv.Utils
 
                 string pos = JsonConvert.SerializeObject(UPC);
 
-                Debug.WriteLine(pos);
-
                 Exports["ghmattimysql"].execute("UPDATE characters SET coords=? WHERE identifier=?", new[] { pos, sid });
 
                 LastCoordsInCache.Remove(player);
             }
             catch
             {
-                Debug.WriteLine($"Se ha intentado guadar las coordenadas de {player.Name}");
+
             }
         }
 
@@ -61,7 +60,7 @@ namespace vorpcore_sv.Utils
         [Tick]
         private async Task saveLastCoordsTick()
         {
-            await Delay(30000);
+            await Delay(300000);
             foreach (var source in LastCoordsInCache) 
             {
                 string sid = ("steam:" + source.Key.Identifiers["steam"]);
@@ -80,14 +79,14 @@ namespace vorpcore_sv.Utils
 
                     string pos = JsonConvert.SerializeObject(UPC);
 
-                    Debug.WriteLine(pos);
-
                     Exports["ghmattimysql"].execute("UPDATE characters SET coords=? WHERE identifier=?", new[] { pos, sid });
                 }
                 catch { continue; }
             }
 
         }
+
+ 
 
     }
 }

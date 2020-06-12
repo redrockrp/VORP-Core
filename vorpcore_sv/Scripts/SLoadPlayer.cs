@@ -28,7 +28,7 @@ namespace vorpcore_sv.Scripts
                 {
                     Debug.WriteLine("Usuario no registrado");
 
-                    source.TriggerEvent("vorpcharacter:createPlayer");
+                    source.TriggerEvent("vorp:firstSpawn");
                 }
                 else
                 {

@@ -10,6 +10,5 @@ E:\RLC_Core\VORP_Core[Server-Cliente]\build\vorp_core\vorpcore_cl.net.pdb
 E:\RLC_Core\VORP_Core[Server-Cliente]\vorpcore_cl\obj\Debug\vorpcore_cl.csprojAssemblyReference.cache
 E:\VORP-Repos\VORP-Core\build\vorp_core\vorpcore_cl.net.dll
 E:\VORP-Repos\VORP-Core\build\vorp_core\vorpcore_cl.net.pdb
-E:\VORP-Repos\VORP-Core\vorpcore_cl\obj\Debug\vorpcore_cl.csprojAssemblyReference.cache
 E:\VORP-Repos\VORP-Core\vorpcore_cl\obj\Debug\vorpcore_cl.net.dll
 E:\VORP-Repos\VORP-Core\vorpcore_cl\obj\Debug\vorpcore_cl.net.pdb
