@@ -10,7 +10,6 @@ namespace vorpcore_sv.Scripts
     {
         public Commands()
         {
-
             TriggerEvent("chat:addSuggestion", "/addmoney", "add money to user\n Example: /addmoney playerid moneytype quantity");
             API.RegisterCommand("addmoney", new Action<int, List<object>, string>((source, args, rawCommand) =>
             {
