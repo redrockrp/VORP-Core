@@ -9,7 +9,7 @@ namespace vorpcore_sv.Scripts
 {
     class Whitelist : BaseScript
     {
-        public static bool whitelistActive = false;
+        public static bool whitelistActive;
 
         public static List<string> whitelist = new List<string>();
 
@@ -40,6 +40,11 @@ namespace vorpcore_sv.Scripts
 
             await Delay(0);
 
+            foreach (var r in whitelist)
+            {
+                Debug.WriteLine(r);
+            }
+
             var steamIdentifier = player.Identifiers["steam"];
 
             if (steamIdentifier == null)
@@ -47,7 +52,6 @@ namespace vorpcore_sv.Scripts
                 deferrals.done(LoadConfig.Langs["NoSteam"]);
                 setKickReason(LoadConfig.Langs["NoSteam"]);
             }
-
 
             if (whitelistActive)
             {
@@ -66,9 +70,9 @@ namespace vorpcore_sv.Scripts
                 deferrals.done();
             }
 
-         
-           
-           
+
+            await Delay(0);
+
 
             Debug.WriteLine($"{playerName} is connecting with (Identifier: [{steamIdentifier}])");
         }

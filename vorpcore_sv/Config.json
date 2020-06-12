@@ -1,11 +1,13 @@
 {
+  "defaultlang": "Es",
+
   "Whitelist": true,
 
   "HeadId": true,
   "HeadIdDistance": 15,
 
   "ActiveEagleEye": false,
-  "ActiveDeadEye":  false,
+  "ActiveDeadEye": false,
 
   //Discord Rich Precense FEATURE DISABLED Please Wait for Milestone 4
   "ActiveDRP": false,

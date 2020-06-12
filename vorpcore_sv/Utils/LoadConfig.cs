@@ -34,12 +34,12 @@ namespace vorpcore_sv.Utils
                     string langstring = File.ReadAllText($"{resourcePath}/{Config["defaultlang"]}.json", Encoding.UTF8);
                     Langs = JsonConvert.DeserializeObject<Dictionary<string, string>>(langstring);
                     Debug.WriteLine($"{API.GetCurrentResourceName()}: Language {Config["defaultlang"]}.json loaded!");
-                    InitScripts();
                 }
                 else
                 {
                     Debug.WriteLine($"{API.GetCurrentResourceName()}: {Config["defaultlang"]}.json Not Found");
                 }
+                InitScripts();
             }
             else
             {
@@ -53,6 +53,10 @@ namespace vorpcore_sv.Utils
             if (Config["Whitelist"].ToObject<bool>())
             {
                 Scripts.Whitelist.whitelistActive = true;
+            }
+            else
+            {
+                Scripts.Whitelist.whitelistActive = false;
             }
         }
 
