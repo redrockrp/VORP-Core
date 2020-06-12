@@ -1,4 +1,6 @@
 {
+  "Whitelist": true,
+
   "HeadId": true,
   "HeadIdDistance": 15,
 
