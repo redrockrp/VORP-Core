@@ -52,8 +52,9 @@
   <ItemGroup>
     <Compile Include="CatchProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\RStrings.cs" />
+    <Compile Include="Scripts\Commands.cs" />
     <Compile Include="Scripts\SLoadPlayer.cs" />
+    <Compile Include="Scripts\Whitelist.cs" />
     <Compile Include="Utils\Database.cs" />
     <Compile Include="Utils\JsonUiCalls.cs" />
     <Compile Include="Utils\LoadConfig.cs" />
