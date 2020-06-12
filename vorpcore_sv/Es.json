@@ -5,5 +5,5 @@
 
   "TitleOnDead": "Has muerto!",
   "SubTitleOnDead": "Reapareceras en {0} segundos",
-  "SubTitlePressKey": "Presiona E para revivir"
+  "SubTitlePressKey": "Presiona ~e~E~q~ para revivir"
 }
