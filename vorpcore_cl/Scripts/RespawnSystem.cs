@@ -25,6 +25,7 @@ namespace vorpcore_cl.Scripts
                 int timer = Function.Call<int>((Hash)0x4F67E8ECA7D3F667) + Utils.GetConfig.Config["RespawnTime"].ToObject<int>();
                 while (timer >= Function.Call<int>((Hash)0x4F67E8ECA7D3F667))
                 {
+                    await Delay(0);
                     Function.Call((Hash)0xFA08722A5EA82DA7, "CrossLine01");
                     Function.Call((Hash)0xFDB74C9CC54C3F37, 1.0f);
                     Function.Call((Hash)0x405224591DF02025, 0.50f, 0.475f, 1.0f, 0.22f, 1, 1, 1, 100, true, true);
