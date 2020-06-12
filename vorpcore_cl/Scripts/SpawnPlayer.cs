@@ -31,17 +31,25 @@ namespace vorpcore_sv.Scripts
             {
                 Debug.WriteLine("INIT_PLAYER");
                 await Delay(4000);
-                TriggerServerEvent("vorp:playerSpawn"); // --> vorpcore_sv/vorpcore_sv.cs
+                TriggerServerEvent("vorp:playerSpawn");
                 firstSpawn = false;
             }
         }
 
-        private void InitPlayer(/*string characterName, string characterSurname, string group, int xp, int level, string job, */ Vector3 coords, float heading)
+        private void InitPlayer(Vector3 coords, float heading)
         {
             Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
-            //Teleportamos al jugador a la posicion que se quedo
             PlayerActions.TeleportToCoords(coords.X, coords.Y, coords.Z, heading);
 
+            if (GetConfig.Config["ActiveEagleEye"].ToObject<bool>())
+            {
+                Function.Call((Hash)0xA63FCAD3A6FEC6D2, API.PlayerId(), true);
+            }
+
+            if (GetConfig.Config["ActiveDeadEye"].ToObject<bool>())
+            {
+                Function.Call((Hash)0x95EE1DEE1DCD9070, API.PlayerId(), true);
+            }
         }
 
 

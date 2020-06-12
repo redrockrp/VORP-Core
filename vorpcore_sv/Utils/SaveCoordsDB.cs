@@ -18,7 +18,6 @@ namespace vorpcore_sv.Utils
             Tick += saveLastCoordsTick;
         }
 
-
         private void OnPlayerDropped([FromSource]Player player, string reason)
         {
             string sid = ("steam:" + player.Identifiers["steam"]);
