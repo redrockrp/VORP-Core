@@ -27,7 +27,7 @@ namespace vorpcore_sv.Scripts
             if (steamIdentifier == null)
             {
                 deferrals.done(LoadConfig.Langs["NoSteam"]);
-                setKickReason(LoadConfig.Langs[""]);
+                setKickReason(LoadConfig.Langs["NoSteam"]);
             }
 
             deferrals.done();
