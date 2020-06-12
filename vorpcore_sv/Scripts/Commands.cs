@@ -36,7 +36,7 @@ namespace vorpcore_sv.Scripts
                         }
                         else
                         {
-                            _source.TriggerEvent("vorp:Tip", "ERROR: You don't have enough permissions", 4000);
+                            _source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoPermissions"], 4000);
                         }
                     }));
                 }
@@ -72,7 +72,7 @@ namespace vorpcore_sv.Scripts
                         }
                         else
                         {
-                            _source.TriggerEvent("vorp:Tip", "ERROR: You don't have enough permissions", 4000);
+                            _source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoPermissions"], 4000);
                         }
                     }));
                 }
