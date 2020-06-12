@@ -2,7 +2,6 @@
 using CitizenFX.Core.Native;
 using System;
 using System.Collections.Generic;
-using vorpcore_sv.Resources;
 using vorpcore_sv.Utils;
 
 namespace vorpcore_sv.Scripts
@@ -27,8 +26,8 @@ namespace vorpcore_sv.Scripts
 
             if (steamIdentifier == null)
             {
-                deferrals.done(RStrings.console["errorNoSteam"]);
-                setKickReason(RStrings.console["errorNoSteam"]);
+                deferrals.done(LoadConfig.Langs["NoSteam"]);
+                setKickReason(LoadConfig.Langs[""]);
             }
 
             deferrals.done();
