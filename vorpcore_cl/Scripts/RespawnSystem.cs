@@ -1,5 +1,6 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,12 +36,28 @@ namespace vorpcore_cl.Scripts
                     Function.Call((Hash)0x1B3DA717B9AFF828, false);
                     Exports["spawnmanager"].setAutoSpawn(false);
                 }
-                await resurrectPlayer();
+                string keyPress = Utils.GetConfig.Config["RespawnKey"].ToString();
+                int KeyInt = Convert.ToInt32(keyPress, 16);
+                bool pressed = false;
+                while (!pressed)
+                {
+                    await Delay(0);
+                    await DrawTxt(Utils.GetConfig.Langs["SubTitlePressKey"], 0.50f, 0.45f, 1.0f, 1.0f, 255, 255, 255, 255, true, true);
+                    if (Function.Call<bool>((Hash)0x580417101DDB492F, 0, KeyInt))
+                    {
+                        await resurrectPlayer();
+                        pressed = true;
+                        await Delay(100);
+                    }
+                }
             }
         }
 
         public async Task resurrectPlayer()
         {
+            JToken respawnCoords = Utils.GetConfig.Config["RespawnCoords"];
+            Function.Call((Hash)0x203BEFFDBE12E96A, API.PlayerPedId(), respawnCoords[0].ToObject<float>(), respawnCoords[1].ToObject<float>(), respawnCoords[2].ToObject<float>(), respawnCoords[3].ToObject<float>(), false, false, false);
+            await Delay(10);
             Function.Call((Hash)0x71BC8E838B9C6035, API.PlayerPedId());
             Function.Call((Hash)0x0E3F4AF2D63491FB);
             Function.Call((Hash)0xD63FE3AF9FB3D53F, true);

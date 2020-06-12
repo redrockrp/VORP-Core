@@ -4,5 +4,6 @@
   "NoPermissions": "You don't have enough permissions",
 
   "TitleOnDead": "Has muerto!",
-  "SubTitleOnDead": "Reapareceras en {0} segundos"
+  "SubTitleOnDead": "Reapareceras en {0} segundos",
+  "SubTitlePressKey": "Presiona E para revivir"
 }

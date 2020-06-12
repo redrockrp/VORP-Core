@@ -23,7 +23,7 @@ namespace vorpcore_sv.Scripts
             {
                 if (result.Count == 0)
                 {
-                    source.TriggerEvent("vorp:firstSpawn");
+                    source.TriggerEvent("vorpcharacter:createPlayer");
                 }
                 else
                 {

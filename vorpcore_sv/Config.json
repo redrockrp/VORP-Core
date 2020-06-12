@@ -3,7 +3,9 @@
 
   "Whitelist": true,
 
-  "RespawnTime": 10000,
+  "RespawnTime": 25000, // 25 seconds in millisecons
+  "RespawnKey": "0xDFF812F9",
+  "RespawnCoords": [ -353.08, 752.11, 116.0, 321.76 ], // X, Y, Z, Heading
 
   "HeadId": true,
   "HeadIdDistance": 15,
