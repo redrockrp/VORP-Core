@@ -14,6 +14,12 @@ namespace vorpcore_cl.Scripts
         public RespawnSystem()
         {
             Tick += OnPlayerDead;
+            EventHandlers["vorp:resurrectPlayer"] += new Action(ResurrectPlayer);
+        }
+
+        private async void ResurrectPlayer()
+        {
+            await resurrectPlayer();
         }
 
         [Tick]
@@ -46,7 +52,7 @@ namespace vorpcore_cl.Scripts
                     if (Function.Call<bool>((Hash)0x580417101DDB492F, 0, KeyInt))
                     {
                         TriggerServerEvent("vorpcharacter:getPlayerSkin");
-                        await resurrectPlayer();
+                        await resspawnPlayer();
                         pressed = true;
                         await Delay(100);
                     }
@@ -54,11 +60,19 @@ namespace vorpcore_cl.Scripts
             }
         }
 
-        public async Task resurrectPlayer()
+        public async Task resspawnPlayer()
         {
             JToken respawnCoords = Utils.GetConfig.Config["RespawnCoords"];
             Function.Call((Hash)0x203BEFFDBE12E96A, API.PlayerPedId(), respawnCoords[0].ToObject<float>(), respawnCoords[1].ToObject<float>(), respawnCoords[2].ToObject<float>(), respawnCoords[3].ToObject<float>(), false, false, false);
             await Delay(10);
+            Function.Call((Hash)0x71BC8E838B9C6035, API.PlayerPedId());
+            Function.Call((Hash)0x0E3F4AF2D63491FB);
+            Function.Call((Hash)0xD63FE3AF9FB3D53F, true);
+            Function.Call((Hash)0x1B3DA717B9AFF828, true);
+        }
+
+        public async Task resurrectPlayer()
+        {
             Function.Call((Hash)0x71BC8E838B9C6035, API.PlayerPedId());
             Function.Call((Hash)0x0E3F4AF2D63491FB);
             Function.Call((Hash)0xD63FE3AF9FB3D53F, true);
