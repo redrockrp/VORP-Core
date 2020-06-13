@@ -18,7 +18,7 @@
   "DiscordAppId": "null",
   "RichPresenceText": "Test",
   "DiscordRichPresenceAsset": "logo_name",
-  "DiscordRichPresenceAssetText": "This server is running with VorpCore",
+  "DiscordRichPresenceAssetText": "This server is running with VORP Core",
   "DiscordRichPresenceAssetSmall": "logo_name",
   "DiscordRichPresenceAssetSmallText": "vorpcore.com"
 }
