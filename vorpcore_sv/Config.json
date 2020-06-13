@@ -10,7 +10,7 @@
   "HeadId": true,
   "HeadIdDistance": 15,
 
-  "ActiveEagleEye": false,
+  "ActiveEagleEye": true,
   "ActiveDeadEye": false,
 
   //Discord Rich Precense FEATURE DISABLED Please Wait for Milestone 4
