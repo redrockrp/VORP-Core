@@ -45,6 +45,7 @@ namespace vorpcore_cl.Scripts
                     await DrawTxt(Utils.GetConfig.Langs["SubTitlePressKey"], 0.50f, 0.45f, 1.0f, 1.0f, 255, 255, 255, 255, true, true);
                     if (Function.Call<bool>((Hash)0x580417101DDB492F, 0, KeyInt))
                     {
+                        TriggerServerEvent("vorpcharacter:getPlayerSkin");
                         await resurrectPlayer();
                         pressed = true;
                         await Delay(100);
