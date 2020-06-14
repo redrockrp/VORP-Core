@@ -21,6 +21,7 @@ namespace vorpcore_sv.Scripts
 
         public async Task LoadWhitelist()
         {
+            await Delay(5000);
             Exports["ghmattimysql"].execute("SELECT * FROM whitelist", new[] { "" }, new Action<dynamic>((result) =>
             {
                 if (result.Count > 0)
@@ -40,9 +41,11 @@ namespace vorpcore_sv.Scripts
 
             await Delay(0);
 
-            foreach (var r in whitelist)
+            if (!LoadConfig.isConfigLoaded)
             {
-                Debug.WriteLine(r);
+                deferrals.done("Servers is loading, Please wait a minute.");
+                setKickReason("Servers is loading, Please wait a minute.");
+                return;
             }
 
             var steamIdentifier = player.Identifiers["steam"];

@@ -27,7 +27,6 @@ namespace vorpcore_sv.Scripts
                 }
                 else
                 {
-                    Debug.WriteLine("Usuario registrado");
 
                     string c_json = result[0].coords;
                     try
