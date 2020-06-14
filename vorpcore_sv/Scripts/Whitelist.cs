@@ -73,9 +73,7 @@ namespace vorpcore_sv.Scripts
                 deferrals.done();
             }
 
-
             await Delay(0);
-
 
             Debug.WriteLine($"{playerName} is connecting with (Identifier: [{steamIdentifier}])");
         }
