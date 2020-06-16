@@ -1,9 +1,10 @@
 {
-    "NoSteam": "🚫 You have to have Steam open, please open Steam & restart RedM",
-    "NoInWhitelist": "🚫 You are not in the Whitelist",
-    "NoPermissions": "You don't have enough permissions",
+  "NoSteam": "🚫 You have to have Steam open, please open Steam & restart RedM",
+  "NoInWhitelist": "🚫 You are not in the Whitelist",
+  "NoPermissions": "You don't have enough permissions",
 
-    "TitleOnDead": "You have died!",
-    "SubTitleOnDead": "You will respawn in {0} seconds",
-    "SubTitlePressKey": "Press ~e~E~q~ to respawn"
+  "TitleOnDead": "You have died!",
+  "SubTitleOnDead": "You will respawn in {0} seconds",
+  "SubTitlePressKey": "Press ~e~E~q~ to respawn",
+  "YouAreCarried": "You are being carried by a person"
 }
