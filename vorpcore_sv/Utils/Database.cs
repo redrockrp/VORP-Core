@@ -191,6 +191,7 @@ namespace vorpcore_sv.Utils
                     user.Add("xp", result[0].xp);
                     user.Add("firstname", result[0].firstname);
                     user.Add("lastname", result[0].lastname);
+                    user.Add("status", result[0].status);
 
                     cb.Invoke(user); //Enviamos los datos de vuelta
                 }
