@@ -57,6 +57,9 @@ namespace vorpcore_cl.Scripts
                         if (Function.Call<bool>((Hash)0x580417101DDB492F, 0, KeyInt))
                         {
                             TriggerServerEvent("vorpcharacter:getPlayerSkin");
+
+                            TriggerServerEvent("vorp:PlayerForceRespawn");
+                            TriggerEvent("vorp:PlayerForceRespawn");
                             await resspawnPlayer();
                             pressed = true;
                             await Delay(100);
