@@ -19,6 +19,16 @@ AddEventHandler('vorp:Tip', function(text, duration)
 exports.vorp_core.DisplayTip(0, tostring(text), tonumber(duration))
 end)
 
+RegisterNetEvent('vorp:TipBottom')
+AddEventHandler('vorp:TipBottom', function(text, duration)
+exports.vorp_core.DisplayObjetive(0, tostring(text), tonumber(duration))
+end)
+
+RegisterNetEvent('vorp:TipRight')
+AddEventHandler('vorp:TipRight', function(text, duration)
+exports.vorp_core.DisplayRightTip(0, tostring(text), tonumber(duration))
+end)
+
 RegisterNetEvent('vorp:NotifyTop')
 AddEventHandler('vorp:NotifyTop', function(text, duration)
 exports.vorp_core.DisplayTopCenterNotification(0, tostring(text), tostring(text), tonumber(duration))
