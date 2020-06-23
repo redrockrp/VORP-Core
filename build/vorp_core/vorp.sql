@@ -18,6 +18,7 @@ CREATE TABLE `characters`  (
   `xp` int(11) NULL DEFAULT 0,
   `inventory` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL,
   `job` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT 'unemployed',
+  `status` varchar(140) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '{}',
   `firstname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT ' ',
   `lastname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT ' ',
   `skinPlayer` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL,
@@ -66,6 +67,6 @@ CREATE TABLE `whitelist`  (
 -- ----------------------------
 -- Records of whitelist
 -- ----------------------------
-INSERT INTO `whitelist` VALUES (1, '11000010c8aa16e');
+INSERT INTO `whitelist` VALUES (1, '11000010c8aa16e'); -- Example
 
 SET FOREIGN_KEY_CHECKS = 1;
