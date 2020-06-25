@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 using vorpcore_cl.Utils;
 
-namespace vorpcore_sv.Scripts
+namespace vorpcore_cl.Scripts
 {
     public class SpawnPlayer : BaseScript
     {
@@ -13,16 +13,49 @@ namespace vorpcore_sv.Scripts
 
         public SpawnPlayer()
         {
-            //Iniciamos un Tick para setear el PVP
-            Tick += setPVPTick;
             //Iniciamos un Tick para guardar cada 10 segundos las coords del jugador en el servidor
             Tick += saveLastCoordsTick;
+
+            Tick += manageOnMount;
 
             EventHandlers["vorp:initPlayer"] += new Action</*string, string, string, int, int, string,*/ Vector3, float>(InitPlayer);
             Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
 
             EventHandlers["playerSpawned"] += new Action<object>(InitTpPlayer);
 
+        }
+
+        static bool active = false;
+
+        [Tick]
+        private async Task manageOnMount()
+        {
+            await Delay(1);
+            API.DisableControlAction(0, 0x580C4473, true); // Disable hud
+            API.DisableControlAction(0, 0xCF8A4ECA, true); // Disable hud
+
+            int pped = API.PlayerPedId();
+
+            int count = 0;
+            uint playerHash = (uint)API.GetHashKey("PLAYER");
+
+            if (API.IsControlPressed(0, (uint)0xCEFD9220))
+            {
+                Function.Call((Hash)0xBF25EB89375A37AD, 1, playerHash, playerHash);
+
+                await Delay(4000);
+            }
+            Debug.WriteLine("pED: " + pped.ToString());
+            Debug.WriteLine(API.GetPedInVehicleSeat(API.GetMount(pped), -1).ToString());
+            if(!API.IsPedOnMount(pped) && !API.IsPedOnVehicle(pped, 1))
+            {
+                Function.Call((Hash)0xBF25EB89375A37AD, 5, playerHash, playerHash);
+
+            }else if (API.GetPedInVehicleSeat(API.GetMount(pped), -1) == pped)
+            {
+                Function.Call((Hash)0xBF25EB89375A37AD, 5, playerHash, playerHash);
+
+            }
         }
 
         private async void InitTpPlayer(object spawnInfo)
@@ -50,18 +83,16 @@ namespace vorpcore_sv.Scripts
             {
                 Function.Call((Hash)0x95EE1DEE1DCD9070, API.PlayerId(), true);
             }
+
+            setPVP();
         }
 
-
-        [Tick]
-        private async Task setPVPTick()
+        public static  async Task setPVP()
         {
-            await Delay(0);
             uint playerHash = (uint)API.GetHashKey("PLAYER");
             Function.Call((Hash)0xF808475FA571D823, true);
             Function.Call((Hash)0xBF25EB89375A37AD, 5, playerHash, playerHash);
-            API.DisableControlAction(0, 0x580C4473, true); // Disable hud
-            API.DisableControlAction(0, 0xCF8A4ECA, true); // Disable hud
+
         }
 
         [Tick]

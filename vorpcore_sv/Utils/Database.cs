@@ -36,7 +36,7 @@ namespace vorpcore_sv.Utils
 
                 double lessMoney = user.money;
                 double lessGold = user.gold;
-                int lessRol = user.rol;
+                int lessRol = Convert.ToInt32(user.rol);
 
                 switch (typeCash)
                 {
@@ -50,7 +50,7 @@ namespace vorpcore_sv.Utils
                         break;
                     case 2:
                         Cash = "rol";
-                        lessRol -= (int)quanty;
+                        lessRol -= Convert.ToInt32(quanty);
                         break;
                 }
 
@@ -92,7 +92,7 @@ namespace vorpcore_sv.Utils
 
                 double lessMoney = user.money;
                 double lessGold = user.gold;
-                int lessRol = user.rol;
+                int lessRol = Convert.ToInt32(user.rol);
 
                 switch (typeCash)
                 {
@@ -106,7 +106,7 @@ namespace vorpcore_sv.Utils
                         break;
                     case 2:
                         Cash = "rol";
-                        lessRol += (int)quanty;
+                        lessRol += Convert.ToInt32(quanty);
                         break;
                 }
 

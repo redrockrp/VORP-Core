@@ -78,6 +78,7 @@ namespace vorpcore_cl.Scripts
             Function.Call((Hash)0x0E3F4AF2D63491FB);
             Function.Call((Hash)0xD63FE3AF9FB3D53F, true);
             Function.Call((Hash)0x1B3DA717B9AFF828, true);
+            SpawnPlayer.setPVP();
         }
 
         public async Task resurrectPlayer()
@@ -86,6 +87,7 @@ namespace vorpcore_cl.Scripts
             Function.Call((Hash)0x0E3F4AF2D63491FB);
             Function.Call((Hash)0xD63FE3AF9FB3D53F, true);
             Function.Call((Hash)0x1B3DA717B9AFF828, true);
+            SpawnPlayer.setPVP();
         }
 
         public async Task DrawTxt(string text, float x, float y, float fontscale, float fontsize, int r, int g, int b, int alpha, bool textcentred, bool shadow)
