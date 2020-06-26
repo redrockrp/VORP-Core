@@ -18,22 +18,28 @@ namespace vorpcore_cl.Scripts
 
             Tick += manageOnMount;
 
+            Tick += disableHud;
+
             EventHandlers["vorp:initPlayer"] += new Action</*string, string, string, int, int, string,*/ Vector3, float>(InitPlayer);
             Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
 
             EventHandlers["playerSpawned"] += new Action<object>(InitTpPlayer);
-
         }
 
         static bool active = false;
 
         [Tick]
-        private async Task manageOnMount()
+        public async Task disableHud()
         {
             await Delay(1);
             API.DisableControlAction(0, 0x580C4473, true); // Disable hud
             API.DisableControlAction(0, 0xCF8A4ECA, true); // Disable hud
+        }
 
+        [Tick]
+        private async Task manageOnMount()
+        {
+            await Delay(1);
             int pped = API.PlayerPedId();
 
             int count = 0;
@@ -42,19 +48,21 @@ namespace vorpcore_cl.Scripts
             if (API.IsControlPressed(0, (uint)0xCEFD9220))
             {
                 Function.Call((Hash)0xBF25EB89375A37AD, 1, playerHash, playerHash);
-
+                active = true;
                 await Delay(4000);
             }
-            Debug.WriteLine("pED: " + pped.ToString());
-            Debug.WriteLine(API.GetPedInVehicleSeat(API.GetMount(pped), -1).ToString());
-            if(!API.IsPedOnMount(pped) && !API.IsPedOnVehicle(pped, 1))
+            if(!API.IsPedOnMount(pped) && !API.IsPedOnVehicle(pped, 1) && active == true)
             {
                 Function.Call((Hash)0xBF25EB89375A37AD, 5, playerHash, playerHash);
+                active = false;
 
-            }else if (API.GetPedInVehicleSeat(API.GetMount(pped), -1) == pped)
+            }else if (active == true && API.IsPedOnMount(pped))
             {
-                Function.Call((Hash)0xBF25EB89375A37AD, 5, playerHash, playerHash);
-
+                if (API.GetPedInVehicleSeat(API.GetMount(pped), -1) == pped)
+                {
+                    Function.Call((Hash)0xBF25EB89375A37AD, 5, playerHash, playerHash);
+                    active = false;
+                }
             }
         }
 
@@ -87,7 +95,7 @@ namespace vorpcore_cl.Scripts
             setPVP();
         }
 
-        public static  async Task setPVP()
+        public static async Task setPVP()
         {
             uint playerHash = (uint)API.GetHashKey("PLAYER");
             Function.Call((Hash)0xF808475FA571D823, true);
@@ -108,9 +116,6 @@ namespace vorpcore_cl.Scripts
 
                 TriggerServerEvent("vorp:saveLastCoords", playerCoords, playerHeading);
             }
-
-
-
         }
     }
 }
