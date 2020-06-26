@@ -25,6 +25,7 @@ CREATE TABLE `characters`  (
   `compPlayer` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL,
   `jobgrade` int(11) NULL DEFAULT 0,
   `coords` varchar(75) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT '{}',
+  `isdead` tinyint(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
