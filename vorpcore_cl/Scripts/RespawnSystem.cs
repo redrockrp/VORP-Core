@@ -22,6 +22,8 @@ namespace vorpcore_cl.Scripts
             await resurrectPlayer();
         }
 
+        static bool setDead = false;
+
         [Tick]
         public async Task OnPlayerDead()
         {
@@ -29,6 +31,13 @@ namespace vorpcore_cl.Scripts
             while (Function.Call<bool>((Hash)0x2E9C3FCB6798F397, API.PlayerId()))
             {
                 await Delay(0);
+
+                if (!setDead)
+                {
+                    TriggerServerEvent("vorp:ImDead", true);
+                    setDead = true;
+                }
+
                 int timer = Function.Call<int>((Hash)0x4F67E8ECA7D3F667) + Utils.GetConfig.Config["RespawnTime"].ToObject<int>();
                 while (timer >= Function.Call<int>((Hash)0x4F67E8ECA7D3F667))
                 {
@@ -69,7 +78,7 @@ namespace vorpcore_cl.Scripts
             }
         }
 
-        public async Task resspawnPlayer()
+        public static async Task resspawnPlayer()
         {
             JToken respawnCoords = Utils.GetConfig.Config["RespawnCoords"];
             Function.Call((Hash)0x203BEFFDBE12E96A, API.PlayerPedId(), respawnCoords[0].ToObject<float>(), respawnCoords[1].ToObject<float>(), respawnCoords[2].ToObject<float>(), respawnCoords[3].ToObject<float>(), false, false, false);
@@ -78,6 +87,8 @@ namespace vorpcore_cl.Scripts
             Function.Call((Hash)0x0E3F4AF2D63491FB);
             Function.Call((Hash)0xD63FE3AF9FB3D53F, true);
             Function.Call((Hash)0x1B3DA717B9AFF828, true);
+            TriggerServerEvent("vorp:ImDead", false);
+            setDead = false;
             SpawnPlayer.setPVP();
         }
 
@@ -87,6 +98,8 @@ namespace vorpcore_cl.Scripts
             Function.Call((Hash)0x0E3F4AF2D63491FB);
             Function.Call((Hash)0xD63FE3AF9FB3D53F, true);
             Function.Call((Hash)0x1B3DA717B9AFF828, true);
+            TriggerServerEvent("vorp:ImDead", false);
+            setDead = false;
             SpawnPlayer.setPVP();
         }
 

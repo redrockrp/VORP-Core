@@ -15,7 +15,16 @@ namespace vorpcore_sv.Utils
 
             EventHandlers["playerDropped"] += new Action<Player, string>(OnPlayerDropped);
 
+            EventHandlers["vorp:ImDead"] += new Action<Player, bool>(OnPlayerDead);
+
             Tick += saveLastCoordsTick;
+        }
+
+        private void OnPlayerDead([FromSource]Player player, bool isDead)
+        {
+            string sid = ("steam:" + player.Identifiers["steam"]);
+            int dead = isDead ? 1 : 0;
+            Exports["ghmattimysql"].execute("UPDATE characters SET isdead=? WHERE identifier=?", new[] { dead.ToString(), sid });
         }
 
         private void OnPlayerDropped([FromSource]Player player, string reason)

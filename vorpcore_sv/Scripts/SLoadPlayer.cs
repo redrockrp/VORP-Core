@@ -27,13 +27,13 @@ namespace vorpcore_sv.Scripts
                 }
                 else
                 {
-
+                    bool isdead = Boolean.Parse(result[0].isdead.ToString());
                     string c_json = result[0].coords;
                     try
                     {
                         Dictionary<string, float> pos = JsonConvert.DeserializeObject<Dictionary<string, float>>(c_json);
                         Vector3 pcoords = new Vector3(pos["x"], pos["y"], pos["z"]);
-                        source.TriggerEvent("vorp:initPlayer", pcoords, pos["heading"]);
+                        source.TriggerEvent("vorp:initPlayer", pcoords, pos["heading"], isdead);
                     }
                     catch
                     {

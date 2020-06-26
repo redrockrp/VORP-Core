@@ -1,10 +1,10 @@
-{
-  "NoSteam": "🚫 Necesitas tener Steam abierto, por favor abre Steam y reinicia RedM",
-  "NoInWhitelist": "🚫 Lo sentimos, no estás en la Whitelist.",
-  "NoPermissions": "No tienes suficientes permisos",
+﻿{
+  "NoSteam": "🚫 Necesitas tener steam abierto, por favor abre steam y reinicia RedM",
+  "NoInWhitelist": "🚫 Lo sentimos acutalmente no estas en la whitelist.",
+  "NoPermissions": "You don't have enough permissions",
 
-  "TitleOnDead": "¡Has muerto!",
-  "SubTitleOnDead": "Reaparecerás en {0} segundos",
-  "SubTitlePressKey": "Pulsa ~e~E~q~ para revivir",
+  "TitleOnDead": "Has muerto!",
+  "SubTitleOnDead": "Reapareceras en {0} segundos",
+  "SubTitlePressKey": "Presiona ~e~E~q~ para revivir",
   "YouAreCarried": "Estas siendo cargado por una persona"
 }

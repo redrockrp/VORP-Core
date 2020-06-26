@@ -20,7 +20,7 @@ namespace vorpcore_cl.Scripts
 
             Tick += disableHud;
 
-            EventHandlers["vorp:initPlayer"] += new Action</*string, string, string, int, int, string,*/ Vector3, float>(InitPlayer);
+            EventHandlers["vorp:initPlayer"] += new Action</*string, string, string, int, int, string,*/ Vector3, float, bool>(InitPlayer);
             Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
 
             EventHandlers["playerSpawned"] += new Action<object>(InitTpPlayer);
@@ -77,7 +77,7 @@ namespace vorpcore_cl.Scripts
             }
         }
 
-        private void InitPlayer(Vector3 coords, float heading)
+        private void InitPlayer(Vector3 coords, float heading, bool isdead)
         {
             Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
             PlayerActions.TeleportToCoords(coords.X, coords.Y, coords.Z, heading);
@@ -93,6 +93,13 @@ namespace vorpcore_cl.Scripts
             }
 
             setPVP();
+
+            if (isdead)
+            {
+                TriggerServerEvent("vorp:PlayerForceRespawn");
+                TriggerEvent("vorp:PlayerForceRespawn");
+                RespawnSystem.resspawnPlayer();
+            }
         }
 
         public static async Task setPVP()
