@@ -32,4 +32,4 @@ The vorp_core folder has a vorp.sql file, you need to create a database 'vorp' a
 Now you are ready!
 
 ## Wiki
-[Wiki VORP CORE](http://docs.vorpcore.com:3000/home)
+[Wiki VORP Core](http://docs.vorpcore.com:3000/home)
