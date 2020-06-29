@@ -17,6 +17,7 @@ This is the VORP CORE for RedM made in C# compatible with LUA
 
 * Copy and paste ```vorp_core``` folder to ```resources/vorp_core```
 * Add ```ensure vorp_core``` to your ```server.cfg``` file
+* To change the language go to ```resources/vorp_core/Config``` and change the default language
 * Example Server.cfg
 ```cfg
 #MYSQL
