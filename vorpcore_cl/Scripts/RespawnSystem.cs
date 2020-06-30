@@ -39,7 +39,7 @@ namespace vorpcore_cl.Scripts
                 }
 
                 int timer = Function.Call<int>((Hash)0x4F67E8ECA7D3F667) + Utils.GetConfig.Config["RespawnTime"].ToObject<int>();
-                while (timer >= Function.Call<int>((Hash)0x4F67E8ECA7D3F667))
+                while (timer >= Function.Call<int>((Hash)0x4F67E8ECA7D3F667) && setDead)
                 {
                     await Delay(0);
                     Function.Call((Hash)0xFDB74C9CC54C3F37, 1.0f);
@@ -53,7 +53,7 @@ namespace vorpcore_cl.Scripts
                 string keyPress = Utils.GetConfig.Config["RespawnKey"].ToString();
                 int KeyInt = Convert.ToInt32(keyPress, 16);
                 bool pressed = false;
-                while (!pressed)
+                while (!pressed && setDead)
                 {
                     await Delay(0);
                     if (Function.Call<bool>((Hash)0xC841153DED2CA89A, API.PlayerPedId()))
