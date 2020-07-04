@@ -43,6 +43,12 @@
                         var ints = Math.trunc(item.rolquanty);
                         var rol = document.getElementById("rol").innerHTML = ints;
                     }
+                    if (item.action === "hide") {
+                        document.body.style.display = "none";
+                    }
+                    if (item.action === "show") {
+                        document.body.style.display = "block";
+                    }
 
                 }
             })

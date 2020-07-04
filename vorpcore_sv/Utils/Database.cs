@@ -169,7 +169,6 @@ namespace vorpcore_sv.Utils
             Player player = getSource(handle);
 
             string sid = ("steam:" + player.Identifiers["steam"]);
-            Debug.WriteLine(sid);
 
             Exports["ghmattimysql"].execute("SELECT * FROM characters WHERE identifier = ?", new[] { sid }, new Action<dynamic>((result) =>
             {

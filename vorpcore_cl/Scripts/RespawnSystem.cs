@@ -96,10 +96,11 @@ namespace vorpcore_cl.Scripts
         {
             Function.Call((Hash)0x71BC8E838B9C6035, API.PlayerPedId());
             Function.Call((Hash)0x0E3F4AF2D63491FB);
-            Function.Call((Hash)0xD63FE3AF9FB3D53F, true);
-            Function.Call((Hash)0x1B3DA717B9AFF828, true);
             TriggerServerEvent("vorp:ImDead", false);
             setDead = false;
+            await Delay(500);
+            Function.Call((Hash)0xD63FE3AF9FB3D53F, true);
+            Function.Call((Hash)0x1B3DA717B9AFF828, true);
             SpawnPlayer.setPVP();
         }
 
