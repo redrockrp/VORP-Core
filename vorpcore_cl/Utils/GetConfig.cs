@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Globalization;
 
 namespace vorpcore_cl.Utils
 {
@@ -35,6 +36,19 @@ namespace vorpcore_cl.Utils
         {
             Scripts.DiscRichPresence.drp_active = Config["ActiveDRP"].ToObject<bool>();
             Scripts.IDHeads.UseIDHeads = Config["HeadId"].ToObject<bool>();
+            Scripts.IDHeads.UseKeyMode = Config["ModeKey"].ToObject<bool>();
+
+            Scripts.IDHeads.keyShow = FromHex(Config["KeyShowIds"].ToString());
+
+        }
+
+        public static uint FromHex(string value)
+        {
+            if (value.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+            {
+                value = value.Substring(2);
+            }
+            return (uint)Int32.Parse(value, NumberStyles.HexNumber);
         }
     }
 }

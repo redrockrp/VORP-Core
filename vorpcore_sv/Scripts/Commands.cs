@@ -11,6 +11,88 @@ namespace vorpcore_sv.Scripts
         public Commands()
         {
 
+            TriggerEvent("chat:addSuggestion", "/setgroup", "set group to user\n Example: /setgroup playerid mod");
+            API.RegisterCommand("setgroup", new Action<int, List<object>, string>((source, args, rawCommand) =>
+            {
+                if (source > 0) // it's a player.
+                {
+                    Player _source = Database.getSource(source);
+                    TriggerEvent("vorp:getCharacter", source, new Action<dynamic>((user) =>
+                    {
+                        if (user.group == "admin")
+                        {
+                            try
+                            {
+                                int target = int.Parse(args[0].ToString());
+                                string newgroup = args[1].ToString();
+
+                                if (String.IsNullOrEmpty(newgroup))
+                                {
+                                    _source.TriggerEvent("vorp:Tip", "ERROR: Use Correct Sintaxis", 4000);
+                                    return;
+                                }
+
+                                TriggerEvent("vorp:setJob", target, newgroup);
+                                _source.TriggerEvent("vorp:Tip", $"Target {target} have group {newgroup}", 4000);
+                            }
+                            catch
+                            {
+                                _source.TriggerEvent("vorp:Tip", "ERROR: Use Correct Sintaxis", 4000);
+                            }
+                        }
+                        else
+                        {
+                            _source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoPermissions"], 4000);
+                        }
+                    }));
+                }
+                else
+                {
+                    Debug.WriteLine("This only can be executed from client side.");
+                }
+            }), false);
+
+            TriggerEvent("chat:addSuggestion", "/setjob", "set job to user\n Example: /setjob playerid medic");
+            API.RegisterCommand("setjob", new Action<int, List<object>, string>((source, args, rawCommand) =>
+            {
+                if (source > 0) // it's a player.
+                {
+                    Player _source = Database.getSource(source);
+                    TriggerEvent("vorp:getCharacter", source, new Action<dynamic>((user) =>
+                    {
+                        if (user.group == "admin")
+                        {
+                            try
+                            {
+                                int target = int.Parse(args[0].ToString());
+                                string newjob = args[1].ToString();
+
+                                if (String.IsNullOrEmpty(newjob))
+                                {
+                                    _source.TriggerEvent("vorp:Tip", "ERROR: Use Correct Sintaxis", 4000);
+                                    return;
+                                }
+
+                                TriggerEvent("vorp:setJob", target, newjob);
+                                _source.TriggerEvent("vorp:Tip", $"Target {target} have job {newjob}", 4000);
+                            }
+                            catch
+                            {
+                                _source.TriggerEvent("vorp:Tip", "ERROR: Use Correct Sintaxis", 4000);
+                            }
+                        }
+                        else
+                        {
+                            _source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoPermissions"], 4000);
+                        }
+                    }));
+                }
+                else
+                {
+                    Debug.WriteLine("This only can be executed from client side.");
+                }
+            }), false);
+
             TriggerEvent("chat:addSuggestion", "/addmoney", "add money to user\n Example: /addmoney playerid moneytype quantity");
             API.RegisterCommand("addmoney", new Action<int, List<object>, string>((source, args, rawCommand) =>
             {

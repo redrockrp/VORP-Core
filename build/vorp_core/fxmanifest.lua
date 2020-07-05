@@ -15,6 +15,10 @@ server_scripts {
 files {
   'Newtonsoft.Json.dll',
   'ui/hud.html',
+  'ui/js/progressbar.js',
+  'ui/js/progressbar.min.js',
+  'ui/js/progressbar.min.js.map',
+  'ui/hud.html',
   'ui/css/style.css',
   'ui/fonts/rdrlino-regular-webfont.woff',
   'ui/icons/gold_2.png',

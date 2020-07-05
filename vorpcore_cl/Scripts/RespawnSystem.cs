@@ -37,7 +37,7 @@ namespace vorpcore_cl.Scripts
                     TriggerServerEvent("vorp:ImDead", true);
                     setDead = true;
                 }
-
+                API.NetworkSetInSpectatorMode(true, API.PlayerPedId());
                 int timer = Function.Call<int>((Hash)0x4F67E8ECA7D3F667) + Utils.GetConfig.Config["RespawnTime"].ToObject<int>();
                 while (timer >= Function.Call<int>((Hash)0x4F67E8ECA7D3F667) && setDead)
                 {
@@ -58,10 +58,13 @@ namespace vorpcore_cl.Scripts
                     await Delay(0);
                     if (Function.Call<bool>((Hash)0xC841153DED2CA89A, API.PlayerPedId()))
                     {
-                        await DrawTxt(Utils.GetConfig.Langs["YouAreCarried"], 0.50f, 0.45f, 1.0f, 1.0f, 255, 255, 255, 255, true, true);
+                        int carrier = Function.Call<int>((Hash)0x09B83E68DE004CD4, API.PlayerPedId());
+                        API.NetworkSetInSpectatorMode(true, carrier);
+                        await DrawTxt(Utils.GetConfig.Langs["YouAreCarried"], 0.50f, 0.95f, 1.0f, 1.0f, 255, 255, 255, 255, true, true);
                     }
                     else
                     {
+                        API.NetworkSetInSpectatorMode(true, API.PlayerPedId());
                         await DrawTxt(Utils.GetConfig.Langs["SubTitlePressKey"], 0.50f, 0.45f, 1.0f, 1.0f, 255, 255, 255, 255, true, true);
                         if (Function.Call<bool>((Hash)0x580417101DDB492F, 0, KeyInt))
                         {
@@ -80,6 +83,7 @@ namespace vorpcore_cl.Scripts
 
         public static async Task resspawnPlayer()
         {
+            API.NetworkSetInSpectatorMode(false, API.PlayerPedId());
             JToken respawnCoords = Utils.GetConfig.Config["RespawnCoords"];
             Function.Call((Hash)0x203BEFFDBE12E96A, API.PlayerPedId(), respawnCoords[0].ToObject<float>(), respawnCoords[1].ToObject<float>(), respawnCoords[2].ToObject<float>(), respawnCoords[3].ToObject<float>(), false, false, false);
             await Delay(10);
@@ -94,6 +98,7 @@ namespace vorpcore_cl.Scripts
 
         public async Task resurrectPlayer()
         {
+            API.NetworkSetInSpectatorMode(false, API.PlayerPedId());
             Function.Call((Hash)0x71BC8E838B9C6035, API.PlayerPedId());
             Function.Call((Hash)0x0E3F4AF2D63491FB);
             TriggerServerEvent("vorp:ImDead", false);

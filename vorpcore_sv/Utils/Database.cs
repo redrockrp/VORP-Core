@@ -1,4 +1,5 @@
 ﻿using CitizenFX.Core;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +19,7 @@ namespace vorpcore_sv.Utils
             EventHandlers["vorp:removeXp"] += new Action<int, int>(removeXp);
 
             EventHandlers["vorp:setJob"] += new Action<int, string>(setJob);
+            EventHandlers["vorp:setGroup"] += new Action<int, string>(setGroup);
         }
 
         public static Player getSource(int handle)
@@ -60,24 +62,16 @@ namespace vorpcore_sv.Utils
 
                 Debug.WriteLine($"Removed {quanty} of {Cash} to {player.Name}");
 
-                JsonUiCalls JUC = new JsonUiCalls()
-                {
-                    type = "ui",
-                    action = "update",
-                    moneyquanty = lessMoney,
-                    goldquanty = lessGold,
-                    rolquanty = lessRol
-                };
+                JObject nuipost = new JObject();
+                nuipost.Add("type", "ui");
+                nuipost.Add("action", "update");
+                nuipost.Add("moneyquanty", lessMoney);
+                nuipost.Add("goldquanty", lessGold);
+                nuipost.Add("rolquanty", lessRol);
+                nuipost.Add("xp", user.xp);
+                nuipost.Add("serverId", handle);
 
-                DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(JsonUiCalls));
-                MemoryStream msObj = new MemoryStream();
-                js.WriteObject(msObj, JUC);
-                msObj.Position = 0;
-                StreamReader sr = new StreamReader(msObj);
-
-                string strjson = sr.ReadToEnd();
-
-                player.TriggerEvent("vorp:updateUi", strjson);
+                player.TriggerEvent("vorp:updateUi", nuipost.ToString());
 
             }));
 
@@ -116,54 +110,65 @@ namespace vorpcore_sv.Utils
 
                 Debug.WriteLine($"Added {quanty} of {Cash} to {player.Name}");
 
-                JsonUiCalls JUC = new JsonUiCalls()
-                {
-                    type = "ui",
-                    action = "update",
-                    moneyquanty = lessMoney,
-                    goldquanty = lessGold,
-                    rolquanty = lessRol
-                };
+                JObject nuipost = new JObject();
+                nuipost.Add("type", "ui");
+                nuipost.Add("action", "update");
+                nuipost.Add("moneyquanty", lessMoney);
+                nuipost.Add("goldquanty", lessGold);
+                nuipost.Add("rolquanty", lessRol);
+                nuipost.Add("xp", user.xp);
+                nuipost.Add("serverId", handle);
 
-                DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(JsonUiCalls));
-                MemoryStream msObj = new MemoryStream();
-                js.WriteObject(msObj, JUC);
-                msObj.Position = 0;
-                StreamReader sr = new StreamReader(msObj);
-
-                string strjson = sr.ReadToEnd();
-
-                player.TriggerEvent("vorp:updateUi", strjson);
+                player.TriggerEvent("vorp:updateUi", nuipost.ToString());
 
             }));
         }
 
         private void addXp(int handle, int quanty)
         {
-            Player player = getSource(handle);
+            TriggerEvent("vorp:getCharacter", handle, new Action<dynamic>((user) =>
+            {
+                Player player = getSource(handle);
 
-            string sid = ("steam:" + player.Identifiers["steam"]);
+                string sid = ("steam:" + player.Identifiers["steam"]);
 
-            Exports["ghmattimysql"].execute($"UPDATE characters SET xp = xp + {quanty} WHERE identifier=?", new[] { sid });
+                Exports["ghmattimysql"].execute($"UPDATE characters SET xp = xp + {quanty} WHERE identifier=?", new[] { sid });
 
-            Debug.WriteLine($"Added {quanty} of Xp to {player.Name}");
+                Debug.WriteLine($"Added {quanty} of Xp to {player.Name}");
 
-            // Send Nui Update UI
+                int totalxp = user.xp + quanty;
 
+                // Send Nui Update UI
+                JObject nuipost = new JObject();
+                nuipost.Add("type", "ui");
+                nuipost.Add("action", "setxp");
+                nuipost.Add("xp", totalxp);
+
+                player.TriggerEvent("vorp:updateUi", nuipost.ToString());
+            }));
         }
 
         private void removeXp(int handle, int quanty)
         {
-            Player player = getSource(handle);
+            TriggerEvent("vorp:getCharacter", handle, new Action<dynamic>((user) =>
+            {
+                Player player = getSource(handle);
 
-            string sid = ("steam:" + player.Identifiers["steam"]);
+                string sid = ("steam:" + player.Identifiers["steam"]);
 
-            Exports["ghmattimysql"].execute($"UPDATE characters SET xp = xp - {quanty} WHERE identifier=?", new[] { sid });
+                Exports["ghmattimysql"].execute($"UPDATE characters SET xp = xp - {quanty} WHERE identifier=?", new[] { sid });
 
-            Debug.WriteLine($"Removed {quanty} of Xp to {player.Name}");
+                Debug.WriteLine($"Removed {quanty} of Xp to {player.Name}");
+                int totalxp = user.xp - quanty;
 
-            // Send Nui Update UI
+                // Send Nui Update UI
+                JObject nuipost = new JObject();
+                nuipost.Add("type", "ui");
+                nuipost.Add("action", "setxp");
+                nuipost.Add("xp", totalxp);
 
+                player.TriggerEvent("vorp:updateUi", nuipost.ToString());
+            }));
         }
 
         private void setJob(int handle, string job)
@@ -175,6 +180,18 @@ namespace vorpcore_sv.Utils
                 string sid = ("steam:" + player.Identifiers["steam"]);
 
                 Exports["ghmattimysql"].execute($"UPDATE characters SET job = ? WHERE identifier=?", new[] { job, sid });
+            }));
+        }
+
+        private void setGroup(int handle, string group)
+        {
+            TriggerEvent("vorp:getCharacter", handle, new Action<dynamic>((user) =>
+            {
+                Player player = getSource(handle);
+
+                string sid = ("steam:" + player.Identifiers["steam"]);
+
+                Exports["ghmattimysql"].execute($"UPDATE characters SET group = ? WHERE identifier=?", new[] { group, sid });
             }));
         }
 

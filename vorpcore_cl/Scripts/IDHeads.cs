@@ -1,5 +1,6 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using static CitizenFX.Core.Native.API;
@@ -9,11 +10,33 @@ namespace vorpcore_cl.Scripts
     public class IDHeads : BaseScript
     {
         public static bool UseIDHeads = false;
+        public static bool UseKeyMode = false;
         public static Dictionary<int, int> PlayerTags = new Dictionary<int, int>();
+        public static uint keyShow = 0;
+
+        private static bool showIds = true;
 
         public IDHeads()
         {
             Tick += SetPlayerIdOnHead;
+            Tick += KeyIdOnHead;
+        }
+
+        [Tick]
+        private async Task KeyIdOnHead()
+        {
+            if (!UseIDHeads || !UseKeyMode) { return; }
+
+            if (IsControlPressed(0, keyShow))
+            {
+                showIds = true;
+            }
+            else
+            {
+                showIds = false;
+            }
+            await Delay(0);
+
         }
 
         [Tick]
@@ -34,7 +57,8 @@ namespace vorpcore_cl.Scripts
                             if (Function.Call<bool>((Hash)0x6E1C31E14C7A5F97, PlayerTags[i]))
                             {
                                 float distanceConfig = Utils.GetConfig.Config["HeadIdDistance"].ToObject<float>();
-                                if (GetDistanceFromPlayer(i) < distanceConfig)
+
+                                if (GetDistanceFromPlayer(i) < distanceConfig && showIds)
                                 {
                                     // Feature 2.0 Voice Chat
                                     //if () //NetworkIsPlayerTalking

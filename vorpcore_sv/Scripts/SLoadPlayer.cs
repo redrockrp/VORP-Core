@@ -1,5 +1,6 @@
 ﻿using CitizenFX.Core;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,24 +42,17 @@ namespace vorpcore_sv.Scripts
                     }
 
                     // Send Nui Update UI all
-                    JsonUiCalls JUC = new JsonUiCalls()
-                    {
-                        type = "ui",
-                        action = "update",
-                        moneyquanty = result[0].money,
-                        goldquanty = result[0].gold,
-                        rolquanty = result[0].rol
-                    };
+                    JObject postUi = new JObject();
+                    postUi.Add("type", "ui");
+                    postUi.Add("action", "update");
+                    postUi.Add("moneyquanty", result[0].money);
+                    postUi.Add("goldquanty", result[0].gold);
+                    postUi.Add("rolquanty", result[0].rol);
+                    postUi.Add("serverId", source.Handle);
+                    postUi.Add("xp", result[0].xp);
 
-                    DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(JsonUiCalls));
-                    MemoryStream msObj = new MemoryStream();
-                    js.WriteObject(msObj, JUC);
-                    msObj.Position = 0;
-                    StreamReader sr = new StreamReader(msObj);
 
-                    string strjson = sr.ReadToEnd();
-
-                    source.TriggerEvent("vorp:updateUi", strjson);
+                    source.TriggerEvent("vorp:updateUi", postUi.ToString());
                 }
 
             }));
