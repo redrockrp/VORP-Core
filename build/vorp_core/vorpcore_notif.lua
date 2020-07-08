@@ -30,6 +30,6 @@ exports.vorp_core.DisplayRightTip(0, tostring(text), tonumber(duration))
 end)
 
 RegisterNetEvent('vorp:NotifyTop')
-AddEventHandler('vorp:NotifyTop', function(text, duration)
-exports.vorp_core.DisplayTopCenterNotification(0, tostring(text), tostring(text), tonumber(duration))
+AddEventHandler('vorp:NotifyTop', function(text, location, duration)
+exports.vorp_core.DisplayTopCenterNotification(0, tostring(text), tostring(location), tonumber(duration))
 end) 
