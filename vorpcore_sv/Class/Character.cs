@@ -9,32 +9,43 @@ namespace vorpcore_sv.Class
 {
     public class Character : BaseScript
     {
-        string identifier;
+        private string identifier;
 
-        string group;
-        string job;
-        string jobgrade;
-        string firstname;
-        string lastname;
+        private string group;
+        private string job;
+        private string jobgrade;
+        private string firstname;
+        private string lastname;
 
-        double money;
-        double gold;
-        double rol;
+        private double money;
+        private double gold;
+        private double rol;
 
-        int xp;
+        private int xp;
+
+        public string Identifier { get => identifier; }
+        public string Group { get => group; }
+        public string Job { get => job; }
+        public string Jobgrade { get => jobgrade; }
+        public string Firstname { get => firstname; }
+        public string Lastname { get => lastname; }
+        public double Money { get => money; }
+        public double Gold { get => gold; }
+        public double Rol { get => rol; }
+        public int Xp { get => xp; }
 
         public Character(string identifier, string group, string job, string jobgrade, string firstname, string lastname, double money, double gold, double rol, int xp)
         {
-            this.Identifier = identifier;
-            this.Group = group;
-            this.Job = job;
-            this.Jobgrade = jobgrade;
-            this.Firstname = firstname;
-            this.Lastname = lastname;
-            this.Money = money;
-            this.Gold = gold;
-            this.Rol = rol;
-            this.Xp = xp;
+            this.identifier = identifier;
+            this.group = group;
+            this.job = job;
+            this.jobgrade = jobgrade;
+            this.firstname = firstname;
+            this.lastname = lastname;
+            this.money = money;
+            this.gold = gold;
+            this.rol = rol;
+            this.xp = xp;
         }
 
         public void addCurrency(int currency, double quantity)
@@ -42,15 +53,15 @@ namespace vorpcore_sv.Class
             switch (currency)
             {
                 case 0:
-                    this.money += quantity;
+                    money += quantity;
                     Exports["ghmattimysql"].execute($"UPDATE characters SET money=money + {quantity} WHERE identifier=?", new[] { identifier });
                     break;
                 case 1:
-                    this.gold += quantity;
+                    gold += quantity;
                     Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold + {quantity} WHERE identifier=?", new[] { identifier });
                     break;
                 case 2:
-                    this.rol += quantity;
+                    rol += quantity;
                     Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol + {quantity} WHERE identifier=?", new[] { identifier });
                     break;
             }
@@ -61,15 +72,15 @@ namespace vorpcore_sv.Class
             switch (currency)
             {
                 case 0:
-                    this.money -= quantity;
+                    money -= quantity;
                     Exports["ghmattimysql"].execute($"UPDATE characters SET money=money - {quantity} WHERE identifier=?", new[] { identifier });
                     break;
                 case 1:
-                    this.gold -= quantity;
+                    gold -= quantity;
                     Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold - {quantity} WHERE identifier=?", new[] { identifier });
                     break;
                 case 2:
-                    this.rol -= quantity;
+                    rol -= quantity;
                     Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol - {quantity} WHERE identifier=?", new[] { identifier });
                     break;
             }
@@ -77,37 +88,27 @@ namespace vorpcore_sv.Class
 
         public void addXp(int quantity)
         {
-            this.xp += quantity;
+            xp += quantity;
             Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp + {quantity} WHERE identifier=?", new[] { identifier });
         }
 
         public void removeXp(int quantity)
         {
-            this.xp -= quantity;
+            xp -= quantity;
             Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp - {quantity} WHERE identifier=?", new[] { identifier });
         }
 
         public void setJob(string newjob)
         {
-            this.job = newjob;
+            job = newjob;
             Exports["ghmattimysql"].execute($"UPDATE characters SET job={newjob} WHERE identifier=?", new[] { identifier });
         }
 
         public void setGroup(string newgroup)
         {
-            this.group = newgroup;
+            group = newgroup;
             Exports["ghmattimysql"].execute($"UPDATE characters SET group={newgroup} WHERE identifier=?", new[] { identifier });
         }
 
-        public string Identifier { get => identifier; set => identifier = value; }
-        public string Group { get => group; set => group = value; }
-        public string Job { get => job; set => job = value; }
-        public string Jobgrade { get => jobgrade; set => jobgrade = value; }
-        public string Firstname { get => firstname; set => firstname = value; }
-        public string Lastname { get => lastname; set => lastname = value; }
-        public double Money { get => money; set => money = value; }
-        public double Gold { get => gold; set => gold = value; }
-        public double Rol { get => rol; set => rol = value; }
-        public int Xp { get => xp; set => xp = value; }
     }
 }
