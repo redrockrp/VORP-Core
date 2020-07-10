@@ -32,7 +32,7 @@ namespace vorpcore_sv.Scripts
                                     return;
                                 }
 
-                                TriggerEvent("vorp:setJob", target, newgroup);
+                                TriggerEvent("vorp:setGroup", target, newgroup);
                                 _source.TriggerEvent("vorp:Tip", $"Target {target} have group {newgroup}", 4000);
                             }
                             catch

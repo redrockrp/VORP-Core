@@ -5,12 +5,16 @@ rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aw
 client_scripts {
   'vorpcore_cl.net.dll',
   'Notifications.js',
-  'vorpcore_notif.lua'
+  'vorpcore_notif.lua',
+  'vorpcore_luapi_cl.lua'
 }
 
 server_scripts {
   'vorpcore_sv.net.dll',
+  'vorpcore_luapi.lua'
 }
+
+server_exports {'vorpAPI'}
 
 files {
   'Newtonsoft.Json.dll',

@@ -34,5 +34,5 @@ Now you are ready!
 [Wiki VORP Core](http://docs.vorpcore.com:3000/home)
 
 ## Credits
-[Respawn System](https://github.com/VORPCORE/VORP-Core/blob/master/vorpcore_cl/Scripts/RespawnSystem.cs) Based [Redemrp_Respawn](https://github.com/RedEM-RP/redemrp_respawn/blob/master/client/cl_main.lua)
+Vespura for his work in c# that has helped me create this great project
 

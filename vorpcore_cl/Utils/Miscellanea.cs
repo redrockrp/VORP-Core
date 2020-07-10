@@ -29,6 +29,16 @@ namespace vorpcore_cl.Utils
             }
         }
 
-
+        //Wait a moment ???? DrawTxt have co.... ah sure no problem, DrawText is Patented?
+        public static async Task DrawText(string text, int font, float x, float y, float fontscale, float fontsize, int r, int g, int b, int alpha, bool textcentred, bool shadow)
+        {
+            long str = Function.Call<long>(Hash._CREATE_VAR_STRING, 10, "LITERAL_STRING", text);
+            Function.Call(Hash.SET_TEXT_SCALE, fontscale, fontsize);
+            Function.Call(Hash._SET_TEXT_COLOR, r, g, b, alpha);
+            Function.Call(Hash.SET_TEXT_CENTRE, textcentred);
+            if (shadow) { Function.Call(Hash.SET_TEXT_DROPSHADOW, 1, 0, 0, 255); }
+            Function.Call(Hash.SET_TEXT_FONT_FOR_CURRENT_COMMAND, font);
+            Function.Call(Hash._DISPLAY_TEXT, str, x, y);
+        }
     }
 }
