@@ -75,6 +75,30 @@ namespace vorpcore_sv.Class
             }
         }
 
+        public void addXp(int quantity)
+        {
+            this.xp += quantity;
+            Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp + {quantity} WHERE identifier=?", new[] { identifier });
+        }
+
+        public void removeXp(int quantity)
+        {
+            this.xp -= quantity;
+            Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp - {quantity} WHERE identifier=?", new[] { identifier });
+        }
+
+        public void setJob(string newjob)
+        {
+            this.job = newjob;
+            Exports["ghmattimysql"].execute($"UPDATE characters SET job={newjob} WHERE identifier=?", new[] { identifier });
+        }
+
+        public void setGroup(string newgroup)
+        {
+            this.group = newgroup;
+            Exports["ghmattimysql"].execute($"UPDATE characters SET group={newgroup} WHERE identifier=?", new[] { identifier });
+        }
+
         public string Identifier { get => identifier; set => identifier = value; }
         public string Group { get => group; set => group = value; }
         public string Job { get => job; set => job = value; }
