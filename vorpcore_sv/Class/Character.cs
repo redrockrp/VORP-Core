@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CitizenFX.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace vorpcore_sv.Class
 {
-    public class Character
+    public class Character : BaseScript
     {
         string identifier;
 
@@ -42,15 +43,36 @@ namespace vorpcore_sv.Class
             {
                 case 0:
                     this.money += quantity;
+                    Exports["ghmattimysql"].execute($"UPDATE characters SET money=money + {quantity} WHERE identifier=?", new[] { identifier });
                     break;
                 case 1:
                     this.gold += quantity;
+                    Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold + {quantity} WHERE identifier=?", new[] { identifier });
                     break;
                 case 2:
                     this.rol += quantity;
+                    Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol + {quantity} WHERE identifier=?", new[] { identifier });
                     break;
             }
-           
+        }
+
+        public void removeCurrency(int currency, double quantity)
+        {
+            switch (currency)
+            {
+                case 0:
+                    this.money -= quantity;
+                    Exports["ghmattimysql"].execute($"UPDATE characters SET money=money - {quantity} WHERE identifier=?", new[] { identifier });
+                    break;
+                case 1:
+                    this.gold -= quantity;
+                    Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold - {quantity} WHERE identifier=?", new[] { identifier });
+                    break;
+                case 2:
+                    this.rol -= quantity;
+                    Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol - {quantity} WHERE identifier=?", new[] { identifier });
+                    break;
+            }
         }
 
         public string Identifier { get => identifier; set => identifier = value; }

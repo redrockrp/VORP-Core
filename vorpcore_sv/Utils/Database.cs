@@ -22,20 +22,6 @@ namespace vorpcore_sv.Utils
             EventHandlers["vorp:setJob"] += new Action<int, string>(setJob);
             EventHandlers["vorp:setGroup"] += new Action<int, string>(setGroup);
 
-            RegisterCallBacks();
-        }
-
-        public static async Task RegisterCallBacks()
-        {
-            await Delay(2000);
-            TriggerEvent("vorp:addNewCallBack", "getCharacter", new Action<int, CallbackDelegate, dynamic>((source, cb, args) => {
-
-                TriggerEvent("vorp:getCharacter", source, new Action<dynamic>((user) =>
-                {
-                    cb(user);
-                }));
-
-            }));
         }
 
         public static Player getSource(int handle)
