@@ -30,7 +30,7 @@ namespace vorpcore_sv.Scripts
         {
             string sid = ("steam:" + source.Identifiers["steam"]);
 
-            if (characters.ContainsKey(sid))
+            if (!characters.ContainsKey(sid))
             {
                 characters[sid] = new Character();
                 source.TriggerEvent("vorpcharacter:createPlayer");
