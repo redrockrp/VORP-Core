@@ -32,170 +32,156 @@ namespace vorpcore_sv.Utils
             return p;
         }
 
-        private void removeMoney(int handle, int typeCash, double quanty)
+        private void removeMoney(int handle, int typeCash, double quantity)
         {
-            TriggerEvent("vorp:getCharacter", handle, new Action<dynamic>((user) =>
+
+            Player player = getSource(handle);
+
+            string sid = ("steam:" + player.Identifiers["steam"]);
+
+            if (LoadCharacter.characters.ContainsKey(sid))
             {
-                Player player = getSource(handle);
-
-                string sid = ("steam:" + player.Identifiers["steam"]);
-                string Cash = "money"; // default is money (0 is money, 1 is gold)
-
-                double lessMoney = user.money;
-                double lessGold = user.gold;
-                int lessRol = Convert.ToInt32(user.rol);
-
-                switch (typeCash)
-                {
-                    case 0:
-                        Cash = "money";
-                        lessMoney -= quanty;
-                        break;
-                    case 1:
-                        Cash = "gold";
-                        lessGold -= quanty;
-                        break;
-                    case 2:
-                        Cash = "rol";
-                        lessRol -= Convert.ToInt32(quanty);
-                        break;
-                }
-
-                Exports["ghmattimysql"].execute($"UPDATE characters SET {Cash}={Cash} - {quanty} WHERE identifier=?", new[] { sid });
-
-                Debug.WriteLine($"Removed {quanty} of {Cash} to {player.Name}");
+                LoadCharacter.characters[sid].removeCurrency(typeCash, quantity);
 
                 JObject nuipost = new JObject();
                 nuipost.Add("type", "ui");
                 nuipost.Add("action", "update");
-                nuipost.Add("moneyquanty", lessMoney);
-                nuipost.Add("goldquanty", lessGold);
-                nuipost.Add("rolquanty", lessRol);
-                nuipost.Add("xp", user.xp);
+                nuipost.Add("moneyquanty", LoadCharacter.characters[sid].Money);
+                nuipost.Add("goldquanty", LoadCharacter.characters[sid].Gold);
+                nuipost.Add("rolquanty", LoadCharacter.characters[sid].Rol);
+                nuipost.Add("xp", LoadCharacter.characters[sid].Xp);
                 nuipost.Add("serverId", handle);
 
                 player.TriggerEvent("vorp:updateUi", nuipost.ToString());
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Warning removeMoney: User not found!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
 
-            }));
+           
 
         }
 
-        private void addMoney(int handle, int typeCash, double quanty)
+        private void addMoney(int handle, int typeCash, double quantity)
         {
-            TriggerEvent("vorp:getCharacter", handle, new Action<dynamic>((user) =>
+          
+            Player player = getSource(handle);
+
+            string sid = ("steam:" + player.Identifiers["steam"]);
+
+            if (LoadCharacter.characters.ContainsKey(sid))
             {
-                Player player = getSource(handle);
-
-                string sid = ("steam:" + player.Identifiers["steam"]);
-                string Cash = "money"; // default is money (0 is money, 1 is gold)
-
-                double lessMoney = user.money;
-                double lessGold = user.gold;
-                int lessRol = Convert.ToInt32(user.rol);
-
-                switch (typeCash)
-                {
-                    case 0:
-                        Cash = "money";
-                        lessMoney += quanty;
-                        break;
-                    case 1:
-                        Cash = "gold";
-                        lessGold += quanty;
-                        break;
-                    case 2:
-                        Cash = "rol";
-                        lessRol += Convert.ToInt32(quanty);
-                        break;
-                }
-
-                Exports["ghmattimysql"].execute($"UPDATE characters SET {Cash} = {Cash} + {quanty} WHERE identifier=?", new[] { sid });
-
-                Debug.WriteLine($"Added {quanty} of {Cash} to {player.Name}");
+                LoadCharacter.characters[sid].addCurrency(typeCash, quantity);
 
                 JObject nuipost = new JObject();
                 nuipost.Add("type", "ui");
                 nuipost.Add("action", "update");
-                nuipost.Add("moneyquanty", lessMoney);
-                nuipost.Add("goldquanty", lessGold);
-                nuipost.Add("rolquanty", lessRol);
-                nuipost.Add("xp", user.xp);
+                nuipost.Add("moneyquanty", LoadCharacter.characters[sid].Money);
+                nuipost.Add("goldquanty", LoadCharacter.characters[sid].Gold);
+                nuipost.Add("rolquanty", LoadCharacter.characters[sid].Rol);
+                nuipost.Add("xp", LoadCharacter.characters[sid].Xp);
                 nuipost.Add("serverId", handle);
 
                 player.TriggerEvent("vorp:updateUi", nuipost.ToString());
-
-            }));
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Warning addMoney: User not found!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
 
-        private void addXp(int handle, int quanty)
+        private void addXp(int handle, int quantity)
         {
-            TriggerEvent("vorp:getCharacter", handle, new Action<dynamic>((user) =>
+          
+            Player player = getSource(handle);
+
+            string sid = ("steam:" + player.Identifiers["steam"]);
+
+            if (LoadCharacter.characters.ContainsKey(sid))
             {
-                Player player = getSource(handle);
+                LoadCharacter.characters[sid].addXp(quantity);
 
-                string sid = ("steam:" + player.Identifiers["steam"]);
-
-                Exports["ghmattimysql"].execute($"UPDATE characters SET xp = xp + {quanty} WHERE identifier=?", new[] { sid });
-
-                Debug.WriteLine($"Added {quanty} of Xp to {player.Name}");
-
-                int totalxp = user.xp + quanty;
-
-                // Send Nui Update UI
                 JObject nuipost = new JObject();
                 nuipost.Add("type", "ui");
                 nuipost.Add("action", "setxp");
-                nuipost.Add("xp", totalxp);
+                nuipost.Add("xp", LoadCharacter.characters[sid].Xp);
 
                 player.TriggerEvent("vorp:updateUi", nuipost.ToString());
-            }));
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Warning addXp: User not found!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
 
-        private void removeXp(int handle, int quanty)
+        private void removeXp(int handle, int quantity)
         {
-            TriggerEvent("vorp:getCharacter", handle, new Action<dynamic>((user) =>
+            
+            Player player = getSource(handle);
+
+            string sid = ("steam:" + player.Identifiers["steam"]);
+
+            if (LoadCharacter.characters.ContainsKey(sid))
             {
-                Player player = getSource(handle);
+                LoadCharacter.characters[sid].removeXp(quantity);
 
-                string sid = ("steam:" + player.Identifiers["steam"]);
-
-                Exports["ghmattimysql"].execute($"UPDATE characters SET xp = xp - {quanty} WHERE identifier=?", new[] { sid });
-
-                Debug.WriteLine($"Removed {quanty} of Xp to {player.Name}");
-                int totalxp = user.xp - quanty;
-
-                // Send Nui Update UI
                 JObject nuipost = new JObject();
                 nuipost.Add("type", "ui");
                 nuipost.Add("action", "setxp");
-                nuipost.Add("xp", totalxp);
+                nuipost.Add("xp", LoadCharacter.characters[sid].Xp);
 
                 player.TriggerEvent("vorp:updateUi", nuipost.ToString());
-            }));
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Warning removeXp: User not found!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
 
         private void setJob(int handle, string job)
         {
-            TriggerEvent("vorp:getCharacter", handle, new Action<dynamic>((user) =>
+
+            Player player = getSource(handle);
+
+            string sid = ("steam:" + player.Identifiers["steam"]);
+
+            if (LoadCharacter.characters.ContainsKey(sid))
             {
-                Player player = getSource(handle);
-
-                string sid = ("steam:" + player.Identifiers["steam"]);
-
-                Exports["ghmattimysql"].execute($"UPDATE characters SET job = ? WHERE identifier=?", new[] { job, sid });
-            }));
+                LoadCharacter.characters[sid].setJob(job);
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Warning setJob: User not found!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
 
         private void setGroup(int handle, string group)
         {
-            TriggerEvent("vorp:getCharacter", handle, new Action<dynamic>((user) =>
+            Player player = getSource(handle);
+
+            string sid = ("steam:" + player.Identifiers["steam"]);
+
+            if (LoadCharacter.characters.ContainsKey(sid))
             {
-                Player player = getSource(handle);
-
-                string sid = ("steam:" + player.Identifiers["steam"]);
-
-                Exports["ghmattimysql"].execute($"UPDATE characters SET group = ? WHERE identifier=?", new[] { group, sid });
-            }));
+                LoadCharacter.characters[sid].setGroup(group);
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Warning setGroup: User not found!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
 
         private void getCharacter(int handle, dynamic cb)

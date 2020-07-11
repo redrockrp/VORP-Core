@@ -102,6 +102,8 @@ namespace vorpcore_sv.Class
                     rol += quantity;
                     Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol + {quantity} WHERE identifier=?", new[] { identifier });
                     break;
+                default:
+                    break;
             }
         }
 
@@ -120,6 +122,8 @@ namespace vorpcore_sv.Class
                 case 2:
                     rol -= quantity;
                     Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol - {quantity} WHERE identifier=?", new[] { identifier });
+                    break;
+                default:
                     break;
             }
         }
