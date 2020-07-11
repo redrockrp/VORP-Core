@@ -152,5 +152,12 @@ namespace vorpcore_sv.Class
             Exports["ghmattimysql"].execute($"UPDATE characters SET group={newgroup} WHERE identifier=?", new[] { identifier });
         }
 
+        public void setDead(bool dead)
+        {
+            isdead = dead;
+            int intdead = dead ? 1 : 0;
+            Exports["ghmattimysql"].execute("UPDATE characters SET isdead=? WHERE identifier=?", new[] { intdead.ToString(), identifier });
+        }
+
     }
 }

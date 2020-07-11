@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using vorpcore_sv.Scripts;
 
 namespace vorpcore_sv.Utils
 {
@@ -23,13 +24,18 @@ namespace vorpcore_sv.Utils
         private void OnPlayerDead([FromSource]Player player, bool isDead)
         {
             string sid = ("steam:" + player.Identifiers["steam"]);
-            int dead = isDead ? 1 : 0;
-            Exports["ghmattimysql"].execute("UPDATE characters SET isdead=? WHERE identifier=?", new[] { dead.ToString(), sid });
+
+            if (LoadCharacter.characters.ContainsKey(sid))
+            {
+                LoadCharacter.characters[sid].setDead(isDead);
+            }
         }
 
         private void OnPlayerDropped([FromSource]Player player, string reason)
         {
             string sid = ("steam:" + player.Identifiers["steam"]);
+
+            LoadCharacter.characters.Remove(sid);
 
             try
             {
