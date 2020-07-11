@@ -30,42 +30,35 @@ namespace vorpcore_sv.Scripts
         {
             string sid = ("steam:" + source.Identifiers["steam"]);
 
-            Exports["ghmattimysql"].execute("SELECT * FROM characters WHERE identifier = ?", new[] { sid }, new Action<dynamic>((result) =>
+            if (characters.ContainsKey(sid))
             {
-                if (result.Count == 0)
+                characters[sid] = new Character();
+                source.TriggerEvent("vorpcharacter:createPlayer");
+            }
+            else
+            {
+
+                JObject pos = JObject.Parse(characters[sid].Coords);
+                if (pos.ContainsKey("x"))
                 {
-                    characters[sid] = new Character();
-                    source.TriggerEvent("vorpcharacter:createPlayer");
-                }
-                else
-                {
-                    characters[sid] = new Character(sid, result[0].group.ToString(), result[0].job.ToString(), result[0].jobgrade.ToString(), result[0].firstname.ToString(), result[0].lastname.ToString(), double.Parse(result[0].money.ToString()), double.Parse(result[0].gold.ToString()), double.Parse(result[0].rol.ToString()), int.Parse(result[0].xp.ToString()));
-                    bool isdead = Boolean.Parse(result[0].isdead.ToString());
-                    string last_coords = result[0].coords;
-
-                    JObject pos = JObject.Parse(last_coords);
-                    if (pos.ContainsKey("x"))
-                    {
-                        Vector3 pcoords = new Vector3(pos["x"].ToObject<float>(), pos["y"].ToObject<float>(), pos["z"].ToObject<float>());
-                        source.TriggerEvent("vorp:initPlayer", pcoords, pos["heading"].ToObject<float>(), isdead);
-                    }
-
-
-                    // Send Nui Update UI all
-                    JObject postUi = new JObject();
-                    postUi.Add("type", "ui");
-                    postUi.Add("action", "update");
-                    postUi.Add("moneyquanty", result[0].money);
-                    postUi.Add("goldquanty", result[0].gold);
-                    postUi.Add("rolquanty", result[0].rol);
-                    postUi.Add("serverId", source.Handle);
-                    postUi.Add("xp", result[0].xp);
-
-
-                    source.TriggerEvent("vorp:updateUi", postUi.ToString());
+                    Vector3 pcoords = new Vector3(pos["x"].ToObject<float>(), pos["y"].ToObject<float>(), pos["z"].ToObject<float>());
+                    source.TriggerEvent("vorp:initPlayer", pcoords, pos["heading"].ToObject<float>(), characters[sid].IsDead);
                 }
 
-            }));
+
+                // Send Nui Update UI all
+                JObject postUi = new JObject();
+                postUi.Add("type", "ui");
+                postUi.Add("action", "update");
+                postUi.Add("moneyquanty", characters[sid].Money);
+                postUi.Add("goldquanty", characters[sid].Gold);
+                postUi.Add("rolquanty", characters[sid].Rol);
+                postUi.Add("serverId", source.Handle);
+                postUi.Add("xp", characters[sid].Xp);
+
+
+                source.TriggerEvent("vorp:updateUi", postUi.ToString());
+            }
 
         }
 

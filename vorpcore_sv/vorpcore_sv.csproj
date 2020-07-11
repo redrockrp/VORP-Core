@@ -56,7 +56,7 @@
     <Compile Include="Scripts\Commands.cs" />
     <Compile Include="Scripts\LoadCharacter.cs" />
     <Compile Include="Scripts\Whitelist.cs" />
-    <Compile Include="Utils\Database.cs" />
+    <Compile Include="Utils\ApiController.cs" />
     <Compile Include="Utils\LoadConfig.cs" />
     <Compile Include="Utils\SaveCoordsDB.cs" />
     <Compile Include="Utils\UPlayerCoords.cs" />

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using vorpcore_sv.Utils;
+using vorpcore_sv.Class;
+using vorpcore_sv.Scripts;
 
 namespace vorpcore_sv.Scripts
 {
@@ -76,6 +78,21 @@ namespace vorpcore_sv.Scripts
             await Delay(0);
 
             Debug.WriteLine($"{playerName} is connecting with (Identifier: [{steamIdentifier}])");
+
+            string sid = "steam:" + steamIdentifier;
+
+            Exports["ghmattimysql"].execute("SELECT * FROM characters WHERE identifier = ?", new[] { sid }, new Action<dynamic>((result) =>
+            {
+                if (result.Count == 0)
+                {
+
+                }
+                else
+                {
+                    LoadCharacter.characters[sid] = new Character(sid, result[0].group.ToString(), result[0].job.ToString(), result[0].jobgrade.ToString(), result[0].firstname.ToString(), result[0].lastname.ToString(), result[0].inventory.ToString(), result[0].status.ToString(), result[0].coords.ToString(), double.Parse(result[0].money.ToString()), double.Parse(result[0].gold.ToString()), double.Parse(result[0].rol.ToString()), int.Parse(result[0].xp.ToString()), Convert.ToBoolean(result[0].isdead.ToString()));
+                }
+
+            }));
         }
     }
 }

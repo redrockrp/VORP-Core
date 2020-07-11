@@ -16,7 +16,7 @@ namespace vorpcore_sv.Scripts
             {
                 if (source > 0) // it's a player.
                 {
-                    Player _source = Database.getSource(source);
+                    Player _source = ApiController.getSource(source);
                     TriggerEvent("vorp:getCharacter", source, new Action<dynamic>((user) =>
                     {
                         if (user.group == "admin")
@@ -57,7 +57,7 @@ namespace vorpcore_sv.Scripts
             {
                 if (source > 0) // it's a player.
                 {
-                    Player _source = Database.getSource(source);
+                    Player _source = ApiController.getSource(source);
                     TriggerEvent("vorp:getCharacter", source, new Action<dynamic>((user) =>
                     {
                         if (user.group == "admin")
@@ -98,7 +98,7 @@ namespace vorpcore_sv.Scripts
             {
                 if (source > 0) // it's a player.
                 {
-                    Player _source = Database.getSource(source);
+                    Player _source = ApiController.getSource(source);
 
                     TriggerEvent("vorp:getCharacter", source, new Action<dynamic>((user) =>
                     {
@@ -135,7 +135,7 @@ namespace vorpcore_sv.Scripts
             {
                 if (source > 0) //it's a player.
                 {
-                    Player _source = Database.getSource(source);
+                    Player _source = ApiController.getSource(source);
                     TriggerEvent("vorp:getCharacter", source, new Action<dynamic>((user) =>
                     {
                         if (user.group == "admin")
@@ -171,7 +171,7 @@ namespace vorpcore_sv.Scripts
             {
                 if (source > 0) // it's a player.
                 {
-                    Player _source = Database.getSource(source);
+                    Player _source = ApiController.getSource(source);
                     TriggerEvent("vorp:getCharacter", source, new Action<dynamic>((user) =>
                     {
                         if (user.group == "admin")

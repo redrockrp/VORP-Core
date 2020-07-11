@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
+using vorpcore_sv.Scripts;
 
 namespace vorpcore_sv.Utils
 {
-    class Database : BaseScript
+    class ApiController : BaseScript
     {
-        public Database()
+        public ApiController()
         {
             EventHandlers["vorp:getCharacter"] += new Action<int, dynamic>(getCharacter);
             EventHandlers["vorp:addMoney"] += new Action<int, int, double>(addMoney);
@@ -203,33 +204,16 @@ namespace vorpcore_sv.Utils
 
             string sid = ("steam:" + player.Identifiers["steam"]);
 
-            Exports["ghmattimysql"].execute("SELECT * FROM characters WHERE identifier = ?", new[] { sid }, new Action<dynamic>((result) =>
+            if (!LoadCharacter.characters.ContainsKey(sid))
             {
-                if (result.Count == 0)
-                {
-                    Debug.WriteLine("ERROR: Usuario no registrado");
-                }
-                else
-                {
-                    Dictionary<string, object> user = new Dictionary<string, object>();
-
-                    /* Seteamos todos los paraametros que nos puedan servir para comprobaciones*/
-                    user.Add("identifier", sid);
-                    user.Add("inventory", result[0].inventory);
-                    user.Add("group", result[0].group);
-                    user.Add("job", result[0].job);
-                    user.Add("money", result[0].money);
-                    user.Add("gold", result[0].gold);
-                    user.Add("rol", result[0].rol);
-                    user.Add("xp", result[0].xp);
-                    user.Add("firstname", result[0].firstname);
-                    user.Add("lastname", result[0].lastname);
-                    user.Add("status", result[0].status);
-
-                    cb(user); //Enviamos los datos de vuelta
-                }
-
-            }));
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Warning: User not found!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                cb(LoadCharacter.characters[sid].getCharacter());
+            }
         }
     }
 }

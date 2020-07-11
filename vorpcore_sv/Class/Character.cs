@@ -16,6 +16,9 @@ namespace vorpcore_sv.Class
         private string jobgrade;
         private string firstname;
         private string lastname;
+        private string inventory;
+        private string status;
+        private string coords;
 
         private double money;
         private double gold;
@@ -23,23 +26,29 @@ namespace vorpcore_sv.Class
 
         private int xp;
 
+        private bool isdead;
+
         public string Identifier { get => identifier; }
         public string Group { get => group; }
         public string Job { get => job; }
         public string Jobgrade { get => jobgrade; }
         public string Firstname { get => firstname; set => firstname = value; }
         public string Lastname { get => lastname; set => lastname = value; }
+        public string Inventory { get => inventory; set => inventory = value; }
+        public string Status { get => status; set => status = value; }
+        public string Coords { get => coords; set => coords = value; }
         public double Money { get => money; }
         public double Gold { get => gold; }
         public double Rol { get => rol; }
         public int Xp { get => xp; }
+        public bool IsDead { get => isdead; }
 
         public Character()
         {
 
         }
 
-        public Character(string identifier, string group, string job, string jobgrade, string firstname, string lastname, double money, double gold, double rol, int xp)
+        public Character(string identifier, string group, string job, string jobgrade, string firstname, string lastname, string inventory, string status, string coords, double money, double gold, double rol, int xp, bool isdead)
         {
             this.identifier = identifier;
             this.group = group;
@@ -47,10 +56,34 @@ namespace vorpcore_sv.Class
             this.jobgrade = jobgrade;
             this.firstname = firstname;
             this.lastname = lastname;
+            this.inventory = inventory;
+            this.status = status;
+            this.coords = coords;
             this.money = money;
             this.gold = gold;
             this.rol = rol;
             this.xp = xp;
+            this.isdead = isdead;
+        }
+
+        public Dictionary<string, object> getCharacter()
+        {
+            Dictionary<string, object> userData = new Dictionary<string, object>();
+            userData.Add("identifier", identifier);
+            userData.Add("group", group);
+            userData.Add("job", job);
+            userData.Add("money", money);
+            userData.Add("gold", gold);
+            userData.Add("rol", rol);
+            userData.Add("xp", xp);
+            userData.Add("firstname", firstname);
+            userData.Add("lastname", lastname);
+            userData.Add("inventory", inventory);
+            userData.Add("status", status);
+            userData.Add("coords", coords);
+            userData.Add("isdead", isdead);
+
+            return userData;
         }
 
         public void addCurrency(int currency, double quantity)
