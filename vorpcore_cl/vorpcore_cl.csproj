@@ -62,6 +62,7 @@
     <Compile Include="Scripts\Instance.cs" />
     <Compile Include="Scripts\RespawnSystem.cs" />
     <Compile Include="Scripts\SpawnPlayer.cs" />
+    <Compile Include="Ui\Notifications.cs" />
     <Compile Include="Ui\Uicore.cs" />
     <Compile Include="Utils\Controls.cs" />
     <Compile Include="Utils\GetConfig.cs" />
