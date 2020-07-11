@@ -27,12 +27,17 @@ namespace vorpcore_sv.Class
         public string Group { get => group; }
         public string Job { get => job; }
         public string Jobgrade { get => jobgrade; }
-        public string Firstname { get => firstname; }
-        public string Lastname { get => lastname; }
+        public string Firstname { get => firstname; set => firstname = value; }
+        public string Lastname { get => lastname; set => lastname = value; }
         public double Money { get => money; }
         public double Gold { get => gold; }
         public double Rol { get => rol; }
         public int Xp { get => xp; }
+
+        public Character()
+        {
+
+        }
 
         public Character(string identifier, string group, string job, string jobgrade, string firstname, string lastname, double money, double gold, double rol, int xp)
         {

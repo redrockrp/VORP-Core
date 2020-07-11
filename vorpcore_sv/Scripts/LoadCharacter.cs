@@ -5,15 +5,25 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Json;
+using vorpcore_sv.Class;
 using vorpcore_sv.Utils;
 
 namespace vorpcore_sv.Scripts
 {
-    public class SLoadPlayer : BaseScript
+    public class LoadCharacter : BaseScript
     {
-        public SLoadPlayer()
+        public static Dictionary<string, Character> characters = new Dictionary<string, Character>();
+
+        public LoadCharacter()
         {
             EventHandlers["vorp:playerSpawn"] += new Action<Player>(PlayerSpawnFunction);
+            EventHandlers["vorp:UpdateCharacter"] += new Action<string, string, string>(UpdateCharacter);
+        }
+
+        private void UpdateCharacter(string steamId, string firstname, string lastname)
+        {
+            characters[steamId].Firstname = firstname;
+            characters[steamId].Lastname = lastname;
         }
 
         private void PlayerSpawnFunction([FromSource] Player source)
@@ -24,22 +34,22 @@ namespace vorpcore_sv.Scripts
             {
                 if (result.Count == 0)
                 {
+                    characters[sid] = new Character();
                     source.TriggerEvent("vorpcharacter:createPlayer");
                 }
                 else
                 {
+                    characters[sid] = new Character(sid, result[0].group, result[0].job, result[0].jobgrade, result[0].firstname, result[0].lastname, result[0].money, result[0].gold, result[0].rol, result[0].xp);
                     bool isdead = Boolean.Parse(result[0].isdead.ToString());
-                    string c_json = result[0].coords;
-                    try
+                    string last_coords = result[0].coords;
+
+                    JObject pos = JObject.Parse(last_coords);
+                    if (pos.ContainsKey("x"))
                     {
-                        Dictionary<string, float> pos = JsonConvert.DeserializeObject<Dictionary<string, float>>(c_json);
-                        Vector3 pcoords = new Vector3(pos["x"], pos["y"], pos["z"]);
+                        Vector3 pcoords = new Vector3(pos["x"].ToObject<float>(), pos["y"].ToObject<float>(), pos["z"].ToObject<float>());
                         source.TriggerEvent("vorp:initPlayer", pcoords, pos["heading"], isdead);
                     }
-                    catch
-                    {
 
-                    }
 
                     // Send Nui Update UI all
                     JObject postUi = new JObject();
