@@ -39,7 +39,7 @@ namespace vorpcore_sv.Scripts
                 }
                 else
                 {
-                    characters[sid] = new Character(sid, result[0].group, result[0].job, result[0].jobgrade, result[0].firstname, result[0].lastname, result[0].money, result[0].gold, result[0].rol, result[0].xp);
+                    characters[sid] = new Character(sid, result[0].group.ToString(), result[0].job.ToString(), result[0].jobgrade.ToString(), result[0].firstname.ToString(), result[0].lastname.ToString(), double.Parse(result[0].money.ToString()), double.Parse(result[0].gold.ToString()), double.Parse(result[0].rol.ToString()), int.Parse(result[0].xp.ToString()));
                     bool isdead = Boolean.Parse(result[0].isdead.ToString());
                     string last_coords = result[0].coords;
 
@@ -47,7 +47,7 @@ namespace vorpcore_sv.Scripts
                     if (pos.ContainsKey("x"))
                     {
                         Vector3 pcoords = new Vector3(pos["x"].ToObject<float>(), pos["y"].ToObject<float>(), pos["z"].ToObject<float>());
-                        source.TriggerEvent("vorp:initPlayer", pcoords, pos["heading"], isdead);
+                        source.TriggerEvent("vorp:initPlayer", pcoords, pos["heading"].ToObject<float>(), isdead);
                     }
 
 
