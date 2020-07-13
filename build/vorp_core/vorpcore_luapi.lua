@@ -47,6 +47,10 @@ exports('vorpAPI',function()
     self.setInstancePlayer = function(source, active)
         TriggerClientEvent("vorp:setInstancePlayer",source, active)
     end
+
+    self.addNewCallBack = function(name, cb)
+        TriggerEvent("vorp:addNewCallBack", name, cb)
+    end
     
     return self
 end)

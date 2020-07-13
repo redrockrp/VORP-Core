@@ -36,4 +36,6 @@ Now you are ready!
 ## Credits
 Vespura for his work in c# that has helped me create this great project
 
+[ExtendedMode](https://github.com/extendedmode/extendedmode) We have based our callback system on his callback system
+
 [Redemrp_Respawn](https://github.com/RedEM-RP/redemrp_respawn/blob/d26395a9c19169cdf47ab4d66282f7a1436dc925/client/cl_main.lua#L18) based on his respawn/death system.
