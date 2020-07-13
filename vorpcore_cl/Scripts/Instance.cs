@@ -11,61 +11,20 @@ namespace vorpcore_cl.Scripts
         public Instance()
         {
             EventHandlers["vorp:setInstancePlayer"] += new Action<bool>(SetInstancePlayer);
-            Tick += InstancePlayer;
         }
 
-        private async Task DeInstancePlayer()
+        private void SetInstancePlayer(bool instance)
         {
-            for (int i = 0; i < 255; i++)
+            
+            switch (instance)
             {
-                if (API.NetworkIsPlayerActive(i))
-                {
-                    if (API.GetPlayerPed(i) != API.PlayerPedId())
-                    {
-                        API.SetEntityAlpha(API.GetPlayerPed(i), 255, false);
-                        API.SetEntityNoCollisionEntity(API.PlayerPedId(), API.GetPlayerPed(i), true);
-                        await Delay(1);
-                    }
-
-                }
-
+                case true:
+                    Function.Call((Hash)0x17E0198B3882C2CB);
+                    break;
+                case false:
+                    Function.Call((Hash)0xD0AFAFF5A51D72F7);
+                    break;
             }
-        }
-
-        private void SetInstancePlayer(bool inst)
-        {
-            if (inst)
-            {
-                intancePlayer = true;
-            }
-            else
-            {
-                intancePlayer = false;
-                DeInstancePlayer();
-            }
-        }
-
-        [Tick]
-        private async Task InstancePlayer()
-        {
-            if (intancePlayer)
-            {
-                for (int i = 0; i < 255; i++)
-                {
-                    if (API.NetworkIsPlayerActive(i))
-                    {
-                        if (API.GetPlayerPed(i) != API.PlayerPedId())
-                        {
-                            API.SetEntityAlpha(API.GetPlayerPed(i), 0, false);
-                            API.SetEntityNoCollisionEntity(API.PlayerPedId(), API.GetPlayerPed(i), false);
-                            await Delay(1);
-                        }
-
-                    }
-
-                }
-            }
-            await Delay(1000);
         }
     }
 }
