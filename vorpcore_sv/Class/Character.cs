@@ -92,15 +92,15 @@ namespace vorpcore_sv.Class
             {
                 case 0:
                     money += quantity;
-                    Exports["ghmattimysql"].execute($"UPDATE characters SET money=money + {quantity} WHERE identifier=?", new[] { identifier });
+                    Exports["ghmattimysql"].execute($"UPDATE characters SET money=money + ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 case 1:
                     gold += quantity;
-                    Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold + {quantity} WHERE identifier=?", new[] { identifier });
+                    Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold + ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 case 2:
                     rol += quantity;
-                    Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol + {quantity} WHERE identifier=?", new[] { identifier });
+                    Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol + ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 default:
                     break;
@@ -113,15 +113,15 @@ namespace vorpcore_sv.Class
             {
                 case 0:
                     money -= quantity;
-                    Exports["ghmattimysql"].execute($"UPDATE characters SET money=money - {quantity} WHERE identifier=?", new[] { identifier });
+                    Exports["ghmattimysql"].execute($"UPDATE characters SET money=money - ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 case 1:
                     gold -= quantity;
-                    Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold - {quantity} WHERE identifier=?", new[] { identifier });
+                    Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold - ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 case 2:
                     rol -= quantity;
-                    Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol - {quantity} WHERE identifier=?", new[] { identifier });
+                    Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol - ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 default:
                     break;
@@ -131,32 +131,32 @@ namespace vorpcore_sv.Class
         public void addXp(int quantity)
         {
             xp += quantity;
-            Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp + {quantity} WHERE identifier=?", new[] { identifier });
+            Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp + ? WHERE identifier=?", new object[] { quantity, identifier });
         }
 
         public void removeXp(int quantity)
         {
             xp -= quantity;
-            Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp - {quantity} WHERE identifier=?", new[] { identifier });
+            Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp - ? WHERE identifier=?", new object[] { quantity, identifier });
         }
 
         public void setJob(string newjob)
         {
             job = newjob;
-            Exports["ghmattimysql"].execute($"UPDATE characters SET job={newjob} WHERE identifier=?", new[] { identifier });
+            Exports["ghmattimysql"].execute($"UPDATE characters SET job=? WHERE identifier=?", new object[] { newjob, identifier });
         }
 
         public void setGroup(string newgroup)
         {
             group = newgroup;
-            Exports["ghmattimysql"].execute($"UPDATE characters SET group={newgroup} WHERE identifier=?", new[] { identifier });
+            Exports["ghmattimysql"].execute($"UPDATE characters SET group=? WHERE identifier=?", new object[] { newgroup, identifier });
         }
 
         public void setDead(bool dead)
         {
             isdead = dead;
             int intdead = dead ? 1 : 0;
-            Exports["ghmattimysql"].execute("UPDATE characters SET isdead=? WHERE identifier=?", new[] { intdead.ToString(), identifier });
+            Exports["ghmattimysql"].execute("UPDATE characters SET isdead=? WHERE identifier=?", new object[] { intdead, identifier });
         }
 
     }
