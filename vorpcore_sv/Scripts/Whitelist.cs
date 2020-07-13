@@ -75,23 +75,24 @@ namespace vorpcore_sv.Scripts
                 deferrals.done();
             }
 
-            await Delay(0);
+            await Delay(1);
 
             Debug.WriteLine($"{playerName} is connecting with (Identifier: [{steamIdentifier}])");
 
             string sid = "steam:" + steamIdentifier;
-
-            Exports["ghmattimysql"].execute("SELECT * FROM characters WHERE identifier = ?", new[] { sid }, new Action<dynamic>((result) =>
+            Debug.WriteLine(sid);
+            Exports["ghmattimysql"].execute("SELECT * FROM characters WHERE identifier LIKE ?", new object[] { sid.ToString() }, new Action<dynamic>((result) =>
             {
-                if (result.Count == 0)
+                Debug.WriteLine(result.Count.ToString());
+                if (result.Count != 0)
                 {
-
+                    string inventory = "{}";
+                    if (!String.IsNullOrEmpty(result[0].inventory))
+                    {
+                        inventory = result[0].inventory;
+                    }
+                    LoadCharacter.characters[sid] = new Character(sid, result[0].group.ToString(), result[0].job.ToString(), result[0].jobgrade.ToString(), result[0].firstname.ToString(), result[0].lastname.ToString(), inventory, result[0].status.ToString(), result[0].coords.ToString(), double.Parse(result[0].money.ToString()), double.Parse(result[0].gold.ToString()), double.Parse(result[0].rol.ToString()), int.Parse(result[0].xp.ToString()), Convert.ToBoolean(result[0].isdead.ToString()));
                 }
-                else
-                {
-                    LoadCharacter.characters[sid] = new Character(sid, result[0].group.ToString(), result[0].job.ToString(), result[0].jobgrade.ToString(), result[0].firstname.ToString(), result[0].lastname.ToString(), result[0].inventory.ToString(), result[0].status.ToString(), result[0].coords.ToString(), double.Parse(result[0].money.ToString()), double.Parse(result[0].gold.ToString()), double.Parse(result[0].rol.ToString()), int.Parse(result[0].xp.ToString()), Convert.ToBoolean(result[0].isdead.ToString()));
-                }
-
             }));
         }
     }
