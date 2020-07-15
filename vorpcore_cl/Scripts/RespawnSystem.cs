@@ -64,12 +64,10 @@ namespace vorpcore_cl.Scripts
                         await Utils.Miscellanea.DrawText(Utils.GetConfig.Langs["SubTitlePressKey"], Utils.GetConfig.Config["RespawnSubTitleFont"].ToObject<int>(), 0.50f, 0.50f, 1.0f, 1.0f, 255, 255, 255, 255, true, true);
                         if (Function.Call<bool>((Hash)0x580417101DDB492F, 0, KeyInt))
                         {
-                            API.DoScreenFadeOut(1000);
-                            await Delay(1000);
-                            TriggerServerEvent("vorpcharacter:getPlayerSkin");
-
                             TriggerServerEvent("vorp:PlayerForceRespawn");
                             TriggerEvent("vorp:PlayerForceRespawn");
+                            API.DoScreenFadeOut(3000);
+                            await Delay(3000);
                             await resspawnPlayer();
                             pressKey = true;
                             await Delay(1000);
@@ -100,6 +98,7 @@ namespace vorpcore_cl.Scripts
             JToken respawnCoords = Utils.GetConfig.Config["RespawnCoords"];
             Function.Call((Hash)0x203BEFFDBE12E96A, API.PlayerPedId(), respawnCoords[0].ToObject<float>(), respawnCoords[1].ToObject<float>(), respawnCoords[2].ToObject<float>(), respawnCoords[3].ToObject<float>(), false, false, false);
             await Delay(100);
+            TriggerServerEvent("vorpcharacter:getPlayerSkin");
             API.DoScreenFadeIn(1000);
             TriggerServerEvent("vorp:ImDead", false); //This is new or copy can u send me a dm?
             setDead = false;

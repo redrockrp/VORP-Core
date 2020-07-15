@@ -8,7 +8,7 @@ exports('vorpAPI',function()
             user = result
         end)
 
-        while callback == nil and timeout ~= 0 do
+        while user == nil and timeout ~= 0 do
             timeout = timeout - 1
             Wait(25)
         end
