@@ -4,7 +4,7 @@ exports('vorpAPI',function()
     self.getCharacter = function(source)
         local timeout = 200 -- 5 seconds
         local user = nil
-        TriggerEvent("vorpCore:getCharacter",source,function(result)
+        TriggerEvent("vorp:getCharacter",source,function(result)
             user = result
         end)
 
