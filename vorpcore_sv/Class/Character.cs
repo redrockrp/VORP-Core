@@ -43,9 +43,10 @@ namespace vorpcore_sv.Class
         public int Xp { get => xp; }
         public bool IsDead { get => isdead; }
 
-        public Character()
+        public Character(string identifier)
         {
-
+            this.identifier = identifier;
+            this.job = "unemployed";
         }
 
         public Character(string identifier, string group, string job, string jobgrade, string firstname, string lastname, string inventory, string status, string coords, double money, double gold, double rol, int xp, bool isdead)

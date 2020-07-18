@@ -13,7 +13,6 @@ namespace vorpcore_cl.Ui
         public Notifications()
         {
             //Notifications Based on Key_Value & Disquse & Vespura natives | Thanks for share.
-
             EventHandlers["vorp:Tip"] += new Action<string, int>(notifyTip);
             EventHandlers["vorp:TipRight"] += new Action<string, int>(notifyDisplayRightTip);
             EventHandlers["vorp:TipBottom"] += new Action<string, int>(notifyDisplayObjetive);
@@ -23,7 +22,6 @@ namespace vorpcore_cl.Ui
 
         private async void notifyDisplayLeftNotification(string title, string text, string dic, string icon, int miliseconds)
         {
-
             await Utils.Miscellanea.LoadTexture(dic);
 
             Exports["vorp_core"].DisplayLeftNotification(title, text, dic, icon, miliseconds);

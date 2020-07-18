@@ -32,7 +32,7 @@ namespace vorpcore_sv.Scripts
 
             if (!characters.ContainsKey(sid))
             {
-                characters[sid] = new Character();
+                characters[sid] = new Character(sid);
                 source.TriggerEvent("vorpcharacter:createPlayer");
             }
             else
