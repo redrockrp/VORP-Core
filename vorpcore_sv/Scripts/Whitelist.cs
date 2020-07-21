@@ -81,7 +81,7 @@ namespace vorpcore_sv.Scripts
 
             string sid = "steam:" + steamIdentifier;
             Debug.WriteLine(sid);
-            Exports["ghmattimysql"].execute("SELECT * FROM characters WHERE identifier LIKE ?", new object[] { sid.ToString() }, new Action<dynamic>((result) =>
+            Exports["ghmattimysql"].execute("SELECT * FROM characters WHERE identifier LIKE ?", new string[] { sid.ToString() }, new Action<dynamic>((result) =>
             {
                 Debug.WriteLine(result.Count.ToString());
                 if (result.Count != 0)
