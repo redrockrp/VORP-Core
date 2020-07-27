@@ -9,7 +9,7 @@ This is the VORP CORE for RedM made in C# compatible with LUA
 * Download ghmattimysql
 * Copy and paste ```ghmattimysql``` folder to ```resources/ghmattimysql```
 * Delete file ```resources/ghmattimysql/config.json```
-* Add ```set mysql_connection_string "mysql://mysqluser:password@localhost/vorp"``` to your ```server.cfg``` file
+* Add ```set mysql_connection_string "mysql://root:@127.0.0.1/vorp?acquireTimeout=60000&connectTimeout=60000"``` to your ```server.cfg``` file
 * Add ```ensure ghmattimysql``` to your ```server.cfg``` file
 
 * [Download the lastest version of VORP CORE](https://github.com/VORPCORE/VORP-Core/releases)
@@ -20,7 +20,7 @@ This is the VORP CORE for RedM made in C# compatible with LUA
 * Example Server.cfg
 ```cfg
 #MYSQL
-set mysql_connection_string "mysql://user:password@ip/vorp"
+set mysql_connection_string "mysql://root:@127.0.0.1/vorp?acquireTimeout=60000&connectTimeout=60000"
 ensure ghmattimysql
 #Core
 ensure vorp_core
