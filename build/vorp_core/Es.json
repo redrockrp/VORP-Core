@@ -6,5 +6,7 @@
   "TitleOnDead": "Has muerto!",
   "SubTitleOnDead": "Reapareceras en {0} segundos",
   "SubTitlePressKey": "Presiona ~e~E~q~ para revivir",
-  "YouAreCarried": "Estas siendo cargado por una persona"
+  "YouAreCarried": "Estas siendo cargado por una persona",
+
+  "VoiceRangeChanged": "Rango de chat de voz cambiado a {0} metros"
 }
