@@ -18,7 +18,7 @@ namespace vorpcore_sv.Class
             get => _identifier;
             set
             {
-                Exports["ghmattimysql"].execute($"UPDATE users SET identifier= ? WHERE identifier=?", new object[] { Identifier, value });
+                Exports["ghmattimysql"].execute("UPDATE users SET identifier= ? WHERE identifier=?", new object[] { Identifier, value });
                 _identifier = value;
             }
         }
@@ -29,7 +29,7 @@ namespace vorpcore_sv.Class
             set
             {
                 _group = value;
-                Exports["ghmattimysql"].execute($"UPDATE users SET group= ? WHERE identifier=?", new object[] { Group, Identifier });
+                Exports["ghmattimysql"].execute("UPDATE users SET group= ? WHERE identifier=?", new object[] { Group, Identifier });
             }
         }
 
@@ -39,7 +39,7 @@ namespace vorpcore_sv.Class
             set
             {
                 _playerwarnings = value;
-                Exports["ghmattimysql"].execute($"UPDATE users SET playerwarnings= ? WHERE identifier=?", new object[] { Playerwarnings, Identifier });
+                Exports["ghmattimysql"].execute("UPDATE users SET playerwarnings= ? WHERE identifier=?", new object[] { Playerwarnings, Identifier });
             }
         }
 
@@ -49,7 +49,7 @@ namespace vorpcore_sv.Class
             set
             {
                 _banned = value;
-                Exports["ghmattimysql"].execute($"UPDATE users SET banned= ? WHERE identifier=?", new object[] { Banned, Identifier });
+                Exports["ghmattimysql"].execute("UPDATE users SET banned= ? WHERE identifier=?", new object[] { Banned, Identifier });
             }
         }
 
