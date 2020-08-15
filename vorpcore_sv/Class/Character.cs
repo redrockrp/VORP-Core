@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace vorpcore_sv.Class
 {
+    //Class for user characters
     public class Character : BaseScript
     {
         private string identifier;
@@ -105,8 +106,6 @@ namespace vorpcore_sv.Class
                     rol += quantity;
                     Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol + ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
-                default:
-                    break;
             }
         }
 
@@ -125,8 +124,6 @@ namespace vorpcore_sv.Class
                 case 2:
                     rol -= quantity;
                     Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol - ? WHERE identifier=?", new object[] { quantity, identifier });
-                    break;
-                default:
                     break;
             }
         }
