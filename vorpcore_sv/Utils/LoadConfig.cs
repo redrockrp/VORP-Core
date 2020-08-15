@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using vorpcore_sv.Scripts;
 
 namespace vorpcore_sv.Utils
 {
@@ -21,7 +22,6 @@ namespace vorpcore_sv.Utils
         public LoadConfig()
         {
             EventHandlers[$"{API.GetCurrentResourceName()}:getConfig"] += new Action<Player>(getConfig);
-
             LoadConfigAndLang();
         }
 
@@ -41,25 +41,35 @@ namespace vorpcore_sv.Utils
                 {
                     Debug.WriteLine($"{API.GetCurrentResourceName()}: {Config["defaultlang"]}.json Not Found");
                 }
-                InitScripts();
             }
             else
             {
                 Debug.WriteLine($"{API.GetCurrentResourceName()}: Config.json Not Found");
             }
             isConfigLoaded = true;
+            if (Config["Whitelist"].ToObject<bool>() != null)
+            {
+                LoadUsers._usingWhitelist = Config["Whitelist"].ToObject<bool>();
+                if (LoadUsers._usingWhitelist)
+                {
+                    LoadWhitelist();
+                }
+            }
         }
 
-        private void InitScripts()
+        private void LoadWhitelist()
         {
-            if (Config["Whitelist"].ToObject<bool>())
+            Exports["ghmattimysql"].execute("SELECT * FROM whitelist", new[] { "" }, new Action<dynamic>((result) =>
             {
-                Scripts.Whitelist.whitelistActive = true;
-            }
-            else
-            {
-                Scripts.Whitelist.whitelistActive = false;
-            }
+                if (result.Count > 0)
+                {
+                    foreach (var r in result)
+                    {
+                        LoadUsers._whitelist.Add(r.identifier);
+                        Debug.WriteLine($"{r.identifier} loaded into whitelist");
+                    }
+                }
+            }));
         }
 
         private void getConfig([FromSource]Player source)

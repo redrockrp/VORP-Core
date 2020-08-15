@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using CitizenFX.Core;
 
 namespace vorpcore_sv.Class
@@ -10,7 +11,6 @@ namespace vorpcore_sv.Class
         private string _identifier; //User steamid    
         private string _group;//User admin group
         private int _playerwarnings;//Used for admins to know how many warnings a user has
-        private bool _banned;//Used for know if a player is banned
         private Dictionary<int,Character> _usercharacters;
         private int _numofcharacters;
         private int usedCharacterId;
@@ -43,7 +43,7 @@ namespace vorpcore_sv.Class
             set
             {
                 _group = value;
-                Exports["ghmattimysql"].execute("UPDATE users SET group= ? WHERE identifier=?", new object[] { Group, Identifier });
+                Exports["ghmattimysql"].execute("UPDATE users SET 'group' = ? WHERE identifier=?", new object[] { Group, Identifier });
             }
         }
 
@@ -53,28 +53,52 @@ namespace vorpcore_sv.Class
             set
             {
                 _playerwarnings = value;
-                Exports["ghmattimysql"].execute("UPDATE users SET playerwarnings= ? WHERE identifier=?", new object[] { Playerwarnings, Identifier });
+                Exports["ghmattimysql"].execute("UPDATE users SET warnings= ? WHERE identifier=?", new object[] { Playerwarnings, Identifier });
             }
         }
+        
 
-        public bool Banned
+        public User(string identifier, string group, int playerwarnings)
         {
-            get => _banned;
-            set
-            {
-                _banned = value;
-                Exports["ghmattimysql"].execute("UPDATE users SET banned= ? WHERE identifier=?", new object[] { Banned, Identifier });
-            }
-        }
-
-        public User(string identifier, string group, int playerwarnings, bool banned)
-        {
-            Identifier = identifier;
-            Group = group;
-            Playerwarnings = playerwarnings;
-            Banned = banned;
+            _identifier = identifier;
+            _group = group;
+            _playerwarnings = playerwarnings;
             _usercharacters = new Dictionary<int, Character>();
+            LoadCharacters(identifier);
             //Cargarmos todos sus characters de la base de datos si al cargarlos no tiene entonces cuando se llame a spawnpalyer habrá que crear 1
+        }
+
+        private async void LoadCharacters(string identifier)
+        {
+            Debug.WriteLine("Usuario "+identifier+" cargado");
+            List<object> usercharacters = await Exports["ghmattimysql"].executeSync("SELECT * FROM characters WHERE identifier =?", new[] {identifier});
+            Numofcharacters = usercharacters.Count;
+            if (Numofcharacters > 0)
+            {
+                //Metemos todos los characters en el diccionario
+                foreach (object icharacter in usercharacters)
+                {
+                    IDictionary<string, object> character = (dynamic)icharacter;
+                    Debug.WriteLine((string)character["identifier"]);
+                    Character newCharacter = new Character((string)character["identifier"],(int)character["charidentifier"],(string)character["group"],
+                        (string)character["job"],(string)character["jobgrade"],(string)character["firstname"],(string)character["lastname"],(string)character["inventory"],
+                        (string)character["status"],(string)character["coords"],(double)character["money"],(double)character["gold"],(double)character["rol"],(int)character["xp"],
+                        (bool) character["isdead"]);
+                    if (_usercharacters.ContainsKey(newCharacter.CharIdentifier))
+                    {
+                        _usercharacters[newCharacter.CharIdentifier] = newCharacter;
+                    }
+                    else
+                    {
+                        _usercharacters.Add(newCharacter.CharIdentifier,newCharacter);
+                    }
+                }
+            }
+            else
+            {
+                //Le decimos que hay que crear un nuevo character
+            }
+            Debug.WriteLine($"El jugador tiene {usercharacters.Count}");
         }
 
         public void addCharacter(Character newCharacter)

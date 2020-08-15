@@ -166,69 +166,69 @@ namespace vorpcore_sv.Scripts
                 }
             }), false);
 
-            TriggerEvent("chat:addSuggestion", "/addwhitelist", "Example: /addwhitelist 11000010c8aa16e");
-            API.RegisterCommand("addwhitelist", new Action<int, List<object>, string>((source, args, rawCommand) =>
-            {
-                if (source > 0) // it's a player.
-                {
-                    Player _source = ApiController.getSource(source);
-                    TriggerEvent("vorp:getCharacter", source, new Action<dynamic>((user) =>
-                    {
-                        if (user.group == "admin")
-                        {
-                            try
-                            {
-                                string steamId = args[0].ToString();
-                                Exports["ghmattimysql"].execute("SELECT * FROM whitelist WHERE identifier = ?", new[] { steamId }, new Action<dynamic>((result) =>
-                                {
-                                    if (result.Count == 0)
-                                    {
-                                        Exports["ghmattimysql"].execute("INSERT INTO whitelist (`identifier`) VALUES (?)", new object[] { steamId });
-                                        Whitelist.whitelist.Add(steamId);
-                                        _source.TriggerEvent("vorp:Tip", $"Added {steamId} to whitelist", 4000);
-                                    }
-                                    else
-                                    {
-                                        _source.TriggerEvent("vorp:Tip", $"{steamId} Is Whitelisted {steamId}", 4000);
-                                    }
-                                }));
-                            }
-                            catch
-                            {
-                                _source.TriggerEvent("vorp:Tip", "ERROR: Use Correct Sintaxis", 4000);
-                            }
-                        }
-                        else
-                        {
-                            _source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoPermissions"], 4000);
-                        }
-                    }));
-                }
-                else
-                {
-                    try
-                    {
-                        string steamId = args[0].ToString();
-                        Exports["ghmattimysql"].execute("SELECT * FROM whitelist WHERE identifier = ?", new[] { steamId }, new Action<dynamic>((result) =>
-                        {
-                            if (result.Count == 0)
-                            {
-                                Exports["ghmattimysql"].execute("INSERT INTO whitelist (`identifier`) VALUES (?)", new object[] { steamId });
-                                Whitelist.whitelist.Add(steamId);
-                                Debug.WriteLine($"Added {steamId} to whitelist", 4000);
-                            }
-                            else
-                            {
-                                Debug.WriteLine($"{steamId} Is Whitelisted {steamId}", 4000);
-                            }
-                        }));
-                    }
-                    catch
-                    {
-                        Debug.WriteLine("ERROR: Use Correct Sintaxis", 4000);
-                    }
-                }
-            }), false);
+            // TriggerEvent("chat:addSuggestion", "/addwhitelist", "Example: /addwhitelist 11000010c8aa16e");
+            // API.RegisterCommand("addwhitelist", new Action<int, List<object>, string>((source, args, rawCommand) =>
+            // {
+            //     if (source > 0) // it's a player.
+            //     {
+            //         Player _source = ApiController.getSource(source);
+            //         TriggerEvent("vorp:getCharacter", source, new Action<dynamic>((user) =>
+            //         {
+            //             if (user.group == "admin")
+            //             {
+            //                 try
+            //                 {
+            //                     string steamId = args[0].ToString();
+            //                     Exports["ghmattimysql"].execute("SELECT * FROM whitelist WHERE identifier = ?", new[] { steamId }, new Action<dynamic>((result) =>
+            //                     {
+            //                         if (result.Count == 0)
+            //                         {
+            //                             Exports["ghmattimysql"].execute("INSERT INTO whitelist (`identifier`) VALUES (?)", new object[] { steamId });
+            //                             Whitelist.whitelist.Add(steamId);
+            //                             _source.TriggerEvent("vorp:Tip", $"Added {steamId} to whitelist", 4000);
+            //                         }
+            //                         else
+            //                         {
+            //                             _source.TriggerEvent("vorp:Tip", $"{steamId} Is Whitelisted {steamId}", 4000);
+            //                         }
+            //                     }));
+            //                 }
+            //                 catch
+            //                 {
+            //                     _source.TriggerEvent("vorp:Tip", "ERROR: Use Correct Sintaxis", 4000);
+            //                 }
+            //             }
+            //             else
+            //             {
+            //                 _source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoPermissions"], 4000);
+            //             }
+            //         }));
+            //     }
+            //     else
+            //     {
+            //         try
+            //         {
+            //             string steamId = args[0].ToString();
+            //             Exports["ghmattimysql"].execute("SELECT * FROM whitelist WHERE identifier = ?", new[] { steamId }, new Action<dynamic>((result) =>
+            //             {
+            //                 if (result.Count == 0)
+            //                 {
+            //                     Exports["ghmattimysql"].execute("INSERT INTO whitelist (`identifier`) VALUES (?)", new object[] { steamId });
+            //                     Whitelist.whitelist.Add(steamId);
+            //                     Debug.WriteLine($"Added {steamId} to whitelist", 4000);
+            //                 }
+            //                 else
+            //                 {
+            //                     Debug.WriteLine($"{steamId} Is Whitelisted {steamId}", 4000);
+            //                 }
+            //             }));
+            //         }
+            //         catch
+            //         {
+            //             Debug.WriteLine("ERROR: Use Correct Sintaxis", 4000);
+            //         }
+            //     }
+            // }), false);
         }
     }
 }

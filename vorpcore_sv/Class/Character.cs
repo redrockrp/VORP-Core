@@ -53,9 +53,10 @@ namespace vorpcore_sv.Class
             this.inventory = "{}";
         }
 
-        public Character(string identifier, string group, string job, string jobgrade, string firstname, string lastname, string inventory, string status, string coords, double money, double gold, double rol, int xp, bool isdead)
+        public Character(string identifier, int charIdentifier ,string group, string job, string jobgrade, string firstname, string lastname, string inventory, string status, string coords, double money, double gold, double rol, int xp, bool isdead)
         {
             this.identifier = identifier;
+            this.charIdentifier = charIdentifier;
             this.group = group;
             this.job = job;
             this.jobgrade = jobgrade;

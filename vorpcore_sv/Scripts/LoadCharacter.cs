@@ -13,7 +13,8 @@ namespace vorpcore_sv.Scripts
     public class LoadCharacter : BaseScript
     {
         public static Dictionary<string, Character> characters = new Dictionary<string, Character>();
-
+        public static Dictionary<string,User> _users = new Dictionary<string, User>();
+        
         public LoadCharacter()
         {
             EventHandlers["vorp:playerSpawn"] += new Action<Player>(PlayerSpawnFunction);

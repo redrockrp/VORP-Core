@@ -13,3 +13,10 @@ E:\VORP-Repos\VORP-Core\build\vorp_core\vorpcore_cl.net.pdb
 E:\VORP-Repos\VORP-Core\vorpcore_cl\obj\Debug\vorpcore_cl.net.dll
 E:\VORP-Repos\VORP-Core\vorpcore_cl\obj\Debug\vorpcore_cl.net.pdb
 E:\VORP-Repos\VORP-Core\vorpcore_cl\obj\Debug\vorpcore_cl.csprojAssemblyReference.cache
+C:\Users\Alejandro\Desktop\VORP-Core\build\vorp_core\vorpcore_cl.net.dll
+C:\Users\Alejandro\Desktop\VORP-Core\build\vorp_core\vorpcore_cl.net.pdb
+C:\Users\Alejandro\Desktop\VORP-Core\vorpcore_cl\obj\Debug\vorpcore_cl.csprojAssemblyReference.cache
+C:\Users\Alejandro\Desktop\VORP-Core\vorpcore_cl\obj\Debug\vorpcore_cl.csproj.CoreCompileInputs.cache
+C:\Users\Alejandro\Desktop\VORP-Core\vorpcore_cl\obj\Debug\vorpcore_cl.csproj.CopyComplete
+C:\Users\Alejandro\Desktop\VORP-Core\vorpcore_cl\obj\Debug\vorpcore_cl.net.dll
+C:\Users\Alejandro\Desktop\VORP-Core\vorpcore_cl\obj\Debug\vorpcore_cl.net.pdb
