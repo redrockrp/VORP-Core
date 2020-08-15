@@ -2,7 +2,7 @@
   "defaultlang": "Es",
 
   "Whitelist": true,
-
+  "MaxCharacters": 2,
   "ActiveVoiceChat": true,
   "KeySwapVoiceRange": "0x6319DB71",
   "DefaultVoiceRange": 5.0,

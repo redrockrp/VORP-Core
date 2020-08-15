@@ -11,7 +11,7 @@ namespace vorpcore_sv.Class
     public class Character : BaseScript
     {
         private string identifier;
-
+        private int charIdentifier;
         private string group;
         private string job;
         private string jobgrade;
@@ -30,6 +30,7 @@ namespace vorpcore_sv.Class
         private bool isdead;
 
         public string Identifier { get => identifier; }
+        public int CharIdentifier { get => charIdentifier; set => charIdentifier = value; }
         public string Group { get => group; }
         public string Job { get => job; }
         public string Jobgrade { get => jobgrade; }
