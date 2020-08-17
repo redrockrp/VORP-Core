@@ -14,7 +14,7 @@ namespace vorpcore_sv.Class
         private int charIdentifier;
         private string group;
         private string job;
-        private string jobgrade;
+        private int jobgrade;
         private string firstname;
         private string lastname;
         private string inventory;
@@ -33,7 +33,7 @@ namespace vorpcore_sv.Class
         public int CharIdentifier { get => charIdentifier; set => charIdentifier = value; }
         public string Group { get => group; }
         public string Job { get => job; }
-        public string Jobgrade { get => jobgrade; }
+        public int Jobgrade { get => jobgrade; }
         public string Firstname { get => firstname; set => firstname = value; }
         public string Lastname { get => lastname; set => lastname = value; }
         public string Inventory { get => inventory; set => inventory = value; }
@@ -53,7 +53,7 @@ namespace vorpcore_sv.Class
             this.inventory = "{}";
         }
 
-        public Character(string identifier, int charIdentifier ,string group, string job, string jobgrade, string firstname, string lastname, string inventory, string status, string coords, double money, double gold, double rol, int xp, bool isdead)
+        public Character(string identifier, int charIdentifier ,string group, string job, int jobgrade, string firstname, string lastname, string inventory, string status, string coords, double money, double gold, double rol, int xp, bool isdead)
         {
             this.identifier = identifier;
             this.charIdentifier = charIdentifier;

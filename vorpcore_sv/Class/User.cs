@@ -79,24 +79,26 @@ namespace vorpcore_sv.Class
                 foreach (object icharacter in usercharacters)
                 {
                     IDictionary<string, object> character = (dynamic)icharacter;
-                    Debug.WriteLine((string)character["identifier"]);
-                    Character newCharacter = new Character((string)character["identifier"],(int)character["charidentifier"],(string)character["group"],
-                        (string)character["job"],(string)character["jobgrade"],(string)character["firstname"],(string)character["lastname"],(string)character["inventory"],
-                        (string)character["status"],(string)character["coords"],(double)character["money"],(double)character["gold"],(double)character["rol"],(int)character["xp"],
-                        (bool) character["isdead"]);
-                    if (_usercharacters.ContainsKey(newCharacter.CharIdentifier))
+                    if (character.ContainsKey("identifier"))
                     {
-                        _usercharacters[newCharacter.CharIdentifier] = newCharacter;
-                    }
-                    else
-                    {
-                        _usercharacters.Add(newCharacter.CharIdentifier,newCharacter);
+                        Character newCharacter = new Character(identifier,(int) character["charidentifier"],(string)character["group"],
+                            (string) character["job"],int.Parse(character["jobgrade"].ToString()),(string) character["firstname"],(string) character["lastname"]
+                            ,(string) character["inventory"],
+                            (string) character["status"],(string) character["coords"],double.Parse(character["money"].ToString())
+                            ,double.Parse(character["gold"].ToString()),double.Parse(character["rol"].ToString()),int.Parse(character["xp"].ToString()), (bool)character["isdead"]);
+                        if (_usercharacters.ContainsKey(newCharacter.CharIdentifier))
+                        {
+                            _usercharacters[newCharacter.CharIdentifier] = newCharacter;
+                        }
+                        else
+                        {
+                            _usercharacters.Add(newCharacter.CharIdentifier,newCharacter);
+                        }
                     }
                 }
             }
             else
             {
-                //Le decimos que hay que crear un nuevo character
             }
             Debug.WriteLine($"El jugador tiene {usercharacters.Count}");
         }

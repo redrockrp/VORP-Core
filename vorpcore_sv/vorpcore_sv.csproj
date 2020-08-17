@@ -54,7 +54,6 @@
     <Compile Include="Class\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Commands.cs" />
-    <Compile Include="Scripts\LoadCharacter.cs" />
     <Compile Include="Scripts\LoadUsers.cs" />
     <Compile Include="Utils\ApiController.cs" />
     <Compile Include="Utils\Callbacks.cs" />
