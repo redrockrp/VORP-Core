@@ -37,20 +37,19 @@ namespace vorpcore_sv.Utils
         {
 
             Player player = getSource(handle);
+            string sid = "steam:" + player.Identifiers["steam"];
 
-            string sid = ("steam:" + player.Identifiers["steam"]);
-
-            if (LoadCharacter.characters.ContainsKey(sid))
+            if (LoadUsers._users.ContainsKey(sid))
             {
-                LoadCharacter.characters[sid].removeCurrency(typeCash, quantity);
+                LoadUsers._users[sid].GetUsedCharacter().removeCurrency(typeCash, quantity);
 
                 JObject nuipost = new JObject();
                 nuipost.Add("type", "ui");
                 nuipost.Add("action", "update");
-                nuipost.Add("moneyquanty", LoadCharacter.characters[sid].Money);
-                nuipost.Add("goldquanty", LoadCharacter.characters[sid].Gold);
-                nuipost.Add("rolquanty", LoadCharacter.characters[sid].Rol);
-                nuipost.Add("xp", LoadCharacter.characters[sid].Xp);
+                nuipost.Add("moneyquanty", LoadUsers._users[sid].GetUsedCharacter().Money);
+                nuipost.Add("goldquanty", LoadUsers._users[sid].GetUsedCharacter().Gold);
+                nuipost.Add("rolquanty", LoadUsers._users[sid].GetUsedCharacter().Rol);
+                nuipost.Add("xp", LoadUsers._users[sid].GetUsedCharacter().Xp);
                 nuipost.Add("serverId", handle);
 
                 player.TriggerEvent("vorp:updateUi", nuipost.ToString());
@@ -73,17 +72,17 @@ namespace vorpcore_sv.Utils
 
             string sid = ("steam:" + player.Identifiers["steam"]);
 
-            if (LoadCharacter.characters.ContainsKey(sid))
+            if (LoadUsers._users.ContainsKey(sid))
             {
-                LoadCharacter.characters[sid].addCurrency(typeCash, quantity);
+                LoadUsers._users[sid].GetUsedCharacter().addCurrency(typeCash, quantity);
 
                 JObject nuipost = new JObject();
                 nuipost.Add("type", "ui");
                 nuipost.Add("action", "update");
-                nuipost.Add("moneyquanty", LoadCharacter.characters[sid].Money);
-                nuipost.Add("goldquanty", LoadCharacter.characters[sid].Gold);
-                nuipost.Add("rolquanty", LoadCharacter.characters[sid].Rol);
-                nuipost.Add("xp", LoadCharacter.characters[sid].Xp);
+                nuipost.Add("moneyquanty", LoadUsers._users[sid].GetUsedCharacter().Money);
+                nuipost.Add("goldquanty", LoadUsers._users[sid].GetUsedCharacter().Gold);
+                nuipost.Add("rolquanty", LoadUsers._users[sid].GetUsedCharacter().Rol);
+                nuipost.Add("xp", LoadUsers._users[sid].GetUsedCharacter().Xp);
                 nuipost.Add("serverId", handle);
 
                 player.TriggerEvent("vorp:updateUi", nuipost.ToString());
@@ -103,14 +102,14 @@ namespace vorpcore_sv.Utils
 
             string sid = ("steam:" + player.Identifiers["steam"]);
 
-            if (LoadCharacter.characters.ContainsKey(sid))
+            if (LoadUsers._users.ContainsKey(sid))
             {
-                LoadCharacter.characters[sid].addXp(quantity);
+                LoadUsers._users[sid].GetUsedCharacter().addXp(quantity);
 
                 JObject nuipost = new JObject();
                 nuipost.Add("type", "ui");
                 nuipost.Add("action", "setxp");
-                nuipost.Add("xp", LoadCharacter.characters[sid].Xp);
+                nuipost.Add("xp", LoadUsers._users[sid].GetUsedCharacter().Xp);
 
                 player.TriggerEvent("vorp:updateUi", nuipost.ToString());
             }
@@ -129,14 +128,14 @@ namespace vorpcore_sv.Utils
 
             string sid = ("steam:" + player.Identifiers["steam"]);
 
-            if (LoadCharacter.characters.ContainsKey(sid))
+            if (LoadUsers._users.ContainsKey(sid))
             {
-                LoadCharacter.characters[sid].removeXp(quantity);
+                LoadUsers._users[sid].GetUsedCharacter().removeXp(quantity);
 
                 JObject nuipost = new JObject();
                 nuipost.Add("type", "ui");
                 nuipost.Add("action", "setxp");
-                nuipost.Add("xp", LoadCharacter.characters[sid].Xp);
+                nuipost.Add("xp", LoadUsers._users[sid].GetUsedCharacter().Xp);
 
                 player.TriggerEvent("vorp:updateUi", nuipost.ToString());
             }
@@ -155,9 +154,9 @@ namespace vorpcore_sv.Utils
 
             string sid = ("steam:" + player.Identifiers["steam"]);
 
-            if (LoadCharacter.characters.ContainsKey(sid))
+            if (LoadUsers._users.ContainsKey(sid))
             {
-                LoadCharacter.characters[sid].setJob(job);
+                LoadUsers._users[sid].GetUsedCharacter().setJob(job);
             }
             else
             {
@@ -173,9 +172,9 @@ namespace vorpcore_sv.Utils
 
             string sid = ("steam:" + player.Identifiers["steam"]);
 
-            if (LoadCharacter.characters.ContainsKey(sid))
+            if (LoadUsers._users.ContainsKey(sid))
             {
-                LoadCharacter.characters[sid].setGroup(group);
+                LoadUsers._users[sid].GetUsedCharacter().setGroup(group);
             }
             else
             {
@@ -191,7 +190,7 @@ namespace vorpcore_sv.Utils
 
             string sid = ("steam:" + player.Identifiers["steam"]);
 
-            if (!LoadCharacter.characters.ContainsKey(sid))
+            if (!LoadUsers._users.ContainsKey(sid))
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Warning: User not found!");
@@ -199,7 +198,7 @@ namespace vorpcore_sv.Utils
             }
             else
             {
-                cb(LoadCharacter.characters[sid].getCharacter());
+                cb(LoadUsers._users[sid].GetUsedCharacter().getCharacter());
             }
         }
     }

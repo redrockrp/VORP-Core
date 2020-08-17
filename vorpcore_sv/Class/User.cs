@@ -97,9 +97,6 @@ namespace vorpcore_sv.Class
                     }
                 }
             }
-            else
-            {
-            }
             Debug.WriteLine($"El jugador tiene {usercharacters.Count}");
         }
 

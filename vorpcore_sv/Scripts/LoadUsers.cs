@@ -16,6 +16,7 @@ namespace vorpcore_sv.Scripts
         public LoadUsers()
         {
             EventHandlers["playerConnecting"] += new Action<Player, string, dynamic, dynamic>(OnPlayerConnecting);
+            EventHandlers["vorp:playerSpawn"] += new Action<Player>(PlayerSpawnFunction);
             _users = new Dictionary<string, User>();
             _whitelist = new List<string>();
         }
@@ -76,7 +77,7 @@ namespace vorpcore_sv.Scripts
                 return;
             }
 
-            var steamIdentifier = source.Identifiers["steam"];
+            var steamIdentifier = "steam:"+source.Identifiers["steam"];
             deferrals.update(LoadConfig.Langs["CheckingIdentifier"]);
             if (steamIdentifier == null)
             {
@@ -111,6 +112,23 @@ namespace vorpcore_sv.Scripts
                     setKickReason(LoadConfig.Langs["BannedUser"]);
                 }
                 deferrals.done();
+            }
+        }
+
+        private void PlayerSpawnFunction([FromSource] Player source)
+        {
+            string steam = "steam:" + source.Identifiers["steam"];
+            if (_users.ContainsKey(steam))
+            {
+                Debug.WriteLine("Ha entrado");
+                if (_users[steam].Numofcharacters == 0)
+                {
+                    //Create character yendo hacia el script de character
+                }
+                else
+                {
+                    //Select character yendo hacia el script de character
+                }
             }
         }
     }

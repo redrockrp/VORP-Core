@@ -26,9 +26,9 @@ namespace vorpcore_sv.Utils
         {
             string sid = ("steam:" + player.Identifiers["steam"]);
 
-            if (LoadCharacter.characters.ContainsKey(sid))
+            if (LoadUsers._users.ContainsKey(sid))
             {
-                LoadCharacter.characters[sid].setDead(isDead);
+                LoadUsers._users[sid].GetUsedCharacter().setDead(isDead);
             }
         }
 
@@ -36,7 +36,7 @@ namespace vorpcore_sv.Utils
         {
             string sid = ("steam:" + player.Identifiers["steam"]);
 
-            LoadCharacter.characters.Remove(sid);
+            
 
             try
             {
@@ -53,9 +53,10 @@ namespace vorpcore_sv.Utils
 
                 string pos = JsonConvert.SerializeObject(UPC);
 
-                Exports["ghmattimysql"].execute("UPDATE characters SET coords=? WHERE identifier=?", new[] { pos, sid });
+                Exports["ghmattimysql"].execute("UPDATE characters SET coords=? WHERE identifier=? AND charidentifier = ?", new[] { pos, sid,LoadUsers._users[sid].GetUsedCharacter().Identifier });
 
                 LastCoordsInCache.Remove(player);
+                LoadUsers._users.Remove(sid);
             }
             catch
             {
