@@ -13,7 +13,7 @@ namespace vorpcore_sv.Class
         private int _playerwarnings;//Used for admins to know how many warnings a user has
         private Dictionary<int,Character> _usercharacters;
         private int _numofcharacters;
-        private int usedCharacterId;
+        private int usedCharacterId = -1;
 
         public int UsedCharacterId
         {
@@ -30,11 +30,6 @@ namespace vorpcore_sv.Class
         public string Identifier
         {
             get => _identifier;
-            set
-            {
-                Exports["ghmattimysql"].execute("UPDATE users SET identifier= ? WHERE identifier=?", new object[] { Identifier, value });
-                _identifier = value;
-            }
         }
 
         public string Group
@@ -43,7 +38,8 @@ namespace vorpcore_sv.Class
             set
             {
                 _group = value;
-                Exports["ghmattimysql"].execute("UPDATE users SET 'group' = ? WHERE identifier=?", new object[] { Group, Identifier });
+                Exports["ghmattimysql"].execute("UPDATE users SET `group` = ? WHERE `identifier` = ?", new object[] { _group, Identifier });
+                Debug.WriteLine("changedGroup");
             }
         }
 
@@ -53,7 +49,8 @@ namespace vorpcore_sv.Class
             set
             {
                 _playerwarnings = value;
-                Exports["ghmattimysql"].execute("UPDATE users SET warnings= ? WHERE identifier=?", new object[] { Playerwarnings, Identifier });
+                Exports["ghmattimysql"].execute("UPDATE users SET `warnings` = ? WHERE `identifier` = ?", new object[] { _playerwarnings, Identifier });
+                Debug.WriteLine("playerwarnings");
             }
         }
         
@@ -66,6 +63,31 @@ namespace vorpcore_sv.Class
             _usercharacters = new Dictionary<int, Character>();
             LoadCharacters(identifier);
             //Cargarmos todos sus characters de la base de datos si al cargarlos no tiene entonces cuando se llame a spawnpalyer habrá que crear 1
+        }
+
+        public Dictionary<string, dynamic> GetUser()
+        {
+            Dictionary<string,dynamic> character = new Dictionary<string, dynamic>();
+            if (_usercharacters.ContainsKey(usedCharacterId))
+            {
+                character = _usercharacters[usedCharacterId].getCharacter();
+            }
+            Dictionary<string,dynamic> auxdic = new Dictionary<string, dynamic>
+            {
+                ["getIdentifier"] = Identifier,
+                ["getGroup"] = Group,
+                ["getPlayerwarnings"] = Playerwarnings,
+                ["setGroup"] = new Action<string>((group) =>
+                {
+                    Group = group;
+                }),
+                ["setPlayerWarnings"] = new Action<int>((warnings) =>
+                {
+                    Playerwarnings = warnings;
+                }),
+                ["getUsedCharacter"] = character
+            };
+            return auxdic;
         }
 
         private async void LoadCharacters(string identifier)

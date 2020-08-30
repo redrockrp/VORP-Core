@@ -22,7 +22,6 @@ namespace vorpcore_sv.Utils
 
             EventHandlers["vorp:setJob"] += new Action<int, string>(setJob);
             EventHandlers["vorp:setGroup"] += new Action<int, string>(setGroup);
-
         }
 
 

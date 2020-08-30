@@ -72,9 +72,9 @@ namespace vorpcore_sv.Class
             this.isdead = isdead;
         }
 
-        public Dictionary<string, object> getCharacter()
+        public Dictionary<string, dynamic> getCharacter()
         {
-            Dictionary<string, object> userData = new Dictionary<string, object>();
+            Dictionary<string, dynamic> userData = new Dictionary<string,dynamic>();
             userData.Add("identifier", identifier);
             userData.Add("group", group);
             userData.Add("job", job);
@@ -88,7 +88,38 @@ namespace vorpcore_sv.Class
             userData.Add("status", status);
             userData.Add("coords", coords);
             userData.Add("isdead", isdead);
-
+            userData.Add("setGroup", new Action<string>((g) =>
+            {
+                group = g;
+            }));
+            userData.Add("setJob", new Action<string>((j) =>
+            {
+                job = j;
+            }));
+            userData.Add("setMoney", new Action<double>((m) =>
+            {
+                money = m;
+            }));
+            userData.Add("setGold", new Action<double>((g) =>
+            {
+                gold = g;
+            }));
+            userData.Add("setRol", new Action<double>((r) =>
+            {
+                rol = r;
+            }));
+            userData.Add("setXp", new Action<int>((x) =>
+            {
+                xp = x;
+            }));
+            userData.Add("setFirstname", new Action<string>((f) =>
+            {
+                firstname = f;
+            }));
+            userData.Add("setLastname", new Action<string>((l) =>
+            {
+                lastname = l;
+            }));
             return userData;
         }
 

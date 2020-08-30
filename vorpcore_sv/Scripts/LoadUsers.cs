@@ -17,6 +17,14 @@ namespace vorpcore_sv.Scripts
         {
             EventHandlers["playerConnecting"] += new Action<Player, string, dynamic, dynamic>(OnPlayerConnecting);
             EventHandlers["vorp:playerSpawn"] += new Action<Player>(PlayerSpawnFunction);
+            EventHandlers["vorp:getUser"] += new Action<int,CallbackDelegate>((source,cb) =>
+            {
+                string steam = "steam:" + Players[source].Identifiers["steam"];
+                if (_users.ContainsKey(steam))
+                {
+                    cb.Invoke(_users[steam].GetUser());
+                }
+            });
             _users = new Dictionary<string, User>();
             _whitelist = new List<string>();
         }
@@ -120,6 +128,7 @@ namespace vorpcore_sv.Scripts
             string steam = "steam:" + source.Identifiers["steam"];
             if (_users.ContainsKey(steam))
             {
+                TriggerEvent("");
                 Debug.WriteLine("Ha entrado");
                 if (_users[steam].Numofcharacters == 0)
                 {

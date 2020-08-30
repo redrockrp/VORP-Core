@@ -57,8 +57,9 @@ namespace vorpcore_sv.Utils
             }
         }
 
-        private void LoadWhitelist()
+        private async void LoadWhitelist()
         {
+            await Delay(3000);
             Exports["ghmattimysql"].execute("SELECT * FROM whitelist", new[] { "" }, new Action<dynamic>((result) =>
             {
                 if (result.Count > 0)
