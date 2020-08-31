@@ -241,7 +241,7 @@ namespace vorpcore_sv.Class
 
         public void SaveCharacterInDb()
         {
-            if (true)
+            if (SaveCharacter)
             {
                 Exports["ghmattimysql"].execute("UPDATE characters SET `group` = ?,`money` = ?,`gold` = ?,`rol` = ?,`xp` = ?,`job` = ?, `status` = ?,`firstname` = ?, `lastname` = ?, `jobgrade` = ?,`coords` = ?,`isdead` = ? WHERE `identifier` = ? AND `charidentifier` = ?", new object[] {group,money,gold,rol,xp,job,status,firstname,lastname,jobgrade,coords,isdead ? 1 : 0,identifier,charIdentifier });
                 SaveCharacter = false;
