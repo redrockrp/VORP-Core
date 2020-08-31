@@ -28,7 +28,15 @@ namespace vorpcore_sv.Utils
                 Dictionary<string,dynamic> corefunctions = new Dictionary<string, dynamic>
                 {
                     ["getUser"] = new auxDelegate(getUser),
-                    ["maxCharacters"] = LoadConfig.Config["MaxCharacters"].ToObject<int>()
+                    ["maxCharacters"] = LoadConfig.Config["MaxCharacters"].ToObject<int>(),
+                    ["addRpcCallback"] = new Action<string,CallbackDelegate>((name, callback) =>
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"Vorp Core: {name} function callback registered!");
+                        Console.ForegroundColor = ConsoleColor.White;
+
+                        Callbacks.ServerCallBacks[name] = callback;
+                    })
                 };
                 cb.Invoke(corefunctions);
             });

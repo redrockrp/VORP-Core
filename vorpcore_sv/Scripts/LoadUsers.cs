@@ -50,6 +50,8 @@ namespace vorpcore_sv.Scripts
             if (_users.ContainsKey(identifier))
             {
                 _users[identifier].SaveUser();
+                _users.Remove(identifier);
+                Debug.WriteLine($"Clened cache of {player.Name}.");
             }
         }
 

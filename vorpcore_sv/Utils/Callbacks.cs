@@ -17,7 +17,7 @@ namespace vorpcore_sv.Utils
             EventHandlers["vorp:TriggerServerCallback"] += new Action<Player, string, int, object>(triggerServerCallback);
         }
 
-        private async void triggerServerCallback([FromSource]Player source, string name, int requestId, object args)
+        public async void triggerServerCallback([FromSource]Player source, string name, int requestId, object args)
         {
             try
             {
