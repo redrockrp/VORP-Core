@@ -27,7 +27,8 @@ namespace vorpcore_sv.Utils
             {
                 Dictionary<string,dynamic> corefunctions = new Dictionary<string, dynamic>
                 {
-                    ["getUser"] = new auxDelegate(getUser)
+                    ["getUser"] = new auxDelegate(getUser),
+                    ["maxCharacters"] = LoadConfig.Config["MaxCharacters"].ToObject<int>()
                 };
                 cb.Invoke(corefunctions);
             });

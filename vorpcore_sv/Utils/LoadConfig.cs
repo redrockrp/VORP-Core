@@ -68,7 +68,6 @@ namespace vorpcore_sv.Utils
                         LoadUsers._whitelist.Add(r.identifier);
                         Debug.WriteLine($"{r.identifier} loaded into whitelist");
                     }
-                    TriggerEvent("vorp:CoreLoaded"); //Event para cuando ha cargado el core avisar a los demas scripts y damos por hecho que la base de datos también esta cargada
                 }
             }));
         }
