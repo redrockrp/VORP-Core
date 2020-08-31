@@ -72,6 +72,11 @@ namespace vorpcore_sv.Class
             {
                 character = _usercharacters[usedCharacterId].getCharacter();
             }
+            List<Dictionary<string,dynamic>> userCharacters = new List<Dictionary<string,dynamic>>();
+            foreach (KeyValuePair<int,Character> chara in _usercharacters)
+            {
+                userCharacters.Add(chara.Value.getCharacter());
+            }
             Dictionary<string,dynamic> auxdic = new Dictionary<string, dynamic>
             {
                 ["getIdentifier"] = Identifier,
@@ -85,7 +90,9 @@ namespace vorpcore_sv.Class
                 {
                     Playerwarnings = warnings;
                 }),
-                ["getUsedCharacter"] = character
+                ["getUsedCharacter"] = character,
+                ["getUserCharacters"] = userCharacters,
+                ["getNumOfCharacters"] = _numofcharacters
             };
             return auxdic;
         }
@@ -107,7 +114,8 @@ namespace vorpcore_sv.Class
                             (string) character["job"],int.Parse(character["jobgrade"].ToString()),(string) character["firstname"],(string) character["lastname"]
                             ,(string) character["inventory"],
                             (string) character["status"],(string) character["coords"],double.Parse(character["money"].ToString())
-                            ,double.Parse(character["gold"].ToString()),double.Parse(character["rol"].ToString()),int.Parse(character["xp"].ToString()), (bool)character["isdead"]);
+                            ,double.Parse(character["gold"].ToString()),double.Parse(character["rol"].ToString()),int.Parse(character["xp"].ToString()), (bool)character["isdead"],(string)character["skinPlayer"],
+                            (string)character["compPlayer"]);
                         if (_usercharacters.ContainsKey(newCharacter.CharIdentifier))
                         {
                             _usercharacters[newCharacter.CharIdentifier] = newCharacter;

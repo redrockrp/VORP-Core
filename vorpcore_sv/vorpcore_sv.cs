@@ -2,6 +2,7 @@
 using CitizenFX.Core.Native;
 using System;
 using System.Collections.Generic;
+using vorpcore_sv.Scripts;
 using vorpcore_sv.Utils;
 
 namespace vorpcore_sv
@@ -10,6 +11,7 @@ namespace vorpcore_sv
     {
         public vorpcore_sv()
         {
+            
             Debug.WriteLine(@"" + "\n" +
                 @" /$$    /$$  /$$$$$$  /$$$$$$$  /$$$$$$$   /$$$$$$   /$$$$$$  /$$$$$$$  /$$$$$$$$ /$$    /$$ |" + "\n" +
                 @"| $$   | $$ /$$__  $$| $$__  $$| $$__  $$ /$$__  $$ /$$__  $$| $$__  $$| $$_____/ | $$   | $$|" + "\n" +

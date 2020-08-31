@@ -20,6 +20,8 @@ namespace vorpcore_sv.Class
         private string inventory;
         private string status;
         private string coords;
+        private string skin;
+        private string comps;
 
         private double money;
         private double gold;
@@ -45,6 +47,26 @@ namespace vorpcore_sv.Class
         public int Xp { get => xp; }
         public bool IsDead { get => isdead; }
 
+        public string Skin
+        {
+            get => skin;
+            set
+            {
+                skin = value;
+                Exports["ghmattimysql"].execute("UPDATE characters SET `skinPlayer` = ? WHERE `identifier` = ? AND `charidentifier` = ?", new object[] { value, Identifier,CharIdentifier });
+            }
+        }
+        
+        public string Comps
+        {
+            get => comps;
+            set
+            {
+                comps = value;
+                Exports["ghmattimysql"].execute("UPDATE characters SET `compPlayer` = ? WHERE `identifier` = ? AND `charidentifier` = ?", new object[] { value, Identifier,CharIdentifier });
+            }
+        }
+
         public Character(string identifier)
         {
             this.identifier = identifier;
@@ -53,7 +75,7 @@ namespace vorpcore_sv.Class
             this.inventory = "{}";
         }
 
-        public Character(string identifier, int charIdentifier ,string group, string job, int jobgrade, string firstname, string lastname, string inventory, string status, string coords, double money, double gold, double rol, int xp, bool isdead)
+        public Character(string identifier, int charIdentifier ,string group, string job, int jobgrade, string firstname, string lastname, string inventory, string status, string coords, double money, double gold, double rol, int xp, bool isdead,string skin,string comps)
         {
             this.identifier = identifier;
             this.charIdentifier = charIdentifier;
@@ -70,6 +92,8 @@ namespace vorpcore_sv.Class
             this.rol = rol;
             this.xp = xp;
             this.isdead = isdead;
+            this.skin = skin;
+            this.comps = comps;
         }
 
         public Dictionary<string, dynamic> getCharacter()
@@ -88,6 +112,7 @@ namespace vorpcore_sv.Class
             userData.Add("status", status);
             userData.Add("coords", coords);
             userData.Add("isdead", isdead);
+            userData.Add("skin",skin);
             userData.Add("setGroup", new Action<string>((g) =>
             {
                 group = g;
@@ -119,6 +144,10 @@ namespace vorpcore_sv.Class
             userData.Add("setLastname", new Action<string>((l) =>
             {
                 lastname = l;
+            }));
+            userData.Add("updateSkin",new Action<string>((nskin) =>
+            {
+                skin = nskin;
             }));
             return userData;
         }

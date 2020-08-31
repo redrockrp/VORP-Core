@@ -11,6 +11,7 @@ namespace vorpcore_sv.Utils
 {
     class ApiController : BaseScript
     {
+        public delegate Dictionary<string, dynamic> auxDelegate(int source);
         public ApiController()
         {
             EventHandlers["vorp:getCharacter"] += new Action<int, dynamic>(getCharacter);
@@ -22,8 +23,29 @@ namespace vorpcore_sv.Utils
 
             EventHandlers["vorp:setJob"] += new Action<int, string>(setJob);
             EventHandlers["vorp:setGroup"] += new Action<int, string>(setGroup);
+            EventHandlers["getCore"] += new Action<CallbackDelegate>((cb) =>
+            {
+                Dictionary<string,dynamic> corefunctions = new Dictionary<string, dynamic>
+                {
+                    ["getUser"] = new auxDelegate(getUser)
+                };
+                cb.Invoke(corefunctions);
+            });
         }
-
+        public static Dictionary<string, dynamic> getUser(int source)
+        {
+            PlayerList p = new PlayerList();
+            string steam = "steam:"+p[source].Identifiers["steam"];
+            if (LoadUsers._users.ContainsKey(steam))
+            {
+                Debug.WriteLine(steam);
+                return LoadUsers._users[steam].GetUser();
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public static Player getSource(int handle)
         {
