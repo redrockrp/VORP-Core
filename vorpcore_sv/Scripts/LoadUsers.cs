@@ -25,8 +25,32 @@ namespace vorpcore_sv.Scripts
                     cb.Invoke(_users[steam].GetUser());
                 }
             });
+            EventHandlers["playerDropped"] += new Action<Player, string>(OnPlayerDropped);
             _users = new Dictionary<string, User>();
             _whitelist = new List<string>();
+            Tick += SaveUsersInServer;
+        }
+
+        private async Task SaveUsersInServer()
+        {
+            await Delay(120000);
+            foreach (KeyValuePair<string,User> user in _users)
+            {
+                await Delay(1000);
+                user.Value.SaveUser();
+                Debug.WriteLine($"Saving player {user.Value.Identifier}.");
+            }
+        }
+        
+        private void OnPlayerDropped([FromSource]Player player, string reason)
+        {
+            Debug.WriteLine($"Player {player.Name} dropped (Reason: {reason}).");
+            string identifier = "steam:" + player.Identifiers["steam"];
+            Debug.WriteLine($"Saving player {player.Name}.");
+            if (_users.ContainsKey(identifier))
+            {
+                _users[identifier].SaveUser();
+            }
         }
 
         private async Task<bool> LoadUser([FromSource]Player source)

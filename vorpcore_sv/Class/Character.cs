@@ -31,6 +31,8 @@ namespace vorpcore_sv.Class
 
         private bool isdead;
 
+        private bool SaveCharacter;
+
         public string Identifier { get => identifier; }
         public int CharIdentifier { get => charIdentifier; set => charIdentifier = value; }
         public string Group { get => group; }
@@ -94,6 +96,7 @@ namespace vorpcore_sv.Class
             this.isdead = isdead;
             this.skin = skin;
             this.comps = comps;
+            SaveCharacter = false;
         }
 
         public Dictionary<string, dynamic> getCharacter()
@@ -147,7 +150,11 @@ namespace vorpcore_sv.Class
             }));
             userData.Add("updateSkin",new Action<string>((nskin) =>
             {
-                skin = nskin;
+                Skin = nskin;
+            }));
+            userData.Add("updateComps",new Action<string>((ncomps) =>
+            {
+                Comps = ncomps;
             }));
             return userData;
         }
@@ -158,15 +165,18 @@ namespace vorpcore_sv.Class
             {
                 case 0:
                     money += quantity;
-                    Exports["ghmattimysql"].execute($"UPDATE characters SET money=money + ? WHERE identifier=?", new object[] { quantity, identifier });
+                    SaveCharacter = true;
+                    //Exports["ghmattimysql"].execute($"UPDATE characters SET money=money + ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 case 1:
                     gold += quantity;
-                    Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold + ? WHERE identifier=?", new object[] { quantity, identifier });
+                    SaveCharacter = true;
+                    //Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold + ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 case 2:
                     rol += quantity;
-                    Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol + ? WHERE identifier=?", new object[] { quantity, identifier });
+                    SaveCharacter = true;
+                    //Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol + ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
             }
         }
@@ -177,15 +187,18 @@ namespace vorpcore_sv.Class
             {
                 case 0:
                     money -= quantity;
-                    Exports["ghmattimysql"].execute($"UPDATE characters SET money=money - ? WHERE identifier=?", new object[] { quantity, identifier });
+                    SaveCharacter = true;
+                    //Exports["ghmattimysql"].execute($"UPDATE characters SET money=money - ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 case 1:
                     gold -= quantity;
-                    Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold - ? WHERE identifier=?", new object[] { quantity, identifier });
+                    SaveCharacter = true;
+                    //Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold - ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 case 2:
                     rol -= quantity;
-                    Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol - ? WHERE identifier=?", new object[] { quantity, identifier });
+                    SaveCharacter = true;
+                    //Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol - ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
             }
         }
@@ -193,33 +206,46 @@ namespace vorpcore_sv.Class
         public void addXp(int quantity)
         {
             xp += quantity;
-            Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp + ? WHERE identifier=?", new object[] { quantity, identifier });
+            SaveCharacter = true;
+            //Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp + ? WHERE identifier=?", new object[] { quantity, identifier });
         }
 
         public void removeXp(int quantity)
         {
             xp -= quantity;
-            Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp - ? WHERE identifier=?", new object[] { quantity, identifier });
+            SaveCharacter = true;
+            //Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp - ? WHERE identifier=?", new object[] { quantity, identifier });
         }
 
         public void setJob(string newjob)
         {
             job = newjob;
-            Exports["ghmattimysql"].execute($"UPDATE characters SET job=? WHERE identifier=?", new string[] { newjob, identifier });
+            SaveCharacter = true;
+            //Exports["ghmattimysql"].execute($"UPDATE characters SET job=? WHERE identifier=?", new string[] { newjob, identifier });
         }
 
         public void setGroup(string newgroup)
         {
             group = newgroup;
-            Exports["ghmattimysql"].execute($"UPDATE characters SET `group`=? WHERE identifier=?", new string[] { newgroup.ToString(), identifier });
+            SaveCharacter = true;
+            //Exports["ghmattimysql"].execute($"UPDATE characters SET `group`=? WHERE identifier=?", new string[] { newgroup.ToString(), identifier });
         }
 
         public void setDead(bool dead)
         {
             isdead = dead;
-            int intdead = dead ? 1 : 0;
-            Exports["ghmattimysql"].execute("UPDATE characters SET isdead=? WHERE identifier=?", new object[] { intdead, identifier });
+            //int intdead = dead ? 1 : 0;
+            SaveCharacter = true;
+            //Exports["ghmattimysql"].execute("UPDATE characters SET `isdead` = ? WHERE `identifier` = ?", new object[] { intdead, identifier });
         }
 
+        public void SaveCharacterInDb()
+        {
+            if (true)
+            {
+                Exports["ghmattimysql"].execute("UPDATE characters SET `group` = ?,`money` = ?,`gold` = ?,`rol` = ?,`xp` = ?,`job` = ?, `status` = ?,`firstname` = ?, `lastname` = ?, `jobgrade` = ?,`coords` = ?,`isdead` = ? WHERE `identifier` = ? AND `charidentifier` = ?", new object[] {group,money,gold,rol,xp,job,status,firstname,lastname,jobgrade,coords,isdead ? 1 : 0,identifier,charIdentifier });
+                SaveCharacter = false;
+            }
+        }
     }
 }

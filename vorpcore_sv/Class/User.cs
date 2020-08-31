@@ -155,5 +155,13 @@ namespace vorpcore_sv.Class
                 return null;
             }
         }
+
+        public void SaveUser()
+        {
+            foreach (KeyValuePair<int,Character> character in _usercharacters)
+            {
+                character.Value.SaveCharacterInDb();
+            }
+        }
     }
 }
