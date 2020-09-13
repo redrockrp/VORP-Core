@@ -122,6 +122,37 @@ namespace vorpcore_sv.Class
             }
         }
 
+        public Character(string identifier, string group, string job, int jobgrade, string firstname, string lastname, string inventory, string status, string coords, double money, double gold, double rol, int xp, bool isdead, string skin, string comps)
+        {
+            this.identifier = identifier;
+            this.group = group;
+            this.job = job;
+            this.jobgrade = jobgrade;
+            this.firstname = firstname;
+            this.lastname = lastname;
+            this.inventory = inventory;
+            this.status = status;
+            this.coords = coords;
+            this.money = money;
+            this.gold = gold;
+            this.rol = rol;
+            this.xp = xp;
+            this.isdead = isdead;
+            this.skin = skin;
+            this.comps = comps;
+            SaveCharacter = false;
+            PlayerList pl = new PlayerList();
+            foreach (Player play in pl)
+            {
+                string steamid = "steam:" + play.Identifiers["steam"];
+                if (steamid == Identifier)
+                {
+                    Source = int.Parse(play.Handle);
+                    break;
+                }
+            }
+        }
+
         public Dictionary<string, dynamic> getCharacter()
         {
             Dictionary<string, dynamic> userData = new Dictionary<string,dynamic>();
@@ -298,9 +329,17 @@ namespace vorpcore_sv.Class
             //Exports["ghmattimysql"].execute("UPDATE characters SET `isdead` = ? WHERE `identifier` = ?", new object[] { intdead, identifier });
         }
 
-        public void SaveNewCharacterInDb()
+        public async Task<int> SaveNewCharacterInDb()
         {
-            Exports["ghmattimysql"].execute("INSERT INTO characters(`identifier`,`charidentifier`,`group`,`money`,`gold`,`rol`,`xp`,`inventory`,`job`,`status`,`firstname`,`lastname`,`skinPlayer`,`compPlayer`,`jobgrade`,`coords`,`isdead`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", new object[] {identifier,charIdentifier,group,money,gold,rol,xp,inventory,job,status,firstname,lastname,skin,comps,jobgrade,coords, isdead ? 1 : 0 });
+            dynamic character = await Exports["ghmattimysql"].executeSync("INSERT INTO characters(`identifier`,`group`,`money`,`gold`,`rol`,`xp`,`inventory`,`job`,`status`,`firstname`,`lastname`,`skinPlayer`,`compPlayer`,`jobgrade`,`coords`,`isdead`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", new object[] { identifier, group, money, gold, rol, xp, inventory, job, status, firstname, lastname, skin, comps, jobgrade, coords, isdead ? 1 : 0 });
+            CharIdentifier = (int)character.insertId;
+            Debug.WriteLine(CharIdentifier.ToString());
+            return (int)character.insertId;
+        }
+
+        public void DeleteCharacter()
+        {
+            Exports["ghmattimysql"].execute("DELETE FROM characters WHERE `identifier` = '?' AND `charidentifier` = ? ", new object[] {Identifier,CharIdentifier });
         }
 
         public void SaveCharacterInDb()

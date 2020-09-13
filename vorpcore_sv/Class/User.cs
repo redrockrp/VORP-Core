@@ -131,6 +131,12 @@ namespace vorpcore_sv.Class
                     //Debug.WriteLine(lastname);
                     //Debug.WriteLine(skin);
                     //Debug.WriteLine(comps);
+                }),
+                ["removeCharacter"] = new Action<int>((charid) => {
+                    if (_usercharacters.ContainsKey(charid))
+                    {
+                        delCharacter(charid);
+                    }
                 })
             };
             return auxdic;
@@ -170,19 +176,20 @@ namespace vorpcore_sv.Class
             Debug.WriteLine($"El jugador tiene {usercharacters.Count}");
         }
 
-        public void addCharacter(string firstname, string lastname, string skin, string comps)
+        public async void addCharacter(string firstname, string lastname, string skin, string comps)
         {
-            if (_usercharacters.ContainsKey(Numofcharacters)) return;
-            _usercharacters.Add(Numofcharacters, new Character(Identifier, Numofcharacters, "user", "none", 0, firstname, lastname, "{}", "{}", "{}", LoadConfig.Config["initMoney"].ToObject<double>(), LoadConfig.Config["initGold"].ToObject<double>(), LoadConfig.Config["initRol"].ToObject<double>(), LoadConfig.Config["initXp"].ToObject<int>(),false, skin, comps));
-            _usercharacters[Numofcharacters].SaveNewCharacterInDb();
-            Debug.WriteLine("Añadiendo character con " + _usercharacters[Numofcharacters].PlayerVar.Identifiers["steam"]);
-            UsedCharacterId = Numofcharacters;
+            Character newChar = new Character(Identifier,"user", "none", 0, firstname, lastname, "{}", "{}", "{}", LoadConfig.Config["initMoney"].ToObject<double>(), LoadConfig.Config["initGold"].ToObject<double>(), LoadConfig.Config["initRol"].ToObject<double>(), LoadConfig.Config["initXp"].ToObject<int>(), false, skin, comps);
+            int charidentifier = await newChar.SaveNewCharacterInDb();
+            _usercharacters.Add(charidentifier, newChar);
+            Debug.WriteLine("Añadiendo character con " + _usercharacters[charidentifier].PlayerVar.Identifiers["steam"]);
+            UsedCharacterId = charidentifier;
         }
 
         public void delCharacter(int charIdentifier)
         {
             if (_usercharacters.ContainsKey(charIdentifier))
             {
+                _usercharacters[charIdentifier].DeleteCharacter();
                 _usercharacters.Remove(charIdentifier);
             }
         }
