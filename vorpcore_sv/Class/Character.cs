@@ -1,4 +1,5 @@
 ﻿using CitizenFX.Core;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,18 @@ namespace vorpcore_sv.Class
         private bool isdead;
 
         private bool SaveCharacter;
+
+        private Player userPlayer;
+        private int source;
+
+        public int Source { set => source = value; }
+
+        public Player PlayerVar {
+            get {
+                PlayerList pl = new PlayerList();
+                return pl[source];
+            } 
+        }
 
         public string Identifier { get => identifier; }
         public int CharIdentifier { get => charIdentifier; set => charIdentifier = value; }
@@ -97,6 +110,16 @@ namespace vorpcore_sv.Class
             this.skin = skin;
             this.comps = comps;
             SaveCharacter = false;
+            PlayerList pl = new PlayerList();
+            foreach (Player play in pl)
+            {
+                string steamid = "steam:" + play.Identifiers["steam"];
+                if(steamid == Identifier)
+                {
+                    Source = int.Parse(play.Handle);
+                    break;
+                }
+            }
         }
 
         public Dictionary<string, dynamic> getCharacter()
@@ -162,7 +185,33 @@ namespace vorpcore_sv.Class
             {
                 Comps = ncomps;
             }));
+            userData.Add("addCurrency", new Action<int, double>((currency,quantity) => {
+                addCurrency(currency, quantity);
+            }));
+            userData.Add("removeCurrency", new Action<int, double>((currency,quantity) => {
+                removeCurrency(currency, quantity);
+            }));
+            userData.Add("addXp", new Action<int>((xp) => {
+                addXp(xp);
+            }));
+            userData.Add("removeXp", new Action<int>((xp) => {
+                removeXp(xp);
+            }));
             return userData;
+        }
+
+        public void updateCharUi()
+        {
+            JObject nuipost = new JObject();
+            nuipost.Add("type", "ui");
+            nuipost.Add("action", "update");
+            nuipost.Add("moneyquanty", Money);
+            nuipost.Add("goldquanty", Gold);
+            nuipost.Add("rolquanty", Rol);
+            nuipost.Add("xp", Xp);
+            nuipost.Add("serverId",source.ToString());
+
+            PlayerVar.TriggerEvent("vorp:updateUi", nuipost.ToString());
         }
 
         public void addCurrency(int currency, double quantity)
@@ -185,6 +234,7 @@ namespace vorpcore_sv.Class
                     //Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol + ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
             }
+            updateCharUi();
         }
 
         public void removeCurrency(int currency, double quantity)
@@ -207,6 +257,7 @@ namespace vorpcore_sv.Class
                     //Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol - ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
             }
+            updateCharUi();
         }
 
         public void addXp(int quantity)
@@ -214,6 +265,7 @@ namespace vorpcore_sv.Class
             xp += quantity;
             SaveCharacter = true;
             //Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp + ? WHERE identifier=?", new object[] { quantity, identifier });
+            updateCharUi();
         }
 
         public void removeXp(int quantity)
@@ -221,6 +273,7 @@ namespace vorpcore_sv.Class
             xp -= quantity;
             SaveCharacter = true;
             //Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp - ? WHERE identifier=?", new object[] { quantity, identifier });
+            updateCharUi();
         }
 
         public void setJob(string newjob)

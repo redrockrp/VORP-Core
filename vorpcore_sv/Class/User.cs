@@ -155,6 +155,7 @@ namespace vorpcore_sv.Class
                             (string) character["status"],(string) character["coords"],double.Parse(character["money"].ToString())
                             ,double.Parse(character["gold"].ToString()),double.Parse(character["rol"].ToString()),int.Parse(character["xp"].ToString()), (bool)character["isdead"],(string)character["skinPlayer"],
                             (string)character["compPlayer"]);
+                        Debug.WriteLine(newCharacter.PlayerVar.Identifiers["steam"]);
                         if (_usercharacters.ContainsKey(newCharacter.CharIdentifier))
                         {
                             _usercharacters[newCharacter.CharIdentifier] = newCharacter;
@@ -174,6 +175,7 @@ namespace vorpcore_sv.Class
             if (_usercharacters.ContainsKey(Numofcharacters)) return;
             _usercharacters.Add(Numofcharacters, new Character(Identifier, Numofcharacters, "user", "none", 0, firstname, lastname, "{}", "{}", "{}", LoadConfig.Config["initMoney"].ToObject<double>(), LoadConfig.Config["initGold"].ToObject<double>(), LoadConfig.Config["initRol"].ToObject<double>(), LoadConfig.Config["initXp"].ToObject<int>(),false, skin, comps));
             _usercharacters[Numofcharacters].SaveNewCharacterInDb();
+            Debug.WriteLine("Añadiendo character con " + _usercharacters[Numofcharacters].PlayerVar.Identifiers["steam"]);
             UsedCharacterId = Numofcharacters;
         }
 
