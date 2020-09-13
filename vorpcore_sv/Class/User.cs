@@ -133,6 +133,7 @@ namespace vorpcore_sv.Class
                     //Debug.WriteLine(comps);
                 }),
                 ["removeCharacter"] = new Action<int>((charid) => {
+                    Debug.WriteLine($"Entro a borrar {charid}");
                     if (_usercharacters.ContainsKey(charid))
                     {
                         delCharacter(charid);
@@ -191,6 +192,7 @@ namespace vorpcore_sv.Class
             {
                 _usercharacters[charIdentifier].DeleteCharacter();
                 _usercharacters.Remove(charIdentifier);
+                Debug.WriteLine($"Character with charid {charIdentifier} deleted from user {Identifier} successfully");
             }
         }
 

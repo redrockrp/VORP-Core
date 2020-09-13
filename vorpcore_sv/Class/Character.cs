@@ -339,7 +339,7 @@ namespace vorpcore_sv.Class
 
         public void DeleteCharacter()
         {
-            Exports["ghmattimysql"].execute("DELETE FROM characters WHERE `identifier` = '?' AND `charidentifier` = ? ", new object[] {Identifier,CharIdentifier });
+            Exports["ghmattimysql"].execute("DELETE FROM characters WHERE `identifier` = ? AND `charidentifier` = ? ", new object[] {Identifier,CharIdentifier });
         }
 
         public void SaveCharacterInDb()
