@@ -37,7 +37,7 @@ namespace vorpcore_sv.Class
         public int CharIdentifier { get => charIdentifier; set => charIdentifier = value; }
         public string Group { get => group; }
         public string Job { get => job; }
-        public int Jobgrade { get => jobgrade; }
+        public int Jobgrade { get => jobgrade; set => jobgrade = value; }
         public string Firstname { get => firstname; set => firstname = value; }
         public string Lastname { get => lastname; set => lastname = value; }
         public string Inventory { get => inventory; set => inventory = value; }
@@ -103,8 +103,10 @@ namespace vorpcore_sv.Class
         {
             Dictionary<string, dynamic> userData = new Dictionary<string,dynamic>();
             userData.Add("identifier", identifier);
+            userData.Add("charIdentifier", charIdentifier);
             userData.Add("group", group);
             userData.Add("job", job);
+            userData.Add("jobGrade", jobgrade);
             userData.Add("money", money);
             userData.Add("gold", gold);
             userData.Add("rol", rol);
@@ -116,6 +118,10 @@ namespace vorpcore_sv.Class
             userData.Add("coords", coords);
             userData.Add("isdead", isdead);
             userData.Add("skin",skin);
+            userData.Add("comps", comps);
+            userData.Add("setJobGrade",new Action<int>((jobgrade)=> {
+                Jobgrade = jobgrade;
+            }));
             userData.Add("setGroup", new Action<string>((g) =>
             {
                 group = g;
@@ -237,6 +243,11 @@ namespace vorpcore_sv.Class
             //int intdead = dead ? 1 : 0;
             SaveCharacter = true;
             //Exports["ghmattimysql"].execute("UPDATE characters SET `isdead` = ? WHERE `identifier` = ?", new object[] { intdead, identifier });
+        }
+
+        public void SaveNewCharacterInDb()
+        {
+            Exports["ghmattimysql"].execute("INSERT INTO characters(`identifier`,`charidentifier`,`group`,`money`,`gold`,`rol`,`xp`,`inventory`,`job`,`status`,`firstname`,`lastname`,`skinPlayer`,`compPlayer`,`jobgrade`,`coords`,`isdead`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", new object[] {identifier,charIdentifier,group,money,gold,rol,xp,inventory,job,status,firstname,lastname,skin,comps,jobgrade,coords, isdead ? 1 : 0 });
         }
 
         public void SaveCharacterInDb()

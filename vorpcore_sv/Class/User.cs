@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using CitizenFX.Core;
+using Newtonsoft.Json.Linq;
+using vorpcore_sv.Utils;
 
 namespace vorpcore_sv.Class
 {
@@ -18,7 +20,36 @@ namespace vorpcore_sv.Class
         public int UsedCharacterId
         {
             get => usedCharacterId;
-            set => usedCharacterId = value;
+            set
+            {
+                usedCharacterId = value;
+                PlayerList pl = new PlayerList();
+                int source = -1;
+                foreach (Player player in pl)
+                {
+                    string steamid = "steam:" + player.Identifiers["steam"];
+                    if (steamid == Identifier)
+                    {
+                        source = int.Parse(player.Handle);
+                        player.TriggerEvent("vorp:SelectedCharacter",usedCharacterId);
+                        JObject postUi = new JObject();
+                        postUi.Add("type", "ui");
+                        postUi.Add("action", "update");
+                        postUi.Add("moneyquanty", _usercharacters[usedCharacterId].Money);
+                        postUi.Add("goldquanty", _usercharacters[usedCharacterId].Gold);
+                        postUi.Add("rolquanty", _usercharacters[usedCharacterId].Rol);
+                        postUi.Add("serverId", player.Handle);
+                        postUi.Add("xp", _usercharacters[usedCharacterId].Xp);
+
+
+                        player.TriggerEvent("vorp:updateUi", postUi.ToString());
+                        break;
+                    }
+                }
+                
+                TriggerEvent("vorp:SelectedCharacter", source, _usercharacters[usedCharacterId].getCharacter());
+
+            }
         }
 
         public int Numofcharacters
@@ -77,7 +108,7 @@ namespace vorpcore_sv.Class
             {
                 userCharacters.Add(chara.Value.getCharacter());
             }
-            Dictionary<string,dynamic> auxdic = new Dictionary<string, dynamic>
+            Dictionary<string, dynamic> auxdic = new Dictionary<string, dynamic>
             {
                 ["getIdentifier"] = Identifier,
                 ["getGroup"] = Group,
@@ -92,7 +123,15 @@ namespace vorpcore_sv.Class
                 }),
                 ["getUsedCharacter"] = character,
                 ["getUserCharacters"] = userCharacters,
-                ["getNumOfCharacters"] = _numofcharacters
+                ["getNumOfCharacters"] = _numofcharacters,
+                ["addCharacter"] = new Action<string, string, string, string>((firstname, lastname, skin, comps) => {
+                    Numofcharacters++;
+                    addCharacter(firstname, lastname, skin, comps);
+                    //Debug.WriteLine(firstname);
+                    //Debug.WriteLine(lastname);
+                    //Debug.WriteLine(skin);
+                    //Debug.WriteLine(comps);
+                })
             };
             return auxdic;
         }
@@ -130,10 +169,12 @@ namespace vorpcore_sv.Class
             Debug.WriteLine($"El jugador tiene {usercharacters.Count}");
         }
 
-        public void addCharacter(Character newCharacter)
+        public void addCharacter(string firstname, string lastname, string skin, string comps)
         {
-            if (_usercharacters.ContainsKey(newCharacter.CharIdentifier)) return;
-            _usercharacters.Add(newCharacter.CharIdentifier,newCharacter);
+            if (_usercharacters.ContainsKey(Numofcharacters)) return;
+            _usercharacters.Add(Numofcharacters, new Character(Identifier, Numofcharacters, "user", "none", 0, firstname, lastname, "{}", "{}", "{}", LoadConfig.Config["initMoney"].ToObject<double>(), LoadConfig.Config["initGold"].ToObject<double>(), LoadConfig.Config["initRol"].ToObject<double>(), LoadConfig.Config["initXp"].ToObject<int>(),false, skin, comps));
+            _usercharacters[Numofcharacters].SaveNewCharacterInDb();
+            UsedCharacterId = Numofcharacters;
         }
 
         public void delCharacter(int charIdentifier)

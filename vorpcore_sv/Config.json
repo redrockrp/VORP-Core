@@ -1,6 +1,9 @@
 {
   "defaultlang": "Es",
-
+  "initGold": 0.0,
+  "initMoney": 0.0,
+  "initRol": 0.0,
+  "initXp": 0,
   "Whitelist": true,
   "MaxCharacters": 2,
   "ActiveVoiceChat": true,
