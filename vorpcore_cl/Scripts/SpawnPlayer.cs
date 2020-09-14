@@ -19,7 +19,8 @@ namespace vorpcore_cl.Scripts
 
             Tick += disableHud;
 
-            EventHandlers["vorp:initCharacter"] += new Action</*string, string, string, int, int, string,*/ Vector3, float, bool>(InitPlayer);
+            EventHandlers["vorp:initCharacter"] += new Action<Vector3, float, bool>(InitPlayer);
+            EventHandlers["vorp:initNewCharacter"] += new Action(InitNewPlayer);
             Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
 
             EventHandlers["playerSpawned"] += new Action<object>(InitTpPlayer);
@@ -73,6 +74,25 @@ namespace vorpcore_cl.Scripts
         {
             await Delay(4000);
             TriggerServerEvent("vorp:playerSpawn");
+        }
+
+        private void InitNewPlayer()
+        {
+            Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
+
+            if (GetConfig.Config["ActiveEagleEye"].ToObject<bool>())
+            {
+                Function.Call((Hash)0xA63FCAD3A6FEC6D2, API.PlayerId(), true);
+            }
+
+            if (GetConfig.Config["ActiveDeadEye"].ToObject<bool>())
+            {
+                Function.Call((Hash)0x95EE1DEE1DCD9070, API.PlayerId(), true);
+            }
+
+            setPVP();
+
+            firstSpawn = false;
         }
 
         private void InitPlayer(Vector3 coords, float heading, bool isdead)
