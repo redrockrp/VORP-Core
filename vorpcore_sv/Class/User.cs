@@ -115,28 +115,60 @@ namespace vorpcore_sv.Class
                 ["getPlayerwarnings"] = Playerwarnings,
                 ["setGroup"] = new Action<string>((group) =>
                 {
-                    Group = group;
+                    try
+                    {
+                        Group = group;
+                    }
+                    catch(Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+                   
                 }),
                 ["setPlayerWarnings"] = new Action<int>((warnings) =>
                 {
-                    Playerwarnings = warnings;
+                    try
+                    {
+                        Playerwarnings = warnings;
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
                 }),
                 ["getUsedCharacter"] = character,
                 ["getUserCharacters"] = userCharacters,
                 ["getNumOfCharacters"] = _numofcharacters,
                 ["addCharacter"] = new Action<string, string, string, string>((firstname, lastname, skin, comps) => {
                     Numofcharacters++;
-                    addCharacter(firstname, lastname, skin, comps);
-                    //Debug.WriteLine(firstname);
-                    //Debug.WriteLine(lastname);
-                    //Debug.WriteLine(skin);
-                    //Debug.WriteLine(comps);
+                    try
+                    {
+                        addCharacter(firstname, lastname, skin, comps);
+                    }catch(Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
                 }),
                 ["removeCharacter"] = new Action<int>((charid) => {
-                    Debug.WriteLine($"Entro a borrar {charid}");
-                    if (_usercharacters.ContainsKey(charid))
+                    try
                     {
-                        delCharacter(charid);
+                        if (_usercharacters.ContainsKey(charid))
+                        {
+                            delCharacter(charid);
+                        }
+                    }catch(Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+                    
+                }),
+                ["setUsedCharacter"] = new Action<int>((charid) => {
+                    try
+                    {
+                        SetUsedCharacter(charid);
+                    }catch(Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
                     }
                 })
             };
@@ -205,6 +237,14 @@ namespace vorpcore_sv.Class
             else
             {
                 return null;
+            }
+        }
+
+        public void SetUsedCharacter(int charid)
+        {
+            if (_usercharacters.ContainsKey(charid))
+            {
+                UsedCharacterId = charid;
             }
         }
 
