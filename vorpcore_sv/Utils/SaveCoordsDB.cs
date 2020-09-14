@@ -1,5 +1,6 @@
 ﻿using CitizenFX.Core;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,17 +44,19 @@ namespace vorpcore_sv.Utils
                 Vector3 lastCoords = LastCoordsInCache[player].Item1;
                 float lastHeading = LastCoordsInCache[player].Item2;
 
-                UPlayerCoords UPC = new UPlayerCoords()
+                JObject characterCoords = new JObject()
                 {
-                    x = lastCoords.X,
-                    y = lastCoords.Y,
-                    z = lastCoords.Z,
-                    heading = lastHeading
+                    { "x", lastCoords.X },
+                    { "y", lastCoords.Y },
+                    { "z", lastCoords.Z },
+                    { "heading", lastHeading }
                 };
 
-                string pos = JsonConvert.SerializeObject(UPC);
 
-                Exports["ghmattimysql"].execute("UPDATE characters SET `coords` = ? WHERE `identifier` = ? AND `charidentifier` = ?", new[] { pos, sid,LoadUsers._users[sid].GetUsedCharacter().Identifier });
+
+                //string pos = JsonConvert.SerializeObject(UPC);
+
+                //Exports["ghmattimysql"].execute("UPDATE characters SET `coords` = ? WHERE `identifier` = ? AND `charidentifier` = ?", new[] { pos, sid,LoadUsers._users[sid].GetUsedCharacter().Identifier });
 
                 LastCoordsInCache.Remove(player);
                 LoadUsers._users.Remove(sid);
@@ -82,17 +85,18 @@ namespace vorpcore_sv.Utils
                     Vector3 lastCoords = source.Value.Item1;
                     float lastHeading = source.Value.Item2;
 
-                    UPlayerCoords UPC = new UPlayerCoords()
+                    JObject characterCoords = new JObject() 
                     {
-                        x = lastCoords.X,
-                        y = lastCoords.Y,
-                        z = lastCoords.Z,
-                        heading = lastHeading
+                        { "x", lastCoords.X },
+                        { "y", lastCoords.Y },
+                        { "z", lastCoords.Z },
+                        { "heading", lastHeading }
                     };
 
-                    string pos = JsonConvert.SerializeObject(UPC);
 
-                    Exports["ghmattimysql"].execute("UPDATE characters SET `coords`= ? WHERE `identifier`= ?", new[] { pos, sid });
+                    string pos = characterCoords.ToString(); //JsonConvert.SerializeObject(characterCoords);
+
+                    //Wait to character save db
                 }
                 catch { continue; }
             }

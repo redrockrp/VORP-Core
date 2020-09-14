@@ -13,14 +13,13 @@ namespace vorpcore_cl.Scripts
 
         public SpawnPlayer()
         {
-            //Iniciamos un Tick para guardar cada 10 segundos las coords del jugador en el servidor
             Tick += saveLastCoordsTick;
 
             Tick += manageOnMount;
 
             Tick += disableHud;
 
-            EventHandlers["vorp:initPlayer"] += new Action</*string, string, string, int, int, string,*/ Vector3, float, bool>(InitPlayer);
+            EventHandlers["vorp:initCharacter"] += new Action</*string, string, string, int, int, string,*/ Vector3, float, bool>(InitPlayer);
             Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
 
             EventHandlers["playerSpawned"] += new Action<object>(InitTpPlayer);
@@ -72,13 +71,8 @@ namespace vorpcore_cl.Scripts
 
         private async void InitTpPlayer(object spawnInfo)
         {
-            if (firstSpawn)
-            {
-                Debug.WriteLine("VORP INIT_PLAYER");
-                await Delay(4000);
-                TriggerServerEvent("vorp:playerSpawn");
-                firstSpawn = false;
-            }
+            await Delay(4000);
+            TriggerServerEvent("vorp:playerSpawn");
         }
 
         private void InitPlayer(Vector3 coords, float heading, bool isdead)
@@ -104,6 +98,8 @@ namespace vorpcore_cl.Scripts
                 TriggerEvent("vorp:PlayerForceRespawn");
                 RespawnSystem.resspawnPlayer();
             }
+
+            firstSpawn = false;
         }
 
         public static async Task setPVP()

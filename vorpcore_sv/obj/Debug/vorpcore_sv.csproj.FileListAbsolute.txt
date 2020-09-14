@@ -14,3 +14,9 @@ C:\Users\Alejandro\Desktop\VORP-Core\build\vorp_core\vorpcore_sv.net.dll
 C:\Users\Alejandro\Desktop\VORP-Core\vorpcore_sv\obj\Debug\vorpcore_sv.csprojAssemblyReference.cache
 C:\Users\Alejandro\Desktop\VORP-Core\vorpcore_sv\obj\Debug\vorpcore_sv.csproj.CoreCompileInputs.cache
 C:\Users\Alejandro\Desktop\VORP-Core\vorpcore_sv\obj\Debug\vorpcore_sv.net.dll
+D:\VORP-Repos\VORP-Core\build\vorp_core\Config.json
+D:\VORP-Repos\VORP-Core\build\vorp_core\Es.json
+D:\VORP-Repos\VORP-Core\build\vorp_core\vorpcore_sv.net.dll
+D:\VORP-Repos\VORP-Core\vorpcore_sv\obj\Debug\vorpcore_sv.csprojAssemblyReference.cache
+D:\VORP-Repos\VORP-Core\vorpcore_sv\obj\Debug\vorpcore_sv.csproj.CoreCompileInputs.cache
+D:\VORP-Repos\VORP-Core\vorpcore_sv\obj\Debug\vorpcore_sv.net.dll
