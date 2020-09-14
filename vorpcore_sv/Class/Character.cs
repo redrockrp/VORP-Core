@@ -448,6 +448,11 @@ namespace vorpcore_sv.Class
             Exports["ghmattimysql"].execute("DELETE FROM characters WHERE `identifier` = ? AND `charidentifier` = ? ", new object[] {Identifier,CharIdentifier });
         }
 
+        public void SaveCharacterCoords(string coords)
+        {
+            Exports["ghmattimysql"].execute("UPDATE characters SET `coords` = ? WHERE `identifier` = ? AND `charidentifier` = ?", new object[] {coords,identifier, charIdentifier });
+        }
+
         public void SaveCharacterInDb()
         {
             if (SaveCharacter)

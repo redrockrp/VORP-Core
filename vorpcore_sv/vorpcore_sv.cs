@@ -12,7 +12,6 @@ namespace vorpcore_sv
     {
         public vorpcore_sv()
         {
-            EventHandlers["callbackdelegate"] += new Action<NetworkCallbackDelegate>(Event);
             // In class constructor
             Debug.WriteLine(@"" + "\n" +
                             @" /$$    /$$  /$$$$$$  /$$$$$$$  /$$$$$$$   /$$$$$$   /$$$$$$  /$$$$$$$  /$$$$$$$$ /$$    /$$ |" + "\n" +
@@ -26,13 +25,6 @@ namespace vorpcore_sv
                             @"                                                                                              " + "\n" +
                             "");
             
-        }
-        
-
-        private void Event(NetworkCallbackDelegate cb)
-        {
-            Debug.WriteLine("Ejecutando callback");
-            cb.Invoke("Hola");
         }
     }
 
