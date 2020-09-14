@@ -52,11 +52,7 @@ namespace vorpcore_sv.Utils
                     { "heading", lastHeading }
                 };
 
-
-
-                //string pos = JsonConvert.SerializeObject(UPC);
-
-                //Exports["ghmattimysql"].execute("UPDATE characters SET `coords` = ? WHERE `identifier` = ? AND `charidentifier` = ?", new[] { pos, sid,LoadUsers._users[sid].GetUsedCharacter().Identifier });
+                LoadUsers._users[sid].GetUsedCharacter().SaveCharacterCoords(characterCoords.ToString());
 
                 LastCoordsInCache.Remove(player);
                 LoadUsers._users.Remove(sid);
@@ -96,7 +92,7 @@ namespace vorpcore_sv.Utils
 
                     string pos = characterCoords.ToString(); //JsonConvert.SerializeObject(characterCoords);
 
-                    //Wait to character save db
+                    LoadUsers._users[sid].GetUsedCharacter().SaveCharacterCoords(characterCoords.ToString());
                 }
                 catch { continue; }
             }
