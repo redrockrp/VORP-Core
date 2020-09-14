@@ -174,59 +174,165 @@ namespace vorpcore_sv.Class
             userData.Add("skin",skin);
             userData.Add("comps", comps);
             userData.Add("setJobGrade",new Action<int>((jobgrade)=> {
-                Jobgrade = jobgrade;
+                try
+                {
+                    Jobgrade = jobgrade;
+                }
+                catch(Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
             userData.Add("setGroup", new Action<string>((g) =>
             {
-                group = g;
+                try
+                {
+                    group = g;
+                }
+                catch(Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
             userData.Add("setJob", new Action<string>((j) =>
             {
-                job = j;
+                try
+                {
+                    job = j;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }     
             }));
             userData.Add("setMoney", new Action<double>((m) =>
             {
-                money = m;
+                try
+                {
+                    money = m;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
             userData.Add("setGold", new Action<double>((g) =>
             {
-                gold = g;
+                try
+                {
+                    gold = g;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
             userData.Add("setRol", new Action<double>((r) =>
             {
-                rol = r;
+                try
+                {
+                    rol = r;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+
             }));
             userData.Add("setXp", new Action<int>((x) =>
             {
-                xp = x;
+                try
+                {
+                    xp = x;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
             userData.Add("setFirstname", new Action<string>((f) =>
             {
-                firstname = f;
+                try
+                {
+                    firstname = f;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
             userData.Add("setLastname", new Action<string>((l) =>
             {
-                lastname = l;
+                try
+                {
+                    lastname = l;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
             userData.Add("updateSkin",new Action<string>((nskin) =>
             {
-                Skin = nskin;
+                try
+                {
+                    Skin = nskin;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
             userData.Add("updateComps",new Action<string>((ncomps) =>
             {
-                Comps = ncomps;
+                try
+                {
+                    Comps = ncomps;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
-            userData.Add("addCurrency", new Action<int, double>((currency,quantity) => {
-                addCurrency(currency, quantity);
+            userData.Add("addCurrency", new Action<int, double>((currency,quantity) => {             
+                try
+                {
+                    addCurrency(currency, quantity);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
             userData.Add("removeCurrency", new Action<int, double>((currency,quantity) => {
-                removeCurrency(currency, quantity);
+                try
+                {
+                    removeCurrency(currency, quantity);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
             userData.Add("addXp", new Action<int>((xp) => {
-                addXp(xp);
+                try
+                {
+                    addXp(xp);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
             userData.Add("removeXp", new Action<int>((xp) => {
-                removeXp(xp);
+                try
+                {
+                    removeXp(xp);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }));
             return userData;
         }
