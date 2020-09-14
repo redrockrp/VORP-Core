@@ -140,7 +140,7 @@ namespace vorpcore_cl.Scripts
                 int playerPedId = API.PlayerPedId();
                 Vector3 playerCoords = API.GetEntityCoords(playerPedId, true, true);
                 float playerHeading = API.GetEntityHeading(playerPedId);
-
+                Debug.WriteLine($"Guardando {playerCoords}");
                 TriggerServerEvent("vorp:saveLastCoords", playerCoords, playerHeading);
             }
         }

@@ -47,6 +47,7 @@ namespace vorpcore_sv.Scripts
             Debug.WriteLine($"Player {player.Name} dropped (Reason: {reason}).");
             string identifier = "steam:" + player.Identifiers["steam"];
             Debug.WriteLine($"Saving player {player.Name}.");
+            SaveCoordsDB.LastCoordsInCache.Remove(player);
             if (_users.ContainsKey(identifier))
             {
                 _users[identifier].SaveUser();

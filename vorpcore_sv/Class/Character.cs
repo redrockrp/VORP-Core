@@ -450,6 +450,8 @@ namespace vorpcore_sv.Class
 
         public void SaveCharacterCoords(string coords)
         {
+            Coords = coords;
+            Debug.WriteLine(coords);
             Exports["ghmattimysql"].execute("UPDATE characters SET `coords` = ? WHERE `identifier` = ? AND `charidentifier` = ?", new object[] {coords, Identifier, CharIdentifier });
         }
 

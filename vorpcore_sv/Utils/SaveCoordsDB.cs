@@ -16,8 +16,6 @@ namespace vorpcore_sv.Utils
         {
             EventHandlers["vorp:saveLastCoords"] += new Action<Player, Vector3, float>(SaveLastCoords);
 
-            EventHandlers["playerDropped"] += new Action<Player, string>(OnPlayerDropped);
-
             EventHandlers["vorp:ImDead"] += new Action<Player, bool>(OnPlayerDead);
 
             Tick += saveLastCoordsTick;
@@ -33,39 +31,22 @@ namespace vorpcore_sv.Utils
             }
         }
 
-        private void OnPlayerDropped([FromSource]Player player, string reason)
-        {
-            string sid = ("steam:" + player.Identifiers["steam"]);
-
-            
-
-            try
-            {
-                Vector3 lastCoords = LastCoordsInCache[player].Item1;
-                float lastHeading = LastCoordsInCache[player].Item2;
-
-                JObject characterCoords = new JObject()
-                {
-                    { "x", lastCoords.X },
-                    { "y", lastCoords.Y },
-                    { "z", lastCoords.Z },
-                    { "heading", lastHeading }
-                };
-
-                LoadUsers._users[sid].GetUsedCharacter().SaveCharacterCoords(characterCoords.ToString());
-
-                LastCoordsInCache.Remove(player);
-                LoadUsers._users.Remove(sid);
-            }
-            catch
-            {
-
-            }
-        }
+       
 
         private void SaveLastCoords([FromSource] Player source, Vector3 lastCoords, float lastHeading)
         {
+            string sid = "steam:" + source.Identifiers["steam"];
             LastCoordsInCache[source] = new Tuple<Vector3, float>(lastCoords, lastHeading);
+            JObject characterCoords = new JObject()
+                    {
+                        { "x", lastCoords.X },
+                        { "y", lastCoords.Y },
+                        { "z", lastCoords.Z },
+                        { "heading", lastHeading }
+                    };
+
+            Debug.WriteLine(JsonConvert.SerializeObject(characterCoords));
+            LoadUsers._users[sid].GetUsedCharacter().Coords = JsonConvert.SerializeObject(characterCoords);
         }
 
         [Tick]
@@ -90,9 +71,9 @@ namespace vorpcore_sv.Utils
                     };
 
 
-                    string pos = characterCoords.ToString(); //JsonConvert.SerializeObject(characterCoords);
+                    string pos = JsonConvert.SerializeObject(characterCoords); //JsonConvert.SerializeObject(characterCoords);
 
-                    LoadUsers._users[sid].GetUsedCharacter().SaveCharacterCoords(characterCoords.ToString());
+                    LoadUsers._users[sid].GetUsedCharacter().SaveCharacterCoords(JsonConvert.SerializeObject(characterCoords));
                 }
                 catch { continue; }
             }
