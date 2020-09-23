@@ -70,7 +70,6 @@ namespace vorpcore_sv.Class
             {
                 _group = value;
                 Exports["ghmattimysql"].execute("UPDATE users SET `group` = ? WHERE `identifier` = ?", new object[] { _group, Identifier });
-                Debug.WriteLine("changedGroup");
             }
         }
 
@@ -81,7 +80,6 @@ namespace vorpcore_sv.Class
             {
                 _playerwarnings = value;
                 Exports["ghmattimysql"].execute("UPDATE users SET `warnings` = ? WHERE `identifier` = ?", new object[] { _playerwarnings, Identifier });
-                Debug.WriteLine("playerwarnings");
             }
         }
         
@@ -177,7 +175,6 @@ namespace vorpcore_sv.Class
 
         private async void LoadCharacters(string identifier)
         {
-            Debug.WriteLine("Usuario "+identifier+" cargado");
             List<object> usercharacters = await Exports["ghmattimysql"].executeSync("SELECT * FROM characters WHERE identifier =?", new[] {identifier});
             Numofcharacters = usercharacters.Count;
             if (Numofcharacters > 0)
@@ -194,7 +191,6 @@ namespace vorpcore_sv.Class
                             (string) character["status"],(string) character["coords"],double.Parse(character["money"].ToString())
                             ,double.Parse(character["gold"].ToString()),double.Parse(character["rol"].ToString()),int.Parse(character["xp"].ToString()), (bool)character["isdead"],(string)character["skinPlayer"],
                             (string)character["compPlayer"]);
-                        Debug.WriteLine(newCharacter.PlayerVar.Identifiers["steam"]);
                         if (_usercharacters.ContainsKey(newCharacter.CharIdentifier))
                         {
                             _usercharacters[newCharacter.CharIdentifier] = newCharacter;
@@ -206,7 +202,6 @@ namespace vorpcore_sv.Class
                     }
                 }
             }
-            Debug.WriteLine($"El jugador tiene {usercharacters.Count}");
         }
 
         public async void addCharacter(string firstname, string lastname, string skin, string comps)
@@ -214,7 +209,7 @@ namespace vorpcore_sv.Class
             Character newChar = new Character(Identifier,"user", "none", 0, firstname, lastname, "{}", "{}", "{}", LoadConfig.Config["initMoney"].ToObject<double>(), LoadConfig.Config["initGold"].ToObject<double>(), LoadConfig.Config["initRol"].ToObject<double>(), LoadConfig.Config["initXp"].ToObject<int>(), false, skin, comps);
             int charidentifier = await newChar.SaveNewCharacterInDb();
             _usercharacters.Add(charidentifier, newChar);
-            Debug.WriteLine("Añadiendo character con " + _usercharacters[charidentifier].PlayerVar.Identifiers["steam"]);
+            Debug.WriteLine("Added new character with identifier " + _usercharacters[charidentifier].PlayerVar.Identifiers["steam"]);
             UsedCharacterId = charidentifier;
         }
 
