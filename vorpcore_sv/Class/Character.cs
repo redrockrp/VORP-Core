@@ -173,6 +173,16 @@ namespace vorpcore_sv.Class
             userData.Add("isdead", isdead);
             userData.Add("skin",skin);
             userData.Add("comps", comps);
+            userData.Add("setStatus", new Action<string>((status) => {
+                try
+                {
+                    Status = status;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+            }));
             userData.Add("setJobGrade",new Action<int>((jobgrade)=> {
                 try
                 {
