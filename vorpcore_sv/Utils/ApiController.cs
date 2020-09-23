@@ -12,6 +12,7 @@ namespace vorpcore_sv.Utils
     class ApiController : BaseScript
     {
         public delegate Dictionary<string, dynamic> auxDelegate(int source);
+        public delegate Dictionary<string, Dictionary<string, dynamic>> getUsersSource();
         public ApiController()
         {
             EventHandlers["vorp:getCharacter"] += new Action<int, dynamic>(getCharacter);
@@ -25,25 +26,26 @@ namespace vorpcore_sv.Utils
             EventHandlers["vorp:setGroup"] += new Action<int, string>(setGroup);
             EventHandlers["getCore"] += new Action<CallbackDelegate>((cb) =>
             {
-                Dictionary<string,dynamic> corefunctions = new Dictionary<string, dynamic>
+                Dictionary<string, dynamic> corefunctions = new Dictionary<string, dynamic>
                 {
                     ["getUser"] = new auxDelegate(getUser),
                     ["maxCharacters"] = LoadConfig.Config["MaxCharacters"].ToObject<int>(),
-                    ["addRpcCallback"] = new Action<string,CallbackDelegate>((name, callback) =>
-                    {
-                        try
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine($"Vorp Core: {name} function callback registered!");
-                            Console.ForegroundColor = ConsoleColor.White;
+                    ["addRpcCallback"] = new Action<string, CallbackDelegate>((name, callback) =>
+                     {
+                         try
+                         {
+                             Console.ForegroundColor = ConsoleColor.Green;
+                             Console.WriteLine($"Vorp Core: {name} function callback registered!");
+                             Console.ForegroundColor = ConsoleColor.White;
 
-                            Callbacks.ServerCallBacks[name] = callback;
-                        }
-                        catch(Exception e)
-                        {
-                            Debug.WriteLine(e.Message);
-                        }
-                    })
+                             Callbacks.ServerCallBacks[name] = callback;
+                         }
+                         catch (Exception e)
+                         {
+                             Debug.WriteLine(e.Message);
+                         }
+                     }),
+                    ["getUsers"] = new getUsersSource(getConnectedUsers)
                 };
                 cb.Invoke(corefunctions);
             });
@@ -51,7 +53,7 @@ namespace vorpcore_sv.Utils
         public static Dictionary<string, dynamic> getUser(int source)
         {
             PlayerList p = new PlayerList();
-            string steam = "steam:"+p[source].Identifiers["steam"];
+            string steam = "steam:" + p[source].Identifiers["steam"];
             if (LoadUsers._users.ContainsKey(steam))
             {
                 Debug.WriteLine(steam);
@@ -61,6 +63,21 @@ namespace vorpcore_sv.Utils
             {
                 return null;
             }
+        }
+
+        public static Dictionary<string, Dictionary<string, dynamic>> getConnectedUsers()
+        {
+            PlayerList p = new PlayerList();
+            Dictionary<string, Dictionary<string, dynamic>> UsersDictionary = new Dictionary<string, Dictionary<string, dynamic>>();
+            foreach(Player player in p)
+            {
+                string steam = "steam:"+player.Identifiers["steam"];
+                if (LoadUsers._users.ContainsKey(steam) && !UsersDictionary.ContainsKey(steam))
+                {
+                    UsersDictionary.Add(steam, LoadUsers._users[steam].GetUser());
+                }
+            }
+            return UsersDictionary;
         }
 
         public static Player getSource(int handle)
