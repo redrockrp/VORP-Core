@@ -32,8 +32,6 @@ namespace vorpcore_sv.Class
 
         private bool isdead;
 
-        private bool SaveCharacter;
-
         private Player userPlayer;
         private int source;
 
@@ -109,7 +107,6 @@ namespace vorpcore_sv.Class
             this.isdead = isdead;
             this.skin = skin;
             this.comps = comps;
-            SaveCharacter = false;
             PlayerList pl = new PlayerList();
             foreach (Player play in pl)
             {
@@ -140,7 +137,6 @@ namespace vorpcore_sv.Class
             this.isdead = isdead;
             this.skin = skin;
             this.comps = comps;
-            SaveCharacter = false;
             PlayerList pl = new PlayerList();
             foreach (Player play in pl)
             {
@@ -367,17 +363,14 @@ namespace vorpcore_sv.Class
             {
                 case 0:
                     money += quantity;
-                    SaveCharacter = true;
                     //Exports["ghmattimysql"].execute($"UPDATE characters SET money=money + ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 case 1:
                     gold += quantity;
-                    SaveCharacter = true;
                     //Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold + ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 case 2:
                     rol += quantity;
-                    SaveCharacter = true;
                     //Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol + ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
             }
@@ -390,17 +383,14 @@ namespace vorpcore_sv.Class
             {
                 case 0:
                     money -= quantity;
-                    SaveCharacter = true;
                     //Exports["ghmattimysql"].execute($"UPDATE characters SET money=money - ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 case 1:
                     gold -= quantity;
-                    SaveCharacter = true;
                     //Exports["ghmattimysql"].execute($"UPDATE characters SET gold=gold - ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
                 case 2:
                     rol -= quantity;
-                    SaveCharacter = true;
                     //Exports["ghmattimysql"].execute($"UPDATE characters SET rol=rol - ? WHERE identifier=?", new object[] { quantity, identifier });
                     break;
             }
@@ -410,7 +400,6 @@ namespace vorpcore_sv.Class
         public void addXp(int quantity)
         {
             xp += quantity;
-            SaveCharacter = true;
             //Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp + ? WHERE identifier=?", new object[] { quantity, identifier });
             updateCharUi();
         }
@@ -418,7 +407,6 @@ namespace vorpcore_sv.Class
         public void removeXp(int quantity)
         {
             xp -= quantity;
-            SaveCharacter = true;
             //Exports["ghmattimysql"].execute($"UPDATE characters SET xp=xp - ? WHERE identifier=?", new object[] { quantity, identifier });
             updateCharUi();
         }
@@ -426,14 +414,12 @@ namespace vorpcore_sv.Class
         public void setJob(string newjob)
         {
             job = newjob;
-            SaveCharacter = true;
             //Exports["ghmattimysql"].execute($"UPDATE characters SET job=? WHERE identifier=?", new string[] { newjob, identifier });
         }
 
         public void setGroup(string newgroup)
         {
             group = newgroup;
-            SaveCharacter = true;
             //Exports["ghmattimysql"].execute($"UPDATE characters SET `group`=? WHERE identifier=?", new string[] { newgroup.ToString(), identifier });
         }
 
@@ -441,7 +427,6 @@ namespace vorpcore_sv.Class
         {
             isdead = dead;
             //int intdead = dead ? 1 : 0;
-            SaveCharacter = true;
             //Exports["ghmattimysql"].execute("UPDATE characters SET `isdead` = ? WHERE `identifier` = ?", new object[] { intdead, identifier });
         }
 
@@ -449,7 +434,6 @@ namespace vorpcore_sv.Class
         {
             dynamic character = await Exports["ghmattimysql"].executeSync("INSERT INTO characters(`identifier`,`group`,`money`,`gold`,`rol`,`xp`,`inventory`,`job`,`status`,`firstname`,`lastname`,`skinPlayer`,`compPlayer`,`jobgrade`,`coords`,`isdead`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", new object[] { identifier, group, money, gold, rol, xp, inventory, job, status, firstname, lastname, skin, comps, jobgrade, coords, isdead ? 1 : 0 });
             CharIdentifier = (int)character.insertId;
-            Debug.WriteLine(CharIdentifier.ToString());
             return (int)character.insertId;
         }
 
@@ -467,7 +451,6 @@ namespace vorpcore_sv.Class
         public void SaveCharacterInDb()
         {
             Exports["ghmattimysql"].execute("UPDATE characters SET `group` = ?,`money` = ?,`gold` = ?,`rol` = ?,`xp` = ?,`job` = ?, `status` = ?,`firstname` = ?, `lastname` = ?, `jobgrade` = ?,`coords` = ?,`isdead` = ? WHERE `identifier` = ? AND `charidentifier` = ?", new object[] {group,money,gold,rol,xp,job,status,firstname,lastname,jobgrade,coords,isdead ? 1 : 0,identifier,charIdentifier });
-            SaveCharacter = false;
         }
     }
 }

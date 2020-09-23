@@ -33,12 +33,11 @@ namespace vorpcore_sv.Scripts
 
         private async Task SaveUsersInServer()
         {
-            await Delay(120000);
+            await Delay(300000);
             foreach (KeyValuePair<string,User> user in _users)
             {
                 await Delay(1000);
                 user.Value.SaveUser();
-                Debug.WriteLine($"Saving player {user.Value.Identifier}.");
             }
         }
         
