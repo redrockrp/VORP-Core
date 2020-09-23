@@ -16,6 +16,7 @@ namespace vorpcore_sv.Class
         private Dictionary<int,Character> _usercharacters;
         private int _numofcharacters;
         private int usedCharacterId = -1;
+        private int source;
 
         public int UsedCharacterId
         {
@@ -52,6 +53,11 @@ namespace vorpcore_sv.Class
             }
         }
 
+        public int Source
+        {
+            get => source;
+            set => source = value;
+        }
         public int Numofcharacters
         {
             get => _numofcharacters;
@@ -111,6 +117,7 @@ namespace vorpcore_sv.Class
                 ["getIdentifier"] = Identifier,
                 ["getGroup"] = Group,
                 ["getPlayerwarnings"] = Playerwarnings,
+                ["source"] = source,
                 ["setGroup"] = new Action<string>((group) =>
                 {
                     try

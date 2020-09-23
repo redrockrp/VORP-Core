@@ -155,6 +155,7 @@ namespace vorpcore_sv.Scripts
             if (_users.ContainsKey(steam))
             {
                 Debug.WriteLine("Characters loaded "+_users[steam].Numofcharacters);
+                _users[steam].Source = int.Parse(source.Handle);
                 if (_users[steam].Numofcharacters <= 0)
                 {
                     TriggerEvent("vorp_CreateNewCharacter",int.Parse(source.Handle));
