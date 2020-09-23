@@ -155,10 +155,9 @@ namespace vorpcore_sv.Scripts
             string steam = "steam:" + source.Identifiers["steam"];
             if (_users.ContainsKey(steam))
             {
-                Debug.WriteLine("Ha entrado y tiene "+_users[steam].Numofcharacters);
+                Debug.WriteLine("Characters loaded "+_users[steam].Numofcharacters);
                 if (_users[steam].Numofcharacters <= 0)
                 {
-                    Debug.WriteLine("No tiene pj creado me voy al menu de creación del primer personaje");
                     TriggerEvent("vorp_CreateNewCharacter",int.Parse(source.Handle));
                 }
                 else
@@ -166,12 +165,10 @@ namespace vorpcore_sv.Scripts
                     if (LoadConfig.Config["MaxCharacters"].ToObject<int>() > 1)
                     {
                         TriggerEvent("vorp_GoToSelectionMenu", int.Parse(source.Handle));
-                        Debug.WriteLine("Ya tiene personaje creado me voy al menu de seleccionar personaje o crear");
                     }
                     else
                     {
                         TriggerEvent("vorp_SpawnUniqueCharacter");
-                        Debug.WriteLine("Spawneo directamente el personaje de la persona");
                     }    
                 }
             }

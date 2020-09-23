@@ -7,7 +7,7 @@
   "Whitelist": true,
   "MaxCharacters": 2,
   "ActiveVoiceChat": true,
-  "KeySwapVoiceRange": "0x6319DB71",
+  "KeySwapVoiceRange": "0x80F28E95",
   "DefaultVoiceRange": 5.0,
   "VoiceRanges": [ 2.0, 5.0, 12.0 ],
 

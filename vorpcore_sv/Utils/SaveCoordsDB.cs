@@ -38,12 +38,12 @@ namespace vorpcore_sv.Utils
             string sid = "steam:" + source.Identifiers["steam"];
             LastCoordsInCache[source] = new Tuple<Vector3, float>(lastCoords, lastHeading);
             JObject characterCoords = new JObject()
-                    {
-                        { "x", lastCoords.X },
-                        { "y", lastCoords.Y },
-                        { "z", lastCoords.Z },
-                        { "heading", lastHeading }
-                    };
+            {
+                { "x", lastCoords.X },
+                { "y", lastCoords.Y },
+                { "z", lastCoords.Z },
+                { "heading", lastHeading }
+            };
 
             Debug.WriteLine(JsonConvert.SerializeObject(characterCoords));
             LoadUsers._users[sid].GetUsedCharacter().Coords = JsonConvert.SerializeObject(characterCoords);
