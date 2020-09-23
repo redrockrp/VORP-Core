@@ -45,7 +45,6 @@ namespace vorpcore_sv.Utils
                 { "heading", lastHeading }
             };
 
-            Debug.WriteLine(JsonConvert.SerializeObject(characterCoords));
             LoadUsers._users[sid].GetUsedCharacter().Coords = JsonConvert.SerializeObject(characterCoords);
         }
 
