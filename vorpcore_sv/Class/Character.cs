@@ -107,16 +107,6 @@ namespace vorpcore_sv.Class
             this.isdead = isdead;
             this.skin = skin;
             this.comps = comps;
-            PlayerList pl = new PlayerList();
-            foreach (Player play in pl)
-            {
-                string steamid = "steam:" + play.Identifiers["steam"];
-                if(steamid == Identifier)
-                {
-                    Source = int.Parse(play.Handle);
-                    break;
-                }
-            }
         }
 
         public Character(string identifier, string group, string job, int jobgrade, string firstname, string lastname, string inventory, string status, string coords, double money, double gold, double rol, int xp, bool isdead, string skin, string comps)
@@ -137,16 +127,6 @@ namespace vorpcore_sv.Class
             this.isdead = isdead;
             this.skin = skin;
             this.comps = comps;
-            PlayerList pl = new PlayerList();
-            foreach (Player play in pl)
-            {
-                string steamid = "steam:" + play.Identifiers["steam"];
-                if (steamid == Identifier)
-                {
-                    Source = int.Parse(play.Handle);
-                    break;
-                }
-            }
         }
 
         public Dictionary<string, dynamic> getCharacter()

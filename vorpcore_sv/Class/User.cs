@@ -16,7 +16,7 @@ namespace vorpcore_sv.Class
         private Dictionary<int,Character> _usercharacters;
         private int _numofcharacters;
         private int usedCharacterId = -1;
-        private int source;
+        private int source = -1;
 
         public int UsedCharacterId
         {
@@ -25,13 +25,13 @@ namespace vorpcore_sv.Class
             {
                 usedCharacterId = value;
                 PlayerList pl = new PlayerList();
-                int source = -1;
                 foreach (Player player in pl)
                 {
                     string steamid = "steam:" + player.Identifiers["steam"];
                     if (steamid == Identifier)
                     {
                         source = int.Parse(player.Handle);
+                        _usercharacters[value].Source = source;
                         player.TriggerEvent("vorp:SelectedCharacter",usedCharacterId);
                         JObject postUi = new JObject();
                         postUi.Add("type", "ui");
