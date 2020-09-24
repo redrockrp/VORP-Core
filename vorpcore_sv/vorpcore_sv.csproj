@@ -50,7 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CatchProcess.cs" />
     <Compile Include="Class\Character.cs" />
     <Compile Include="Class\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

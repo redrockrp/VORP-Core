@@ -23,8 +23,23 @@ namespace vorpcore_sv
                             @"   \  $/   |  $$$$$$/| $$  | $$| $$      |  $$$$$$/  | $$| $$  | $$  | $$| $$$$$$$$" + "\n" +
                             @"    \_/     \______/ |__/  |__/|__/       \______/   |__/|__/  |__/  |__/|________/" + "\n" +
                             "");
+
+            if (IsLinux)
+            {
+                Console.WriteLine("\nVORP CORE Running on Linux, thanks for using VorpCore");
+            }
             Console.ForegroundColor = ConsoleColor.White;
         }
+
+        public static bool IsLinux
+        {
+            get
+            {
+                int p = (int)Environment.OSVersion.Platform;
+                return (p == 4) || (p == 6) || (p == 128);
+            }
+        }
+
     }
 
 }

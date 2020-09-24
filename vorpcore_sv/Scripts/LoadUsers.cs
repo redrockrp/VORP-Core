@@ -45,19 +45,17 @@ namespace vorpcore_sv.Scripts
         {
             Debug.WriteLine($"Player {player.Name} dropped (Reason: {reason}).");
             string identifier = "steam:" + player.Identifiers["steam"];
-            Debug.WriteLine($"Saving player {player.Name}.");
             SaveCoordsDB.LastCoordsInCache.Remove(player);
             if (_users.ContainsKey(identifier))
             {
                 _users[identifier].SaveUser();
                 _users.Remove(identifier);
-                Debug.WriteLine($"Clened cache of {player.Name}.");
             }
+            Debug.WriteLine($"Saved player {player.Name}.");
         }
 
         private async Task<bool> LoadUser([FromSource]Player source)
         {
-            Debug.WriteLine(source.Identifiers["steam"]);
             string identifier = "steam:" + source.Identifiers["steam"];
             List<object> resultList = await Exports["ghmattimysql"].executeSync("SELECT * FROM users WHERE identifier = ?", new[] {identifier});
             if (resultList.Count > 0)
