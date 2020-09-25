@@ -196,6 +196,7 @@ namespace vorpcore_sv.Class
                 try
                 {
                     money = m;
+                    updateCharUi();
                 }
                 catch (Exception e)
                 {
@@ -207,6 +208,7 @@ namespace vorpcore_sv.Class
                 try
                 {
                     gold = g;
+                    updateCharUi();
                 }
                 catch (Exception e)
                 {
@@ -218,6 +220,7 @@ namespace vorpcore_sv.Class
                 try
                 {
                     rol = r;
+                    updateCharUi();
                 }
                 catch (Exception e)
                 {
@@ -230,6 +233,7 @@ namespace vorpcore_sv.Class
                 try
                 {
                     xp = x;
+                    updateCharUi();
                 }
                 catch (Exception e)
                 {
