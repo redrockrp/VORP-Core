@@ -56,7 +56,6 @@ namespace vorpcore_sv.Utils
             string steam = "steam:" + p[source].Identifiers["steam"];
             if (LoadUsers._users.ContainsKey(steam))
             {
-                Debug.WriteLine(steam);
                 return LoadUsers._users[steam].GetUser();
             }
             else

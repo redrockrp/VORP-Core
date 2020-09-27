@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using vorpcore_sv.Scripts;
 using vorpcore_sv.Utils;
-using CitizenFX.Core;
 
 namespace vorpcore_sv
 {

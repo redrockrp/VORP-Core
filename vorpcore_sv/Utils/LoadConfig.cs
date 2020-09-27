@@ -66,7 +66,6 @@ namespace vorpcore_sv.Utils
                     foreach (var r in result)
                     {
                         LoadUsers._whitelist.Add(r.identifier);
-                        Debug.WriteLine($"{r.identifier} loaded into whitelist");
                     }
                 }
             }));
