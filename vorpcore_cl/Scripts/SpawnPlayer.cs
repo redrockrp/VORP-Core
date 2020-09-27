@@ -13,16 +13,8 @@ namespace vorpcore_cl.Scripts
 
         public SpawnPlayer()
         {
-            Tick += saveLastCoordsTick;
-
-            Tick += manageOnMount;
-
-            Tick += disableHud;
-
             EventHandlers["vorp:initCharacter"] += new Action<Vector3, float, bool>(InitPlayer);
-            EventHandlers["vorp:initNewCharacter"] += new Action(InitNewPlayer);
-            Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
-
+            EventHandlers["vorp:SelectedCharacter"] += new Action<int>(InitCharacter);
             EventHandlers["playerSpawned"] += new Action<object>(InitTpPlayer);
         }
 
@@ -76,8 +68,11 @@ namespace vorpcore_cl.Scripts
             TriggerServerEvent("vorp:playerSpawn");
         }
 
-        private void InitNewPlayer()
+        private void InitCharacter(int charId)
         {
+
+            firstSpawn = false;
+
             Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
 
             if (GetConfig.Config["ActiveEagleEye"].ToObject<bool>())
@@ -91,26 +86,11 @@ namespace vorpcore_cl.Scripts
             }
 
             setPVP();
-
-            firstSpawn = false;
         }
 
         private void InitPlayer(Vector3 coords, float heading, bool isdead)
         {
-            Function.Call(Hash.SET_MINIMAP_HIDE_FOW, true);
             PlayerActions.TeleportToCoords(coords.X, coords.Y, coords.Z, heading);
-
-            if (GetConfig.Config["ActiveEagleEye"].ToObject<bool>())
-            {
-                Function.Call((Hash)0xA63FCAD3A6FEC6D2, API.PlayerId(), true);
-            }
-
-            if (GetConfig.Config["ActiveDeadEye"].ToObject<bool>())
-            {
-                Function.Call((Hash)0x95EE1DEE1DCD9070, API.PlayerId(), true);
-            }
-
-            setPVP();
 
             if (isdead)
             {
@@ -118,8 +98,6 @@ namespace vorpcore_cl.Scripts
                 TriggerEvent("vorp:PlayerForceRespawn");
                 RespawnSystem.resspawnPlayer();
             }
-
-            firstSpawn = false;
         }
 
         public static async Task setPVP()
