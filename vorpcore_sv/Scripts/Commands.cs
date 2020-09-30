@@ -48,7 +48,24 @@ namespace vorpcore_sv.Scripts
                 }
                 else
                 {
-                    Debug.WriteLine("This only can be executed from client side.");
+                    try
+                    {
+                        int target = int.Parse(args[0].ToString());
+                        string newgroup = args[1].ToString();
+
+                        if (String.IsNullOrEmpty(newgroup))
+                        {
+                            Debug.WriteLine("ERROR: Use Correct Sintaxis");
+                            return;
+                        }
+
+                        TriggerEvent("vorp:setGroup", target, newgroup);
+                        Debug.WriteLine($"Target {target} have group {newgroup}");
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("ERROR: Use Correct Sintaxis");
+                    }
                 }
             }), false);
 
@@ -89,7 +106,24 @@ namespace vorpcore_sv.Scripts
                 }
                 else
                 {
-                    Debug.WriteLine("This only can be executed from client side.");
+                    try
+                    {
+                        int target = int.Parse(args[0].ToString());
+                        string newjob = args[1].ToString();
+
+                        if (String.IsNullOrEmpty(newjob))
+                        {
+                            Debug.WriteLine("vorp:Tip", "ERROR: Use Correct Sintaxis");
+                            return;
+                        }
+
+                        TriggerEvent("vorp:setJob", target, newjob);
+                        Debug.WriteLine($"Target {target} have job {newjob}");
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("ERROR: Use Correct Sintaxis");
+                    }
                 }
             }), false);
 
@@ -127,6 +161,19 @@ namespace vorpcore_sv.Scripts
                 else
                 {
                     Debug.WriteLine("This only can be executed from client side.");
+                    try
+                    {
+                        int target = int.Parse(args[0].ToString());
+                        int montype = int.Parse(args[1].ToString());
+                        double quantity = double.Parse(args[2].ToString());
+
+                        TriggerEvent("vorp:addMoney", target, montype, quantity);
+                        Debug.WriteLine($"Added {quantity} to {target}");
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("ERROR: Use Correct Sintaxis");
+                    }
                 }
             }), false);
 
@@ -162,73 +209,85 @@ namespace vorpcore_sv.Scripts
                 }
                 else
                 {
-                    Debug.WriteLine("This only can be executed from client side.");
+                    try
+                    {
+                        int target = int.Parse(args[0].ToString());
+                        int montype = int.Parse(args[1].ToString());
+                        double quantity = double.Parse(args[2].ToString());
+
+                        TriggerEvent("vorp:removeMoney", target, montype, quantity);
+                        Debug.WriteLine($"Removed {quantity} from {target}");
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("ERROR: Use Correct Sintaxis");
+                    }
                 }
             }), false);
 
-            // TriggerEvent("chat:addSuggestion", "/addwhitelist", "Example: /addwhitelist 11000010c8aa16e");
-            // API.RegisterCommand("addwhitelist", new Action<int, List<object>, string>((source, args, rawCommand) =>
-            // {
-            //     if (source > 0) // it's a player.
-            //     {
-            //         Player _source = ApiController.getSource(source);
-            //         TriggerEvent("vorp:getCharacter", source, new Action<dynamic>((user) =>
-            //         {
-            //             if (user.group == "admin")
-            //             {
-            //                 try
-            //                 {
-            //                     string steamId = args[0].ToString();
-            //                     Exports["ghmattimysql"].execute("SELECT * FROM whitelist WHERE identifier = ?", new[] { steamId }, new Action<dynamic>((result) =>
-            //                     {
-            //                         if (result.Count == 0)
-            //                         {
-            //                             Exports["ghmattimysql"].execute("INSERT INTO whitelist (`identifier`) VALUES (?)", new object[] { steamId });
-            //                             Whitelist.whitelist.Add(steamId);
-            //                             _source.TriggerEvent("vorp:Tip", $"Added {steamId} to whitelist", 4000);
-            //                         }
-            //                         else
-            //                         {
-            //                             _source.TriggerEvent("vorp:Tip", $"{steamId} Is Whitelisted {steamId}", 4000);
-            //                         }
-            //                     }));
-            //                 }
-            //                 catch
-            //                 {
-            //                     _source.TriggerEvent("vorp:Tip", "ERROR: Use Correct Sintaxis", 4000);
-            //                 }
-            //             }
-            //             else
-            //             {
-            //                 _source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoPermissions"], 4000);
-            //             }
-            //         }));
-            //     }
-            //     else
-            //     {
-            //         try
-            //         {
-            //             string steamId = args[0].ToString();
-            //             Exports["ghmattimysql"].execute("SELECT * FROM whitelist WHERE identifier = ?", new[] { steamId }, new Action<dynamic>((result) =>
-            //             {
-            //                 if (result.Count == 0)
-            //                 {
-            //                     Exports["ghmattimysql"].execute("INSERT INTO whitelist (`identifier`) VALUES (?)", new object[] { steamId });
-            //                     Whitelist.whitelist.Add(steamId);
-            //                     Debug.WriteLine($"Added {steamId} to whitelist", 4000);
-            //                 }
-            //                 else
-            //                 {
-            //                     Debug.WriteLine($"{steamId} Is Whitelisted {steamId}", 4000);
-            //                 }
-            //             }));
-            //         }
-            //         catch
-            //         {
-            //             Debug.WriteLine("ERROR: Use Correct Sintaxis", 4000);
-            //         }
-            //     }
-            // }), false);
+            TriggerEvent("chat:addSuggestion", "/addwhitelist", "Example: /addwhitelist 11000010c8aa16e");
+            API.RegisterCommand("addwhitelist", new Action<int, List<object>, string>((source, args, rawCommand) =>
+            {
+                if (source > 0) // it's a player.
+                 {
+                    Player _source = ApiController.getSource(source);
+                    TriggerEvent("vorp:getCharacter", source, new Action<dynamic>((user) =>
+                    {
+                        if (user.group == "admin" || user.group == "mod")
+                        {
+                            try
+                            {
+                                string steamId = args[0].ToString();
+                                Exports["ghmattimysql"].execute("SELECT * FROM whitelist WHERE identifier = ?", new[] { steamId }, new Action<dynamic>((result) =>
+                                {
+                                    if (result.Count == 0)
+                                    {
+                                        Exports["ghmattimysql"].execute("INSERT INTO whitelist (`identifier`) VALUES (?)", new object[] { steamId });
+                                        LoadUsers._whitelist.Add(steamId);
+                                        _source.TriggerEvent("vorp:Tip", $"Added {steamId} to whitelist", 4000);
+                                    }
+                                    else
+                                    {
+                                        _source.TriggerEvent("vorp:Tip", $"{steamId} Is Whitelisted {steamId}", 4000);
+                                    }
+                                }));
+                            }
+                            catch
+                            {
+                                _source.TriggerEvent("vorp:Tip", "ERROR: Use Correct Sintaxis", 4000);
+                            }
+                        }
+                        else
+                        {
+                            _source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoPermissions"], 4000);
+                        }
+                    }));
+                }
+                else
+                {
+                    try
+                    {
+                        string steamId = args[0].ToString();
+                        Exports["ghmattimysql"].execute("SELECT * FROM whitelist WHERE identifier = ?", new[] { steamId }, new Action<dynamic>((result) =>
+                        {
+                            if (result.Count == 0)
+                            {
+                                Exports["ghmattimysql"].execute("INSERT INTO whitelist (`identifier`) VALUES (?)", new object[] { steamId });
+                                LoadUsers._whitelist.Add(steamId);
+                                Debug.WriteLine($"Added {steamId} to whitelist", 4000);
+                            }
+                            else
+                            {
+                                Debug.WriteLine($"{steamId} Is Whitelisted {steamId}", 4000);
+                            }
+                        }));
+                    }
+                    catch
+                    {
+                        Debug.WriteLine("ERROR: Use Correct Sintaxis", 4000);
+                    }
+                }
+            }), false);
         }
     }
 }
