@@ -160,13 +160,13 @@ namespace vorpcore_sv.Scripts
                 }
                 else
                 {
-                    if (LoadConfig.Config["MaxCharacters"].ToObject<int>() > 1)
+                    if (LoadConfig.Config["MaxCharacters"].ToObject<int>() == 1 && _users[steam].Numofcharacters <= 1)
                     {
-                        TriggerEvent("vorp_GoToSelectionMenu", int.Parse(source.Handle));
+                        TriggerEvent("vorp_SpawnUniqueCharacter", int.Parse(source.Handle));
                     }
                     else
                     {
-                        TriggerEvent("vorp_SpawnUniqueCharacter");
+                        TriggerEvent("vorp_GoToSelectionMenu", int.Parse(source.Handle));
                     }    
                 }
             }
