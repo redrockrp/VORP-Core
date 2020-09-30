@@ -1,3 +1,5 @@
+--DEPRECATE PLEASE UPDATE TO NEW API
+
 exports('vorpAPI',function()
     local self = {}
 

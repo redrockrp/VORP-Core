@@ -57,6 +57,7 @@ namespace vorpcore_sv.Scripts
         private async Task<bool> LoadUser([FromSource]Player source)
         {
             string identifier = "steam:" + source.Identifiers["steam"];
+            string license = "license:" + source.Identifiers["license"];
             List<object> resultList = await Exports["ghmattimysql"].executeSync("SELECT * FROM users WHERE identifier = ?", new[] {identifier});
             if (resultList.Count > 0)
             {
@@ -65,7 +66,7 @@ namespace vorpcore_sv.Scripts
                 {
                     return true;
                 }
-                User newUser = new User(identifier, user["group"].ToString(),(int)user["warnings"]);
+                User newUser = new User(identifier, user["group"].ToString(),(int)user["warnings"], license);
                 if (_users.ContainsKey(identifier))
                 {
                     _users[identifier] = newUser;
@@ -79,9 +80,9 @@ namespace vorpcore_sv.Scripts
             }
             else
             {
-                //Usuario nuevo que entra por primera vez y no puede estar baneado xd
+                //New User
                 await Exports["ghmattimysql"].executeSync("INSERT INTO users VALUES(?,'user',0,0)", new[] {identifier});
-                User newUser = new User(identifier, "user", 0);
+                User newUser = new User(identifier, "user", 0, license);
                 if (_users.ContainsKey(identifier))
                 {
                     _users[identifier] = newUser;
@@ -110,6 +111,7 @@ namespace vorpcore_sv.Scripts
             }
 
             var steamIdentifier = "steam:"+source.Identifiers["steam"];
+            string license = "license:" + source.Identifiers["license"];
             deferrals.update(LoadConfig.Langs["CheckingIdentifier"]);
             if (steamIdentifier == null)
             {
@@ -134,9 +136,18 @@ namespace vorpcore_sv.Scripts
                 _userEntering = true;
             }
 
+            
+
             if (_userEntering)
             {
                 deferrals.update(LoadConfig.Langs["LoadingUser"]);
+
+                if (_users.ContainsKey(steamIdentifier) || CheckConnectedLicenses(license)) // Fix Duplicate Connections
+                {
+                    deferrals.done(LoadConfig.Langs["IsConnected"]);
+                    setKickReason(LoadConfig.Langs["IsConnected"]);
+                }
+
                 banned =  await LoadUser(source);
                 if (banned)
                 {
@@ -145,6 +156,18 @@ namespace vorpcore_sv.Scripts
                 }
                 deferrals.done();
             }
+        }
+
+        private bool CheckConnectedLicenses(string license)
+        {
+            foreach (var user in _users)
+            {
+                if (user.Value.License == license)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void PlayerSpawnFunction([FromSource] Player source)

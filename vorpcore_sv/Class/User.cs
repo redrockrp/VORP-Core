@@ -10,7 +10,8 @@ namespace vorpcore_sv.Class
     //class for users that contains their characters
     public class User:BaseScript
     {
-        private string _identifier; //User steamid    
+        private string _identifier; //User steamid
+        private string _license; //User rockstar    
         private string _group;//User admin group
         private int _playerwarnings;//Used for admins to know how many warnings a user has
         private Dictionary<int,Character> _usercharacters;
@@ -69,6 +70,15 @@ namespace vorpcore_sv.Class
             get => _identifier;
         }
 
+        public string License
+        {
+            get => _license;
+            set
+            {
+                _license = value;
+            }
+        }
+
         public string Group
         {
             get => _group;
@@ -90,12 +100,13 @@ namespace vorpcore_sv.Class
         }
         
 
-        public User(string identifier, string group, int playerwarnings)
+        public User(string identifier, string group, int playerwarnings, string license)
         {
             _identifier = identifier;
             _group = group;
             _playerwarnings = playerwarnings;
             _usercharacters = new Dictionary<int, Character>();
+            _license = license;
             LoadCharacters(identifier);
             //Cargarmos todos sus characters de la base de datos si al cargarlos no tiene entonces cuando se llame a spawnpalyer habrá que crear 1
         }
