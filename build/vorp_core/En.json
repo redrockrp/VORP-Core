@@ -1,4 +1,5 @@
 {
+    "IsConnected": "🚫 Duplicated account connected (steam | rockstar)",
     "NoSteam": "🚫 You have to have Steam open, please open Steam & restart RedM",
     "NoInWhitelist": "🚫 You are not in the Whitelist",
     "NoPermissions": "You don't have enough permissions",
