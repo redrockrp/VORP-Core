@@ -19,7 +19,8 @@ This is VORP CORE for RedM made in C# compatible with LUA
 * Copy and paste ``vorp_core`` folder to ``resources/[vorp]`` (Same for other scripts)
 * Add ensure ``vorp_core`` to your ``server.cfg`` file (Same for other scripts)
 * Example Server.cfg
-```
+
+```cfg
 set mysql_connection_string "mysql://root:yourDBpassword(If you dont have one, leave this blank)@localhost/vorp?acquireTimeout=60000&connectTimeout=60000"
 
 #These resources will start by default.
@@ -61,6 +62,9 @@ ensure vorp_woodcutter
 ```
 ``
 The scripts may have an SQL file, you need to create a database and execute the SQL files.
+``
+``
+We recommend to download and add the all the scripts to the server together before creating a character if you are going to test the scripts (Specially for vorp_metabolism and vorp_inventory)
 ``
 Now you are ready!
 
