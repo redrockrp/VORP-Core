@@ -20,7 +20,7 @@ This is VORP CORE for RedM made in C# compatible with LUA
 * Add ensure ``vorp_core`` to your ``server.cfg`` file (Same for other scripts)
 * Example Server.cfg
 
-``set mysql_connection_string "mysql://root:yourDBpassword(If you dont have one, leave this blank)@localhost/vorp?acquireTimeout=60000&connectTimeout=60000"
+```set mysql_connection_string "mysql://root:yourDBpassword(If you dont have one, leave this blank)@localhost/vorp?acquireTimeout=60000&connectTimeout=60000"
 
 # These resources will start by default.
 stop sessionmanager
@@ -60,7 +60,7 @@ ensure vorp_postman
 ensure vorp_woodcutter``
 ``
 The script may have an SQL file, you need to create a database and execute the SQL files.
-``
+```
 Now you are ready!
 
 ## Wiki
