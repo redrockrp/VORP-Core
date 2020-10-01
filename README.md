@@ -60,7 +60,7 @@ ensure vorp_postman
 ensure vorp_woodcutter``
 ```
 ``
-The script may have an SQL file, you need to create a database and execute the SQL files.
+The scripts may have an SQL file, you need to create a database and execute the SQL files.
 ``
 Now you are ready!
 
