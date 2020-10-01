@@ -59,12 +59,13 @@ ensure vorp_housing
 ensure vorp_postman
 ensure vorp_woodcutter
 ```
-``
+
+## Note
+
 The scripts may have an SQL file, you need to create a database and execute the SQL files.
-``
-``
+
 We recommend to download and add the all the scripts to the server together before creating a character if you are going to test the scripts (Specially for vorp_metabolism and vorp_inventory)
-``
+
 Now you are ready!
 
 ## Wiki
