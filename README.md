@@ -55,7 +55,6 @@ ensure vorp_metabolism
 ensure vorp_banks
 ensure vorp_barbershops
 ensure vorp_cinema
-ensure vorp_fishing
 ensure vorp_housing
 ensure vorp_postman
 ensure vorp_woodcutter
