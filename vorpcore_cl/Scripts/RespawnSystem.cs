@@ -50,11 +50,11 @@ namespace vorpcore_cl.Scripts
                 {
                     await Delay(1000);
                     TimeToRespawn -= 1;
-                    Exports["spawnmanager"].setAutoSpawn(false); //Is this a copy ? wtf I need to create a new spawnmanager? 
+                    Exports["spawnmanager"].setAutoSpawn(false);
                 }
                 string keyPress = Utils.GetConfig.Config["RespawnKey"].ToString();
                 int KeyInt = Convert.ToInt32(keyPress, 16);
-                bool pressKey = false; //sorry the word pressed has copyright
+                bool pressKey = false;
                 while (!pressKey && setDead)
                 {
                     await Delay(0);
@@ -93,7 +93,7 @@ namespace vorpcore_cl.Scripts
 
         public static async Task resspawnPlayer()
         {
-            Function.Call((Hash)0x71BC8E838B9C6035, API.PlayerPedId()); //This is from kaners? https://vespura.com/doc/natives/#_0x71BC8E838B9C6035 are u sure? lol amazing
+            Function.Call((Hash)0x71BC8E838B9C6035, API.PlayerPedId());
             API.AnimpostfxStop("DeathFailMP01");
             JToken respawnCoords = Utils.GetConfig.Config["RespawnCoords"];
             Function.Call((Hash)0x203BEFFDBE12E96A, API.PlayerPedId(), respawnCoords[0].ToObject<float>(), respawnCoords[1].ToObject<float>(), respawnCoords[2].ToObject<float>(), respawnCoords[3].ToObject<float>(), false, false, false);
