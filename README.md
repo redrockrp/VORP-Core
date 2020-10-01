@@ -46,12 +46,12 @@ ensure vorp_inputs
 #VORP Scripts
 ensure vorp_character
 ensure vorp_inventory
+ensure vorp_metabolism
 ensure vorp_clothingstore
 ensure vorp_stables
 ensure vorp_adminmenu
 ensure vorp_stores
 ensure vorp_weaponstore
-ensure vorp_metabolism
 ensure vorp_banks
 ensure vorp_barbershops
 ensure vorp_cinema
