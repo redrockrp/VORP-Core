@@ -111,7 +111,7 @@ namespace vorpcore_sv.Scripts
             }
 
             var steamIdentifier = "steam:"+source.Identifiers["steam"];
-            string license = "license:" + source.Identifiers["license"];
+            //string license = "license:" + source.Identifiers["license"];
             deferrals.update(LoadConfig.Langs["CheckingIdentifier"]);
             if (steamIdentifier == null)
             {
@@ -141,8 +141,7 @@ namespace vorpcore_sv.Scripts
             if (_userEntering)
             {
                 deferrals.update(LoadConfig.Langs["LoadingUser"]);
-
-                if (_users.ContainsKey(steamIdentifier) || CheckConnectedLicenses(license)) // Fix Duplicate Connections
+                if (_users.ContainsKey(steamIdentifier)) //CheckConnectedLicenses(license)) // Fix Duplicate Connections
                 {
                     deferrals.done(LoadConfig.Langs["IsConnected"]);
                     setKickReason(LoadConfig.Langs["IsConnected"]);
