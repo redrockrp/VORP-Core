@@ -1,7 +1,7 @@
 {
-    "IsConnected": "ðŸš« Questo account è già connesso (steam | rockstar)",
-    "NoSteam": "ðŸš« Devi avere Steam aperto! Per favore, apri Steam e riavvia RedM",
-    "NoInWhitelist": "ðŸš« Non fai parte della Whitelist",
+    "IsConnected": "Questo account è già connesso (steam | rockstar)",
+    "NoSteam": "Devi avere Steam aperto! Per favore, apri Steam e riavvia RedM",
+    "NoInWhitelist": "Non fai parte della Whitelist",
     "NoPermissions": "Non hai i privilegi",
 
     "TitleOnDead": "Sei morto!",
