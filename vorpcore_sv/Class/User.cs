@@ -203,11 +203,11 @@ namespace vorpcore_sv.Class
                     IDictionary<string, object> character = (dynamic)icharacter;
                     if (character.ContainsKey("identifier"))
                     {
-                        Character newCharacter = new Character(identifier,(int) character["charidentifier"],(string)character["group"],
+                        Character newCharacter = new Character(identifier,Convert.ToInt32(character["charidentifier"]),(string)character["group"],
                             (string) character["job"],int.Parse(character["jobgrade"].ToString()),(string) character["firstname"],(string) character["lastname"]
                             ,(string) character["inventory"],
                             (string) character["status"],(string) character["coords"],double.Parse(character["money"].ToString())
-                            ,double.Parse(character["gold"].ToString()),double.Parse(character["rol"].ToString()),int.Parse(character["xp"].ToString()), (bool)character["isdead"],(string)character["skinPlayer"],
+                            ,double.Parse(character["gold"].ToString()),double.Parse(character["rol"].ToString()),int.Parse(character["xp"].ToString()), Convert.ToBoolean(character["isdead"]),(string)character["skinPlayer"],
                             (string)character["compPlayer"]);
                         if (_usercharacters.ContainsKey(newCharacter.CharIdentifier))
                         {

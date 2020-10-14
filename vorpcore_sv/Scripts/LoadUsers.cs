@@ -110,14 +110,16 @@ namespace vorpcore_sv.Scripts
                 return;
             }
 
-            var steamIdentifier = "steam:"+source.Identifiers["steam"];
-            //string license = "license:" + source.Identifiers["license"];
             deferrals.update(LoadConfig.Langs["CheckingIdentifier"]);
-            if (steamIdentifier == null)
+
+            if (String.IsNullOrEmpty(source.Identifiers["steam"]))
             {
                 deferrals.done(LoadConfig.Langs["NoSteam"]);
                 setKickReason(LoadConfig.Langs["NoSteam"]);
             }
+
+            var steamIdentifier = "steam:" + source.Identifiers["steam"];
+
             if (_usingWhitelist)
             {
                 if (_whitelist.Contains(steamIdentifier))
