@@ -108,7 +108,6 @@ namespace vorpcore_sv.Class
             _usercharacters = new Dictionary<int, Character>();
             _license = license;
             LoadCharacters(identifier);
-            //Cargarmos todos sus characters de la base de datos si al cargarlos no tiene entonces cuando se llame a spawnpalyer habrá que crear 1
         }
 
         public Dictionary<string, dynamic> GetUser()
@@ -224,7 +223,7 @@ namespace vorpcore_sv.Class
 
         public async void addCharacter(string firstname, string lastname, string skin, string comps)
         {
-            Character newChar = new Character(Identifier,"user", "none", 0, firstname, lastname, "{}", "{}", "{}", LoadConfig.Config["initMoney"].ToObject<double>(), LoadConfig.Config["initGold"].ToObject<double>(), LoadConfig.Config["initRol"].ToObject<double>(), LoadConfig.Config["initXp"].ToObject<int>(), false, skin, comps);
+            Character newChar = new Character(Identifier, LoadConfig.Config["initGroup"].ToString(), LoadConfig.Config["initJob"].ToString(), LoadConfig.Config["initJobGrade"].ToObject<int>(), firstname, lastname, "{}", "{}", "{}", LoadConfig.Config["initMoney"].ToObject<double>(), LoadConfig.Config["initGold"].ToObject<double>(), LoadConfig.Config["initRol"].ToObject<double>(), LoadConfig.Config["initXp"].ToObject<int>(), false, skin, comps);
             int charidentifier = await newChar.SaveNewCharacterInDb();
             _usercharacters.Add(charidentifier, newChar);
             Debug.WriteLine("Added new character with identifier " + _usercharacters[charidentifier].PlayerVar.Identifiers["steam"]);
