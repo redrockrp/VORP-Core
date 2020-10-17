@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using vorpcore_sv.Class;
@@ -112,7 +113,7 @@ namespace vorpcore_sv.Scripts
 
             deferrals.update(LoadConfig.Langs["CheckingIdentifier"]);
 
-            if (String.IsNullOrEmpty(source.Identifiers["steam"]))
+            if (String.IsNullOrEmpty(source.Identifiers["steam"]) || source.Identifiers["steam"].Length < 5)
             {
                 deferrals.done(LoadConfig.Langs["NoSteam"]);
                 setKickReason(LoadConfig.Langs["NoSteam"]);
@@ -124,7 +125,6 @@ namespace vorpcore_sv.Scripts
             {
                 if (_whitelist.Contains(steamIdentifier))
                 {
-                    //deferrals.done();
                     _userEntering = true;
                 }
                 else
@@ -143,27 +143,33 @@ namespace vorpcore_sv.Scripts
             if (_userEntering)
             {
                 deferrals.update(LoadConfig.Langs["LoadingUser"]);
-                if (_users.ContainsKey(steamIdentifier)) //CheckConnectedLicenses(license)) // Fix Duplicate Connections
+                if (CheckConnected(source.Identifiers["steam"]))
                 {
                     deferrals.done(LoadConfig.Langs["IsConnected"]);
                     setKickReason(LoadConfig.Langs["IsConnected"]);
                 }
-
-                banned =  await LoadUser(source);
-                if (banned)
+                else
                 {
-                    deferrals.done(LoadConfig.Langs["BannedUser"]);
-                    setKickReason(LoadConfig.Langs["BannedUser"]);
+                    banned = await LoadUser(source);
+                    if (banned)
+                    {
+                        deferrals.done(LoadConfig.Langs["BannedUser"]);
+                        setKickReason(LoadConfig.Langs["BannedUser"]);
+                    }
+                    deferrals.done();
                 }
-                deferrals.done();
+
+
             }
         }
 
-        private bool CheckConnectedLicenses(string license)
+        private bool CheckConnected(string steam)
         {
-            foreach (var user in _users)
+            PlayerList PL = new PlayerList();
+            List<Player> playerList = PL.ToList();
+            foreach (Player p in playerList)
             {
-                if (user.Value.License == license)
+                if (p.Identifiers["steam"].Contains(steam))
                 {
                     return true;
                 }
