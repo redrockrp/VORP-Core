@@ -89,6 +89,10 @@ namespace vorpcore_cl.Scripts
                 await Utils.Miscellanea.DrawText(Utils.GetConfig.Langs["TitleOnDead"], Utils.GetConfig.Config["RespawnTitleFont"].ToObject<int>(), 0.50F, 0.50F, 1.2F, 1.2F, 171, 3, 0, 255, true, true);
                 await Utils.Miscellanea.DrawText(string.Format(Utils.GetConfig.Langs["SubTitleOnDead"], TimeToRespawn.ToString()), Utils.GetConfig.Config["RespawnSubTitleFont"].ToObject<int>(), 0.50f, 0.60f, 0.5f, 0.5f, 255, 255, 255, 255, true, true);
             }
+            else
+            {
+                await Delay(1000);
+            }
         }
 
         public static async Task resspawnPlayer()

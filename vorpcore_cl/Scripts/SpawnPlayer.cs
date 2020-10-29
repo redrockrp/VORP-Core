@@ -111,7 +111,7 @@ namespace vorpcore_cl.Scripts
         [Tick]
         private async Task saveLastCoordsTick()
         {
-            await Delay(3000);
+            await Delay(5000);
 
             if (!firstSpawn)
             {

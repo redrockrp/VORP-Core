@@ -35,14 +35,17 @@ namespace vorpcore_cl.Scripts
             {
                 showIds = false;
             }
-            await Delay(0);
+            await Delay(10);
 
         }
 
         [Tick]
         private async Task SetPlayerIdOnHead()
         {
-            if (!UseIDHeads) { return; }
+            if (!UseIDHeads) {
+                await Delay(100);
+                return; 
+            }
 
             for (int i = 0; i < 255; i++)
             {
