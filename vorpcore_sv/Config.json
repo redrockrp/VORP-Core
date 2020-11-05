@@ -8,6 +8,7 @@
   "initJobGrade": 0,
   "initGroup": "user",
   "Whitelist": true,
+  "AllowWhitelistAutoUpdate": false,
   "MaxCharacters": 2,
   "ActiveVoiceChat": true,
   "KeySwapVoiceRange": "0x80F28E95",

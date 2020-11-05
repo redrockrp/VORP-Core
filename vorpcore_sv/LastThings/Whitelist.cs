@@ -2,6 +2,7 @@
 using CitizenFX.Core.Native;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Threading.Tasks;
 using vorpcore_sv.Utils;
 using vorpcore_sv.Class;
@@ -19,6 +20,7 @@ namespace vorpcore_sv.Scripts
         {
             EventHandlers["playerConnecting"] += new Action<Player, string, dynamic, dynamic>(OnPlayerConnecting);
             LoadWhitelist();
+            SetUpdateWhitelistPolicy();
         }
 
         public async Task LoadWhitelist()
@@ -37,7 +39,34 @@ namespace vorpcore_sv.Scripts
             }));
         }
 
-        private async void OnPlayerConnecting([FromSource]Player player, string playerName, dynamic setKickReason, dynamic deferrals)
+        private void SetUpdateWhitelistPolicy()
+        {
+            var startTimeSpan = TimeSpan.FromMinutes(10);
+            var periodTimeSpan = TimeSpan.FromMinutes(5);
+            var timer = new System.Threading.Timer((e) =>
+            {
+                if (LoadConfig.isConfigLoaded && LoadConfig.Config["AllowWhitelistAutoUpdate"].ToObject<bool>())
+                {
+                    Exports["ghmattimysql"].execute("SELECT * FROM whitelist", new[] {""}, new Action<dynamic>(
+                        (result) =>
+                        {
+                            if (result.Count > 0)
+                            {
+                                var whitelistToReplace = new List<string>();
+                                foreach (var r in result)
+                                {
+                                    whitelistToReplace.Add(r.identifier);
+                                }
+
+                                whitelist = whitelistToReplace;
+                            }
+                        }));
+                }
+            }, null, startTimeSpan, periodTimeSpan);
+        }
+        
+        private async void OnPlayerConnecting([FromSource] Player player, string playerName, dynamic setKickReason,
+            dynamic deferrals)
         {
             deferrals.defer();
 
