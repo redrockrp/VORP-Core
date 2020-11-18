@@ -113,7 +113,7 @@ namespace vorpcore_sv.Scripts
 
             deferrals.update(LoadConfig.Langs["CheckingIdentifier"]);
 
-            if (String.IsNullOrEmpty(source.Identifiers["steam"]) || source.Identifiers["steam"].Length < 5)
+            if (String.IsNullOrEmpty(source.Identifiers["steam"]) || source.Identifiers["steam"].Length < 5 || source.Identifiers["steam"] == null)
             {
                 deferrals.done(LoadConfig.Langs["NoSteam"]);
                 setKickReason(LoadConfig.Langs["NoSteam"]);
@@ -165,16 +165,27 @@ namespace vorpcore_sv.Scripts
 
         private bool CheckConnected(string steam)
         {
-            PlayerList PL = new PlayerList();
-            List<Player> playerList = PL.ToList();
-            foreach (Player p in playerList)
+            try
             {
-                if (p.Identifiers["steam"].Contains(steam))
+                PlayerList PL = new PlayerList();
+                List<Player> playerList = PL.ToList();
+                foreach (Player p in playerList)
                 {
-                    return true;
+                    if (p.Identifiers["steam"] != null)
+                    {
+                        if (p.Identifiers["steam"].Contains(steam))
+                        {
+                            return true;
+                        }
+                    }
                 }
+                return false;
             }
-            return false;
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return false;
+            }
         }
 
         private void PlayerSpawnFunction([FromSource] Player source)
