@@ -55,7 +55,7 @@ namespace vorpcore_sv.Scripts
             Debug.WriteLine($"Saved player {player.Name}.");
         }
 
-        private async Task<bool> LoadUser([FromSource]Player source)
+        private async void LoadUser([FromSource]Player source,dynamic setKickReason,dynamic deferrals)
         {
             string identifier = "steam:" + source.Identifiers["steam"];
             string license = "license:" + source.Identifiers["license"];
@@ -65,7 +65,8 @@ namespace vorpcore_sv.Scripts
                 IDictionary<string, object> user = (dynamic)resultList[0];
                 if ((int)user["banned"] == 1)
                 {
-                    return true;
+                    deferrals.done(LoadConfig.Langs["BannedUser"]);
+                    setKickReason(LoadConfig.Langs["BannedUser"]);
                 }
                 User newUser = new User(identifier, user["group"].ToString(),(int)user["warnings"], license);
                 if (_users.ContainsKey(identifier))
@@ -76,8 +77,8 @@ namespace vorpcore_sv.Scripts
                 {
                     _users.Add(identifier,newUser);
                 }
-                
-                return false;
+
+                deferrals.done();
             }
             else
             {
@@ -92,7 +93,7 @@ namespace vorpcore_sv.Scripts
                 {
                     _users.Add(identifier,newUser);
                 }
-                return false;
+                deferrals.done();
             }
         }
         
@@ -100,7 +101,6 @@ namespace vorpcore_sv.Scripts
         {
             deferrals.defer();
             bool _userEntering = false;
-            bool banned = false;
 
             await Delay(0);
 
@@ -150,16 +150,8 @@ namespace vorpcore_sv.Scripts
                 }
                 else
                 {
-                    banned = await LoadUser(source);
-                    if (banned)
-                    {
-                        deferrals.done(LoadConfig.Langs["BannedUser"]);
-                        setKickReason(LoadConfig.Langs["BannedUser"]);
-                    }
-                    deferrals.done();
+                    LoadUser(source,setKickReason,deferrals);
                 }
-
-
             }
         }
 

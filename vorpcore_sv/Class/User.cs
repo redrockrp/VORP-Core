@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using CitizenFX.Core;
+using CitizenFX.Core.Native;
 using Newtonsoft.Json.Linq;
 using vorpcore_sv.Utils;
 
@@ -48,7 +49,7 @@ namespace vorpcore_sv.Class
                         break;
                     }
                 }
-                
+
                 TriggerEvent("vorp:SelectedCharacter", source, _usercharacters[usedCharacterId].getCharacter());
 
             }
@@ -192,33 +193,36 @@ namespace vorpcore_sv.Class
 
         private async void LoadCharacters(string identifier)
         {
-            List<object> usercharacters = await Exports["ghmattimysql"].executeSync("SELECT * FROM characters WHERE identifier =?", new[] {identifier});
-            Numofcharacters = usercharacters.Count;
-            if (Numofcharacters > 0)
+            Exports["ghmattimysql"].execute("SELECT * FROM characters WHERE identifier =?", new[] { identifier }, new Action<dynamic>((usercharacters) =>
             {
-                //Metemos todos los characters en el diccionario
-                foreach (object icharacter in usercharacters)
+                Numofcharacters = usercharacters.Count;
+                if (usercharacters.Count > 0)
                 {
-                    IDictionary<string, object> character = (dynamic)icharacter;
-                    if (character.ContainsKey("identifier"))
+                    foreach (object icharacter in usercharacters)
                     {
-                        Character newCharacter = new Character(identifier,Convert.ToInt32(character["charidentifier"]),(string)character["group"],
-                            (string) character["job"],int.Parse(character["jobgrade"].ToString()),(string) character["firstname"],(string) character["lastname"]
-                            ,(string) character["inventory"],
-                            (string) character["status"],(string) character["coords"],double.Parse(character["money"].ToString())
-                            ,double.Parse(character["gold"].ToString()),double.Parse(character["rol"].ToString()),int.Parse(character["xp"].ToString()), Convert.ToBoolean(character["isdead"]),(string)character["skinPlayer"],
-                            (string)character["compPlayer"]);
-                        if (_usercharacters.ContainsKey(newCharacter.CharIdentifier))
+                        IDictionary<string, object> character = (dynamic)icharacter;
+                        if (character.ContainsKey("identifier"))
                         {
-                            _usercharacters[newCharacter.CharIdentifier] = newCharacter;
-                        }
-                        else
-                        {
-                            _usercharacters.Add(newCharacter.CharIdentifier,newCharacter);
+                            Character newCharacter = new Character(identifier, Convert.ToInt32(character["charidentifier"]), (string)character["group"],
+                                (string)character["job"], int.Parse(character["jobgrade"].ToString()), (string)character["firstname"], (string)character["lastname"]
+                                , (string)character["inventory"],
+                                (string)character["status"], (string)character["coords"], double.Parse(character["money"].ToString())
+                                , double.Parse(character["gold"].ToString()), double.Parse(character["rol"].ToString()), int.Parse(character["xp"].ToString()), Convert.ToBoolean(character["isdead"]), (string)character["skinPlayer"],
+                                (string)character["compPlayer"]);
+                            if (_usercharacters.ContainsKey(newCharacter.CharIdentifier))
+                            {
+                                _usercharacters[newCharacter.CharIdentifier] = newCharacter;
+                            }
+                            else
+                            {
+                                _usercharacters.Add(newCharacter.CharIdentifier, newCharacter);
+                            }
                         }
                     }
+                    Debug.WriteLine("User characters"+usercharacters.Count);
                 }
-            }
+
+            }));
         }
 
         public async void addCharacter(string firstname, string lastname, string skin, string comps)
@@ -242,7 +246,7 @@ namespace vorpcore_sv.Class
 
         public Character GetUsedCharacter()
         {
-            if (_usercharacters.ContainsKey(UsedCharacterId))//Comprobante para asegurarnos de que existe aunque lo demos por hecho
+            if (_usercharacters.ContainsKey(UsedCharacterId))
             {
                 return _usercharacters[UsedCharacterId];
             }
