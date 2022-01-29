@@ -40,11 +40,8 @@ namespace vorpcore_cl.Scripts
                     TriggerServerEvent("vorp:ImDead", true);
                     setDead = true;
                 }
-                API.NetworkSetInSpectatorMode(true, API.PlayerPedId());
-                API.AnimpostfxPlay("DeathFailMP01");
                 Function.Call((Hash)0xD63FE3AF9FB3D53F, false);
                 Function.Call((Hash)0x1B3DA717B9AFF828, false);
-                TriggerEvent("vorp:showUi", false);
                 TimeToRespawn = Utils.GetConfig.Config["RespawnTime"].ToObject<int>();
 
                 while (TimeToRespawn >= 0 && setDead)
@@ -62,16 +59,21 @@ namespace vorpcore_cl.Scripts
                     if (!Function.Call<bool>((Hash)0xC841153DED2CA89A, API.PlayerPedId()))
                     {
                         API.NetworkSetInSpectatorMode(true, API.PlayerPedId());
-                        await Utils.Miscellanea.DrawText(Utils.GetConfig.Langs["SubTitlePressKey"], Utils.GetConfig.Config["RespawnSubTitleFont"].ToObject<int>(), 0.50f, 0.50f, 1.0f, 1.0f, 255, 255, 255, 255, true, true);
+                        await Utils.Miscellanea.DrawText(Utils.GetConfig.Langs["SubTitlePressKey2"], Utils.GetConfig.Config["RespawnSubTitleFont"].ToObject<int>(), 0.50f, 0.50f, 1.0f, 1.0f, 255, 255, 255, 255, true, true);
                         if (Function.Call<bool>((Hash)0x580417101DDB492F, 0, KeyInt))
                         {
-                            TriggerServerEvent("vorp:PlayerForceRespawn");
-                            TriggerEvent("vorp:PlayerForceRespawn");
-                            API.DoScreenFadeOut(3000);
-                            await Delay(3000);
-                            await resspawnPlayer();
-                            pressKey = true;
-                            await Delay(1000);
+                            Function.Call((Hash)0x71BC8E838B9C6035, API.PlayerPedId()); //This is from kaners? https://vespura.com/doc/natives/#_0x71BC8E838B9C6035 are u sure? lol amazing
+                            Function.Call((Hash)0xAE99FB955581844A, API.PlayerPedId(), 1000, 1000, 0, 0, 0, 0);
+                            Function.Call((Hash)0x9FA4664CF62E47E8, API.PlayerPedId());
+                            Function.Call((Hash)0xA9A41C1E940FB0E8, true);
+                            API.SetEntityHealth(API.PlayerPedId(), 1, 0);
+                            TriggerServerEvent("vorp:ImDead", false);
+                            setDead = false;
+                            await Delay(100);
+                            API.NetworkSetInSpectatorMode(false, API.PlayerPedId());
+                            Function.Call((Hash)0xD63FE3AF9FB3D53F, true);
+                            Function.Call((Hash)0x1B3DA717B9AFF828, true);
+                            SpawnPlayer.setPVP();
                         }
                     }
                 }
@@ -84,10 +86,11 @@ namespace vorpcore_cl.Scripts
             {
                 int carrier = Function.Call<int>((Hash)0x09B83E68DE004CD4, API.PlayerPedId());
                 API.NetworkSetInSpectatorMode(true, carrier);
-                await Utils.Miscellanea.DrawText(Utils.GetConfig.Langs["YouAreCarried"], 4, 0.50f, 0.30f, 1.0f, 1.0f, 255, 255, 255, 255, true, true);
+                await Utils.Miscellanea.DrawText(Utils.GetConfig.Langs["YouAreCarried"], 1, 0.50f, 0.30f, 1.0f, 1.0f, 255, 255, 255, 255, true, true);
             }
             else if (TimeToRespawn >= 0 && setDead)
             {
+                API.NetworkSetInSpectatorMode(true, API.PlayerPedId());
                 await Utils.Miscellanea.DrawText(Utils.GetConfig.Langs["TitleOnDead"], Utils.GetConfig.Config["RespawnTitleFont"].ToObject<int>(), 0.50F, 0.50F, 1.2F, 1.2F, 171, 3, 0, 255, true, true);
                 await Utils.Miscellanea.DrawText(string.Format(Utils.GetConfig.Langs["SubTitleOnDead"], TimeToRespawn.ToString()), Utils.GetConfig.Config["RespawnSubTitleFont"].ToObject<int>(), 0.50f, 0.60f, 0.5f, 0.5f, 255, 255, 255, 255, true, true);
             }
@@ -97,7 +100,7 @@ namespace vorpcore_cl.Scripts
         {
             Function.Call((Hash)0x71BC8E838B9C6035, API.PlayerPedId());
             API.AnimpostfxStop("DeathFailMP01");
-string currentHospital = string.Empty;
+            string currentHospital = string.Empty;
             float minDistance = -1;
             Vector3 playerCoords = API.GetEntityCoords(API.PlayerPedId(), true, true);
             foreach (JToken Hospitals in Utils.GetConfig.Config["hospital"].Children())
@@ -127,7 +130,6 @@ string currentHospital = string.Empty;
             TriggerServerEvent("vorp:ImDead", false); //This is new or copy can u send me a dm?
             setDead = false;
             API.NetworkSetInSpectatorMode(false, API.PlayerPedId());
-            TriggerEvent("vorp:showUi", true);
             Function.Call((Hash)0xD63FE3AF9FB3D53F, true);
             Function.Call((Hash)0x1B3DA717B9AFF828, true);
             SpawnPlayer.setPVP();
@@ -136,13 +138,15 @@ string currentHospital = string.Empty;
         public async Task resurrectPlayer()
         {
             Function.Call((Hash)0x71BC8E838B9C6035, API.PlayerPedId()); //This is from kaners? https://vespura.com/doc/natives/#_0x71BC8E838B9C6035 are u sure? lol amazing
+            Function.Call((Hash)0xAE99FB955581844A, API.PlayerPedId(), 1000, 1000, 0, 0, 0, 0);
+            Function.Call((Hash)0x9FA4664CF62E47E8, API.PlayerPedId());
+            Function.Call((Hash)0xA9A41C1E940FB0E8, true);
             API.AnimpostfxStop("DeathFailMP01");
             API.DoScreenFadeIn(1000);
             TriggerServerEvent("vorp:ImDead", false);
             setDead = false;
             await Delay(100);
             API.NetworkSetInSpectatorMode(false, API.PlayerPedId());
-            TriggerEvent("vorp:showUi", true);
             Function.Call((Hash)0xD63FE3AF9FB3D53F, true);
             Function.Call((Hash)0x1B3DA717B9AFF828, true);
             SpawnPlayer.setPVP();

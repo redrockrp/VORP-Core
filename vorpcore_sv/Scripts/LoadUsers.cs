@@ -35,8 +35,7 @@ namespace vorpcore_sv.Scripts
         private async Task SaveUsersInServer()
         {
             await Delay(300000);
-            Dictionary<string, User> _tmp_users = new Dictionary<string, User>(_users);
-            foreach (KeyValuePair<string,User> user in _tmp_users)
+            foreach (KeyValuePair<string,User> user in _users)
             {
                 await Delay(1000);
                 user.Value.SaveUser();
